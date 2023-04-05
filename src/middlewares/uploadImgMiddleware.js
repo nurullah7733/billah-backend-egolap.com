@@ -1,11 +1,11 @@
 const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
-const fs = require("fs");
+const fs = require("/");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./imgs");
+    cb(null, "/imgs");
   },
   filename: function (req, file, cb) {
     const uniquesuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
