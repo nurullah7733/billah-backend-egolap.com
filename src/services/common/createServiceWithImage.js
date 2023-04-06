@@ -28,7 +28,7 @@ const createServiceWithImage = async (
     urls.map((item) => {
       fs.unlinkSync(item);
     });
-console.log(cloudinaryUploadedImgUrl, 'create')
+
     if (cloudinaryUploadedImgUrl.length > 0) {
       Request.body.img = cloudinaryUploadedImgUrl;
       var infoResult = await DataModel.create(reqBody);
