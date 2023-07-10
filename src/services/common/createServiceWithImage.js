@@ -9,6 +9,7 @@ const createServiceWithImage = async (
   height
 ) => {
   let reqBody = Request.body;
+
   try {
     let cloudinaryUploadedImgUrl;
     const urls = [];

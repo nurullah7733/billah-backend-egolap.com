@@ -21,10 +21,18 @@ var productSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    unitPrice: {
+    discount: {
+      type: Number,
+    },
+    finalPrice: {
       type: Number,
       required: true,
     },
+    saveAmount: {
+      type: Number,
+      required: true,
+    },
+
     quantity: { type: Number, required: [true, "Quantity is required"] },
     sold: { type: Number, default: 0 },
     img: [],

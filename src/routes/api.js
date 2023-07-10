@@ -49,6 +49,7 @@ const {
   listProductForGlobal,
   ratingsProduct,
   deleteProductImgAndPullImg,
+  bestSalesProductForGlobal,
 } = require("../controllers/products/productController");
 const {
   createSubCategory,
@@ -294,6 +295,11 @@ router.get(
 router.get(
   "/list-product-global/:pageNo/:perPage/:searchKeyword",
   listProductForGlobal
+);
+// Best Sales product for Global
+router.get(
+  "/best-sales/:pageNo/:perPage/:searchKeyword",
+  bestSalesProductForGlobal
 );
 // dropdown list product
 router.get(

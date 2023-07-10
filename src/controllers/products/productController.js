@@ -13,10 +13,32 @@ const deleteServiceWithImg = require("../../services/common/deleteServiceWithImg
 const updateServiceWithImg = require("../../services/common/updateServiceWithImg");
 const updateServiceWithDeleteImg = require("../../services/common/updateServiceWithDeleteImg");
 const listThreeJoinService = require("../../services/common/listThreeJoinService");
+const listThreeJoinServiceBestSalesForGlobal = require("../../services/common/listThreeJoinServiceBestSalesForGlobal");
 
 exports.createProduct = async (req, res) => {
   if (req.body.name !== "undefined") {
     req.body.slug = slugify(req.body.name);
+  }
+  console.log(req.body.discount);
+  if (
+    (req.body.price !== "undefined" && req.body.discount == 0) ||
+    req.body.discount == undefined
+  ) {
+    req.body.finalPrice = Number(req.body.price);
+    req.body.discount = 0;
+    req.body.saveAmount = 0;
+  } else if (
+    req.body.price !== "undefined" &&
+    req.body.discount !== "undefined"
+  ) {
+    req.body.finalPrice = (
+      (Number(req.body.price) * (100 - req.body.discount)) /
+      100
+    ).toFixed();
+    req.body.saveAmount = (
+      Number(req.body.price) *
+      (req.body.discount / 100)
+    ).toFixed();
   }
   let result = await createServiceWithImage(
     req,
@@ -117,6 +139,52 @@ exports.listProductForGlobal = async (req, res) => {
   );
   return res.status(200).json(result);
 };
+// Best Sales Products
+exports.bestSalesProductForGlobal = async (req, res) => {
+  let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
+  let searchArray = [
+    { name: searchRgx },
+    { slug: searchRgx },
+    { color: searchRgx },
+    { "category.name": searchRgx },
+    { "subCategory.name": searchRgx },
+    { "brand.name": searchRgx },
+  ];
+
+  let joinStage1 = {
+    $lookup: {
+      from: "categories",
+      localField: "categoryId",
+      foreignField: "_id",
+      as: "category",
+    },
+  };
+  let joinStage2 = {
+    $lookup: {
+      from: "subcategories",
+      localField: "subCategoryId",
+      foreignField: "_id",
+      as: "subCategory",
+    },
+  };
+  let joinStage3 = {
+    $lookup: {
+      from: "brands",
+      localField: "brandId",
+      foreignField: "_id",
+      as: "brand",
+    },
+  };
+  let result = await listThreeJoinServiceBestSalesForGlobal(
+    req,
+    ProductModel,
+    searchArray,
+    joinStage1,
+    joinStage2,
+    joinStage3
+  );
+  return res.status(200).json(result);
+};
 exports.dropdownListProduct = async (req, res) => {
   let result = await dropdownListService(req, ProductModel);
   return res.status(200).json(result);
@@ -126,6 +194,26 @@ exports.getProductDetailsById = async (req, res) => {
   return res.status(200).json(result);
 };
 exports.updateProduct = async (req, res) => {
+  if (
+    (req.body.price !== "undefined" && req.body.discount == 0) ||
+    req.body.discount == undefined
+  ) {
+    req.body.finalPrice = req.body.price;
+    req.body.discount = 0;
+    req.body.saveAmount = 0;
+  } else if (
+    req.body.price !== "undefined" &&
+    req.body.discount !== "undefined"
+  ) {
+    req.body.finalPrice = (
+      (req.body.price * (100 - req.body.discount)) /
+      100
+    ).toFixed();
+    req.body.saveAmount = (
+      req.body.price *
+      (req.body.discount / 100)
+    ).toFixed();
+  }
   let result = await updateServiceWithImg(
     req,
     ProductModel,

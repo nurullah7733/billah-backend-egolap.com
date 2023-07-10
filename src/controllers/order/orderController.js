@@ -4,7 +4,7 @@ const createParentChildService = require("../../services/common/createParentChil
 const getDetailsByIdTwoJoinService = require("../../services/common/getDetailsByIdTwoJoinService");
 const getServiceById = require("../../services/common/getSerciceById");
 const listTwoJoinService = require("../../services/common/listTwoJoinService");
-const listTwoJoinServiceForGlobal = require("../../services/common/listThreeJoinServiceForGlobal");
+
 const updateService = require("../../services/common/updateService");
 
 exports.createOrder = async (req, res) => {
@@ -26,11 +26,12 @@ exports.getAllOrderForAdmin = async (req, res) => {
       email: searchRgx,
     },
   ];
+
   let joinStage1 = {
     $lookup: {
       from: "products",
-      localField: "products.productId",
-      foreignField: "_id",
+      localField: "allProducts",
+      foreignField: "productId",
       as: "productsDetails",
     },
   };
@@ -42,7 +43,7 @@ exports.getAllOrderForAdmin = async (req, res) => {
       as: "orderDetails",
     },
   };
-  let result = await listTwoJoinServiceForGlobal(
+  let result = await listTwoJoinService(
     req,
     orderProductsModel,
     searchArray,

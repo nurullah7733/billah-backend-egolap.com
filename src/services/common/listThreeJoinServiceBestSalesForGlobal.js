@@ -1,4 +1,4 @@
-const listThreeJoinServiceForGlobal = async (
+const listThreeJoinServiceBestSalesForGlobal = async (
   Request,
   DataModel,
   searchArray,
@@ -9,11 +9,10 @@ const listThreeJoinServiceForGlobal = async (
   // query search
   let min = Number(Request.query.min);
   let max = Number(Request.query.max);
+  let discount = Number(Request.query.discount);
   let category = Request.query.category;
   let subcategory = Request.query.subcategory;
   let brand = Request.query.brand;
-  let discount = Number(Request.query.discount);
-  let inStock = Request.query.inStock;
 
   let pageNo = Number(Request.params.pageNo);
   let perPage = Number(Request.params.perPage);
@@ -30,6 +29,7 @@ const listThreeJoinServiceForGlobal = async (
     joinStage1,
     joinStage2,
     joinStage3,
+    { $sort: { sold: -1 } },
     {
       $facet: {
         total: [{ $count: "count" }],
@@ -102,35 +102,15 @@ const listThreeJoinServiceForGlobal = async (
       $match: { discount: { $gte: discount } },
     });
   }
-  // inStock;
-  if (inStock == "true") {
-    queryPipeline.insert(-1, {
-      $match: {
-        quantity: { $gte: 1 },
-      },
-    });
-  }
-  // inStock;
-  if (inStock == "false") {
-    queryPipeline.insert(-1, {
-      $match: {
-        quantity: 0,
-      },
-    });
-  }
-
-  console.log(queryPipeline);
-  // let searchQueryCategory = [
-  //   { "category.name": { $regex: Request.query.category, $options: "i" } },
-  // ];
 
   try {
     let data;
+
     data = await DataModel.aggregate(queryPipeline);
     return { status: "success", data };
   } catch (error) {
-    return { status: "fail", data: error.toString() };
+    return { status: "fail", data: error };
   }
 };
 
-module.exports = listThreeJoinServiceForGlobal;
+module.exports = listThreeJoinServiceBestSalesForGlobal;
