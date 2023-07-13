@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
 const ProductModel = require("../../models/product/productModel");
-const OrderProductModel = require("../../models/order/orderProductsModel");
+const OrderModel = require("../../models/order/orderModel");
 const createServiceWithImage = require("../../services/common/createServiceWithImage");
 const dropdownListService = require("../../services/common/dropdownListService");
 const getServiceById = require("../../services/common/getSerciceById");
@@ -232,7 +232,7 @@ exports.deleteProduct = async (req, res) => {
   let objectId = mongoose.Types.ObjectId;
   let queryObject = { "products.productId": objectId(id) };
 
-  let isDelete = await checkAssociateService(queryObject, OrderProductModel);
+  let isDelete = await checkAssociateService(queryObject, OrderModel);
   if (isDelete === true) {
     return res
       .status(200)

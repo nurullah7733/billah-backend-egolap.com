@@ -2,14 +2,25 @@ const mongoose = require("mongoose");
 
 const orderSchema = mongoose.Schema(
   {
-    email: String,
+    userId: mongoose.Schema.Types.ObjectId,
+    orderId: String,
+    allProducts: [
+      {
+        productId: mongoose.Schema.Types.ObjectId,
+        quantity: Number,
+        unitPrice: Number,
+        total: Number,
+        size: { type: String, uppercase: true },
+        color: String,
+      },
+    ],
     paymentIntent: {
       paymentId: String,
       paymentMethod: String,
       amount: Number,
     },
     vatTax: { type: Number, default: 0 },
-    discount: { type: Number, default: 0 },
+    voucherDiscount: { type: Number, default: 0 },
     otherCost: { type: Number, default: 0 },
     shippingCost: { type: Number, default: 0 },
     grandTotal: { type: Number, default: 0 },
@@ -19,9 +30,8 @@ const orderSchema = mongoose.Schema(
       default: "Not Processed",
       enum: [
         "Not Processed",
-        "Cash on Delivery",
         "Processing",
-        "Dispatched",
+        "Shipping",
         "Cancelled",
         "Delivered",
       ],

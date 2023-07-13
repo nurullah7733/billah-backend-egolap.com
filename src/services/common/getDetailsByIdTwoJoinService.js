@@ -10,7 +10,6 @@ const getDetailsByIdTwoJoinService = async (
   let objectId = mongoose.Types.ObjectId;
   let query = {};
   query._id = objectId(id);
-  console.log(query);
 
   try {
     let data;

@@ -33,7 +33,6 @@ const {
 } = require("../controllers/coupon/couponController");
 const {
   createOrder,
-  getAllOrder,
   getAllOrderForAdmin,
   getAllOrderForUser,
   getDetailsById,
@@ -435,6 +434,12 @@ router.post(
   "/change-order-status/:id",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
+  changeOrderStatus
+);
+// change orderStatus for User
+router.post(
+  "/change-order-status/:id",
+  verifyAuthMiddleware,
   changeOrderStatus
 );
 

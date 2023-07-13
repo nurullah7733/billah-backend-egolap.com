@@ -1,19 +1,15 @@
-const orderModel = require("../../models/order/orderModel");
-const orderProductsModel = require("../../models/order/orderProductsModel");
-const createParentChildService = require("../../services/common/createParentChildService");
+let mongoose = require("mongoose");
+const OrderModel = require("../../models/order/orderModel");
 const getDetailsByIdTwoJoinService = require("../../services/common/getDetailsByIdTwoJoinService");
-const getServiceById = require("../../services/common/getSerciceById");
 const listTwoJoinService = require("../../services/common/listTwoJoinService");
-
-const updateService = require("../../services/common/updateService");
+const updateServiceOrderChangeStatus = require("../../services/order/updateServiceChangeOrderStatus");
+var uniqid = require("uniqid");
+const createServiceWithIncreaseDecreaseItem = require("../../services/order/createServiceWithIncreaseDecreaseItem");
 
 exports.createOrder = async (req, res) => {
-  let result = await createParentChildService(
-    req,
-    orderModel,
-    orderProductsModel,
-    "orderModelId"
-  );
+  req.body.orderId = uniqid.time();
+  req.body.userId = req.headers.userId;
+  let result = await createServiceWithIncreaseDecreaseItem(req, OrderModel);
   return res.status(200).json(result);
 };
 
@@ -22,30 +18,38 @@ exports.getAllOrderForAdmin = async (req, res) => {
   let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
   let searchArray = [
     { orderId: searchRgx },
+    { userId: mongoose.Types.ObjectId(req.params.searchKeyword) },
+    { "paymentIntent.paymentMethod": searchRgx },
+    { note: searchRgx },
+    { "userDetails.firstName": searchRgx },
+    { "userDetails.lastName": searchRgx },
+    { "userDetails.email": searchRgx },
+    { "userDetails.mobile": searchRgx },
     {
-      email: searchRgx,
+      "productsDetails._id": mongoose.Types.ObjectId(req.params.searchKeyword),
     },
+    { "productsDetails.name": searchRgx },
   ];
 
   let joinStage1 = {
     $lookup: {
-      from: "products",
-      localField: "allProducts",
-      foreignField: "productId",
-      as: "productsDetails",
+      from: "users",
+      localField: "userId",
+      foreignField: "_id",
+      as: "userDetails",
     },
   };
   let joinStage2 = {
     $lookup: {
-      from: "orders",
-      localField: "orderModelId",
+      from: "products",
+      localField: "allProducts.productId",
       foreignField: "_id",
-      as: "orderDetails",
+      as: "productsDetails",
     },
   };
   let result = await listTwoJoinService(
     req,
-    orderProductsModel,
+    OrderModel,
     searchArray,
     joinStage1,
     joinStage2
@@ -58,29 +62,37 @@ exports.getAllOrderForUser = async (req, res) => {
   let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
   let searchArray = [
     { orderId: searchRgx },
+    { userId: mongoose.Types.ObjectId(req.params.searchKeyword) },
+    { "paymentIntent.paymentMethod": searchRgx },
+    { note: searchRgx },
+    { "userDetails.firstName": searchRgx },
+    { "userDetails.lastName": searchRgx },
+    { "userDetails.email": searchRgx },
+    { "userDetails.mobile": searchRgx },
     {
-      email: searchRgx,
+      "productsDetails._id": mongoose.Types.ObjectId(req.params.searchKeyword),
     },
+    { "productsDetails.name": searchRgx },
   ];
   let joinStage1 = {
     $lookup: {
-      from: "products",
-      localField: "products.productId",
+      from: "users",
+      localField: "userId",
       foreignField: "_id",
-      as: "productsDetails",
+      as: "userDetails",
     },
   };
   let joinStage2 = {
     $lookup: {
-      from: "orders",
-      localField: "orderModelId",
+      from: "products",
+      localField: "allProducts.productId",
       foreignField: "_id",
-      as: "orderDetails",
+      as: "productsDetails",
     },
   };
   let result = await listTwoJoinService(
     req,
-    orderProductsModel,
+    OrderModel,
     searchArray,
     joinStage1,
     joinStage2
@@ -89,25 +101,25 @@ exports.getAllOrderForUser = async (req, res) => {
 };
 
 exports.getDetailsById = async (req, res) => {
-  joinStage1 = {
+  let joinStage1 = {
     $lookup: {
-      from: "products",
-      localField: "products.productId",
+      from: "users",
+      localField: "userId",
       foreignField: "_id",
-      as: "allProduct",
+      as: "userDetails",
     },
   };
-  joinStage2 = {
+  let joinStage2 = {
     $lookup: {
-      from: "orders",
-      localField: "orderModelId",
+      from: "products",
+      localField: "allProducts.productId",
       foreignField: "_id",
-      as: "orderDetails",
+      as: "productsDetails",
     },
   };
   let result = await getDetailsByIdTwoJoinService(
     req,
-    orderProductsModel,
+    OrderModel,
     joinStage1,
     joinStage2
   );
@@ -116,6 +128,6 @@ exports.getDetailsById = async (req, res) => {
 };
 
 exports.changeOrderStatus = async (req, res) => {
-  let result = await updateService(req, orderModel);
+  let result = await updateServiceOrderChangeStatus(req, OrderModel);
   return res.status(200).json(result);
 };
