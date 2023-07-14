@@ -10,6 +10,7 @@ const verifyEmailService = require("../../services/user/resetPassword/verifyEmai
 const verifyOtpService = require("../../services/user/resetPassword/verifyOtpService");
 const userResetPasswordService = require("../../services/user/resetPassword/userResetPasswordService");
 const updateService = require("../../services/common/updateService");
+const allAdminService = require("../../services/user/adminAllService");
 
 exports.registration = async (req, res) => {
   let data = await userCreateService(req, userModel);
@@ -40,9 +41,22 @@ exports.allUser = async (req, res) => {
   let searchArray = [
     { firstName: searchRegex },
     { lastName: searchRegex },
-    { role: searchRegex },
+    { email: searchRegex },
+    { mobile: searchRegex },
   ];
   let data = await allUserService(req, userModel, searchArray);
+  return res.status(200).json(data);
+};
+// all Admin
+exports.allAdmin = async (req, res) => {
+  let searchRegex = { $regex: req.params.searchKeyword, $options: "i" };
+  let searchArray = [
+    { firstName: searchRegex },
+    { lastName: searchRegex },
+    { email: searchRegex },
+    { mobile: searchRegex },
+  ];
+  let data = await allAdminService(req, userModel, searchArray);
   return res.status(200).json(data);
 };
 // save user address

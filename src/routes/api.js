@@ -51,6 +51,15 @@ const {
   bestSalesProductForGlobal,
 } = require("../controllers/products/productController");
 const {
+  logoUpload,
+  deletelogo,
+  pushLogo,
+} = require("../controllers/settings/logoUploadController");
+const {
+  pushMainSlider,
+  deleteMainSlider,
+} = require("../controllers/settings/mainSliderController");
+const {
   createSubCategory,
   listSubCategories,
   dropdownListSubCategories,
@@ -58,6 +67,14 @@ const {
   updateSubCategory,
   deleteSubCategory,
 } = require("../controllers/subCategory/subCategoryController");
+const {
+  salesSummary,
+  cancelSummary,
+  orderSummary,
+  runningOrderSummary,
+} = require("../controllers/summary/summaryController");
+// --------summary-----------------
+
 const {
   deleteImages,
   uploadImages,
@@ -77,7 +94,9 @@ const {
   resetPassword,
   adminLogin,
   saveUserAddress,
+  allAdmin,
 } = require("../controllers/user/userController");
+
 const {
   createWishList,
   createAndRemoveWishList,
@@ -117,6 +136,13 @@ router.get(
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   allUser
+);
+// all admin for admin
+router.get(
+  "/all-admin/:pageNo/:perPage/:searchKeyword",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  allAdmin
 );
 
 // save address
@@ -441,6 +467,72 @@ router.post(
   "/change-order-status/:id",
   verifyAuthMiddleware,
   changeOrderStatus
+);
+
+// ---------------------Summary--------------------------------
+// Order Summary
+router.get(
+  "/order-summary",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  orderSummary
+);
+// Running Order Summary
+router.get(
+  "/running-order-summary",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  runningOrderSummary
+);
+// Sales summary
+router.get(
+  "/sales-summary",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  salesSummary
+);
+// cancel Summary
+router.get(
+  "/cancel-summary",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  cancelSummary
+);
+
+//-------------------------- Settings -----------------------------------------------
+router.post(
+  "/upload-logo",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  logoUpload
+);
+router.post(
+  "/delete-logo/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deletelogo
+);
+router.post(
+  "/update-logo/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushLogo
+);
+// -------- Main Slider -------------------------------------------
+router.post(
+  "/add-main-slider/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushMainSlider
+);
+router.post(
+  "/delete-main-slider/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteMainSlider
 );
 
 module.exports = router;

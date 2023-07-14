@@ -36,8 +36,8 @@ exports.uploadMultipleImages = (images, opt) => {
   });
 };
 
-exports.deleteCloudinaryImg = async (fileToDelete) => {
-  let result = await cloudinary.uploader.destroy(fileToDelete);
+exports.deleteCloudinaryImg = async (imgId) => {
+  let result = await cloudinary.uploader.destroy(imgId);
 
   return result;
 };

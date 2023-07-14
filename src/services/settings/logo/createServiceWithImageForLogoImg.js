@@ -1,7 +1,7 @@
 const fs = require("fs");
-const { uploadMultipleImages } = require("../../utils/cloudinary");
+const { uploadMultipleImages } = require("../../../utils/cloudinary");
 
-const createServiceWithImage = async (
+const createServiceWithImageForLogoImg = async (
   Request,
   DataModel,
   folder,
@@ -9,7 +9,6 @@ const createServiceWithImage = async (
   height
 ) => {
   let reqBody = Request.body;
-
   try {
     let cloudinaryUploadedImgUrl;
     const urls = [];
@@ -31,8 +30,7 @@ const createServiceWithImage = async (
     });
 
     if (cloudinaryUploadedImgUrl.length > 0) {
-      Request.body.img = cloudinaryUploadedImgUrl;
-      Request.body.logoImg = cloudinaryUploadedImgUrl;
+      reqBody.logoImg = cloudinaryUploadedImgUrl;
       var infoResult = await DataModel.create(reqBody);
     }
 
@@ -49,4 +47,4 @@ const createServiceWithImage = async (
   }
 };
 
-module.exports = createServiceWithImage;
+module.exports = createServiceWithImageForLogoImg;
