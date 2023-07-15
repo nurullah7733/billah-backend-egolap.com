@@ -51,6 +51,18 @@ const {
   bestSalesProductForGlobal,
 } = require("../controllers/products/productController");
 const {
+  pushProvisionalBazar,
+  deleteProvisionalBazar,
+} = require("../controllers/settings/ProvisionalBazarController");
+const {
+  pushBestOfElectronics,
+  deleteBestOfElectronics,
+} = require("../controllers/settings/bestOfElectronicsController");
+const {
+  pushBestSalesBanner,
+  deleteBestSalesBanner,
+} = require("../controllers/settings/bestSalesBannerController");
+const {
   logoUpload,
   deletelogo,
   pushLogo,
@@ -533,6 +545,48 @@ router.post(
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   deleteMainSlider
+);
+// -------- BestSales Banner -------------------------------------------
+router.post(
+  "/add-best-sales-banner/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushBestSalesBanner
+);
+router.post(
+  "/delete-best-sales-banner/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBestSalesBanner
+);
+// -------- provisionalBazar Banner -------------------------------------------
+router.post(
+  "/add-provisional-bazar-banner/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushProvisionalBazar
+);
+router.post(
+  "/delete-provisional-bazar-banner/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteProvisionalBazar
+);
+// -------- bestOfElectronics Banner -------------------------------------------
+router.post(
+  "/add-best-of-electronics-banner/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushBestOfElectronics
+);
+router.post(
+  "/delete-best-of-electronics-banner/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBestOfElectronics
 );
 
 module.exports = router;
