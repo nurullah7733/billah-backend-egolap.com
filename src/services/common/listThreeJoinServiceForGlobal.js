@@ -14,6 +14,7 @@ const listThreeJoinServiceForGlobal = async (
   let brand = Request.query.brand;
   let discount = Number(Request.query.discount);
   let inStock = Request.query.inStock;
+  let tag = Request.query.tag;
 
   let pageNo = Number(Request.params.pageNo);
   let perPage = Number(Request.params.perPage);
@@ -119,7 +120,17 @@ const listThreeJoinServiceForGlobal = async (
     });
   }
 
-  console.log(queryPipeline);
+  if (tag !== undefined) {
+    let tagArr = tag.trim().split(/[ ,]+/);
+    queryPipeline.insert(
+      -1,
+
+      {
+        $match: { tags: { $in: tagArr } },
+      }
+    );
+  }
+  // console.log(queryPipeline);
   // let searchQueryCategory = [
   //   { "category.name": { $regex: Request.query.category, $options: "i" } },
   // ];

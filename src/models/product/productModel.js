@@ -55,6 +55,7 @@ var productSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
+    tags: [],
   },
   { versionKey: false, timestamps: true }
 );

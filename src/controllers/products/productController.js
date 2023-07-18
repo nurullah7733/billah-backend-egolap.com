@@ -19,7 +19,11 @@ exports.createProduct = async (req, res) => {
   if (req.body.name !== "undefined") {
     req.body.slug = slugify(req.body.name);
   }
-  console.log(req.body.discount);
+
+  if (req.body.tags !== undefined) {
+    let tagArr = req.body.tags.trim().split(/[ ,]+/);
+    req.body.tags = tagArr;
+  }
   if (
     (req.body.price !== "undefined" && req.body.discount == 0) ||
     req.body.discount == undefined
@@ -230,7 +234,7 @@ exports.deleteProductImgAndPullImg = async (req, res) => {
 exports.deleteProduct = async (req, res) => {
   let id = req.params.id;
   let objectId = mongoose.Types.ObjectId;
-  let queryObject = { "products.productId": objectId(id) };
+  let queryObject = { "allProducts.productId": objectId(id) };
 
   let isDelete = await checkAssociateService(queryObject, OrderModel);
   if (isDelete === true) {
