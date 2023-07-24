@@ -4,8 +4,12 @@ const RunningOrderSummary = async (Request) => {
     let data = await OrderModel.aggregate([
       {
         $match: {
-          orderStatus: { $not: { $eq: "Cancelled" } },
           orderStatus: { $not: { $eq: "Delivered" } },
+        },
+      },
+      {
+        $match: {
+          orderStatus: { $not: { $eq: "Cancelled" } },
         },
       },
       {

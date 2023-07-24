@@ -84,6 +84,10 @@ const {
   cancelSummary,
   orderSummary,
   runningOrderSummary,
+  salesSummaryReport,
+  cancelSummaryReport,
+  allOrderSummaryReport,
+  runningOrderSummaryReport,
 } = require("../controllers/summary/summaryController");
 // --------summary-----------------
 
@@ -489,6 +493,14 @@ router.get(
   verifyAdminMiddleware,
   orderSummary
 );
+// All Order Summary Report
+router.post(
+  "/order-summary-report",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  allOrderSummaryReport
+);
+
 // Running Order Summary
 router.get(
   "/running-order-summary",
@@ -496,6 +508,14 @@ router.get(
   verifyAdminMiddleware,
   runningOrderSummary
 );
+// Running Order Summary Report
+router.post(
+  "/running-order-summary-report",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  runningOrderSummaryReport
+);
+
 // Sales summary
 router.get(
   "/sales-summary",
@@ -503,12 +523,26 @@ router.get(
   verifyAdminMiddleware,
   salesSummary
 );
+// Sales summary Report
+router.post(
+  "/sales-summary-report",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  salesSummaryReport
+);
 // cancel Summary
 router.get(
   "/cancel-summary",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   cancelSummary
+);
+// cancel Summary Report
+router.post(
+  "/cancel-summary-report",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  cancelSummaryReport
 );
 
 //-------------------------- Settings -----------------------------------------------
