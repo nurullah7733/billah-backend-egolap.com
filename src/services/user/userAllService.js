@@ -9,6 +9,7 @@ const allUserService = async (Request, DataModel, searchArray) => {
       let searchQuery = { $or: searchArray };
       data = await DataModel.aggregate([
         { $match: searchQuery },
+        { $match: { role: "user" } },
         { $project: { password: 0 } },
         {
           $facet: {
@@ -19,6 +20,7 @@ const allUserService = async (Request, DataModel, searchArray) => {
       ]);
     } else {
       data = await DataModel.aggregate([
+        { $match: { role: "user" } },
         { $project: { password: 0 } },
         {
           $facet: {

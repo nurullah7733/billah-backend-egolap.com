@@ -46,8 +46,8 @@ var userSchema = new mongoose.Schema(
       trim: true,
     },
     isBlock: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "No",
     },
     refreshToken: {
       type: String,
