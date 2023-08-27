@@ -114,6 +114,7 @@ const {
   adminLogin,
   saveUserAddress,
   allAdmin,
+  logOut,
 } = require("../controllers/user/userController");
 
 const {
@@ -130,6 +131,7 @@ const deliveredOrderServices = require("../services/order/deliveredOrderServices
 router.post("/registration", registration);
 // login
 router.post("/login", login);
+router.get("/logout", verifyAuthMiddleware, logOut);
 router.post("/admin-login", adminLogin);
 // user details for user
 router.get("/user-detail-by-user", verifyAuthMiddleware, userDetailsById);

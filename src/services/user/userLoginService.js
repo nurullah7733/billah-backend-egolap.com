@@ -22,9 +22,9 @@ const userLoginService = async (Request, Response, DataModel) => {
           );
         }
 
-        Response.cookie("refreshToken", refreshToken, {
-          maxAge: 2.592e8,
+        Response.cookie("token", token, {
           httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
         });
 
         return {

@@ -21,6 +21,12 @@ exports.login = async (req, res) => {
   let data = await userLoginService(req, res, userModel);
   return res.status(200).json(data);
 };
+exports.logOut = async (req, res) => {
+  res.clearCookie("token");
+  return res
+    .status(200)
+    .json({ status: "success", data: "Successfully logged out" });
+};
 exports.adminLogin = async (req, res) => {
   let data = await adminLoginService(req, res, userModel);
   return res.status(200).json(data);
