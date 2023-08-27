@@ -1,4 +1,6 @@
-const listTwoJoinService = async (
+const mongoose = require("mongoose");
+
+const cancelledOrderServices = async (
   Request,
   DataModel,
   searchArray,
@@ -9,12 +11,21 @@ const listTwoJoinService = async (
   let perPage = Number(Request.params.perPage);
   let searchKeyword = Request.params.searchKeyword;
   let skipRow = (pageNo - 1) * perPage;
+  let userId = Request.headers.userId;
 
   try {
     let data;
     if (searchKeyword !== "0") {
       data = await DataModel.aggregate([
         // { $match: { $expr: { $ne: ["$events", []] } } },
+        {
+          $match: { userId: mongoose.Types.ObjectId(userId) },
+        },
+        {
+          $match: {
+            orderStatus: "Cancelled",
+          },
+        },
         joinStage1,
         joinStage2,
         { $match: { $or: searchArray } },
@@ -27,7 +38,14 @@ const listTwoJoinService = async (
       ]);
     } else {
       data = await DataModel.aggregate([
-        { $match: { $expr: { $ne: ["$events", []] } } },
+        {
+          $match: { userId: mongoose.Types.ObjectId(userId) },
+        },
+        {
+          $match: {
+            orderStatus: "Cancelled",
+          },
+        },
         joinStage1,
         joinStage2,
         {
@@ -44,4 +62,4 @@ const listTwoJoinService = async (
   }
 };
 
-module.exports = listTwoJoinService;
+module.exports = cancelledOrderServices;

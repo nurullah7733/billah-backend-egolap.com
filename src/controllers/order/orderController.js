@@ -5,6 +5,10 @@ const listTwoJoinService = require("../../services/common/listTwoJoinService");
 const updateServiceOrderChangeStatus = require("../../services/order/updateServiceChangeOrderStatus");
 var uniqid = require("uniqid");
 const createServiceWithIncreaseDecreaseItem = require("../../services/order/createServiceWithIncreaseDecreaseItem");
+const runningOrderServices = require("../../services/order/runningOrderServices");
+const deliveredOrderServices = require("../../services/order/deliveredOrderServices");
+const cancelledOrderServices = require("../../services/order/cancelledOrderServices");
+const returnedOrderServices = require("../../services/order/returnedOrderServices");
 
 exports.createOrder = async (req, res) => {
   req.body.orderId = uniqid.time();
@@ -67,7 +71,7 @@ exports.getAllOrderForAdmin = async (req, res) => {
 };
 
 // for user
-exports.getAllOrderForUser = async (req, res) => {
+exports.getRunningOrderForUser = async (req, res) => {
   let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
   let searchArray = [
     { orderId: searchRgx },
@@ -109,7 +113,160 @@ exports.getAllOrderForUser = async (req, res) => {
       as: "productsDetails",
     },
   };
-  let result = await listTwoJoinService(
+  let result = await runningOrderServices(
+    req,
+    OrderModel,
+    searchArray,
+    joinStage1,
+    joinStage2
+  );
+  return res.status(200).json(result);
+};
+exports.getDeliveredOrderForUser = async (req, res) => {
+  let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
+  let searchArray = [
+    { orderId: searchRgx },
+    { "paymentIntent.paymentMethod": searchRgx },
+    { note: searchRgx },
+    { "userDetails.firstName": searchRgx },
+    { "userDetails.lastName": searchRgx },
+    { "userDetails.email": searchRgx },
+    { "userDetails.mobile": searchRgx },
+
+    { "productsDetails.name": searchRgx },
+  ];
+  if (
+    req.params.searchKeyword.length == 12 ||
+    req.params.searchKeyword.length == 24
+  ) {
+    searchArray.push(
+      { userId: mongoose.Types.ObjectId(req.params.searchKeyword) },
+      {
+        "productsDetails._id": mongoose.Types.ObjectId(
+          req.params.searchKeyword
+        ),
+      }
+    );
+  }
+  let joinStage1 = {
+    $lookup: {
+      from: "users",
+      localField: "userId",
+      foreignField: "_id",
+      as: "userDetails",
+    },
+  };
+  let joinStage2 = {
+    $lookup: {
+      from: "products",
+      localField: "allProducts.productId",
+      foreignField: "_id",
+      as: "productsDetails",
+    },
+  };
+  let result = await deliveredOrderServices(
+    req,
+    OrderModel,
+    searchArray,
+    joinStage1,
+    joinStage2
+  );
+  return res.status(200).json(result);
+};
+exports.getCancelledOrderForUser = async (req, res) => {
+  let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
+  let searchArray = [
+    { orderId: searchRgx },
+    { "paymentIntent.paymentMethod": searchRgx },
+    { note: searchRgx },
+    { "userDetails.firstName": searchRgx },
+    { "userDetails.lastName": searchRgx },
+    { "userDetails.email": searchRgx },
+    { "userDetails.mobile": searchRgx },
+
+    { "productsDetails.name": searchRgx },
+  ];
+  if (
+    req.params.searchKeyword.length == 12 ||
+    req.params.searchKeyword.length == 24
+  ) {
+    searchArray.push(
+      { userId: mongoose.Types.ObjectId(req.params.searchKeyword) },
+      {
+        "productsDetails._id": mongoose.Types.ObjectId(
+          req.params.searchKeyword
+        ),
+      }
+    );
+  }
+  let joinStage1 = {
+    $lookup: {
+      from: "users",
+      localField: "userId",
+      foreignField: "_id",
+      as: "userDetails",
+    },
+  };
+  let joinStage2 = {
+    $lookup: {
+      from: "products",
+      localField: "allProducts.productId",
+      foreignField: "_id",
+      as: "productsDetails",
+    },
+  };
+  let result = await cancelledOrderServices(
+    req,
+    OrderModel,
+    searchArray,
+    joinStage1,
+    joinStage2
+  );
+  return res.status(200).json(result);
+};
+exports.getReturnedOrderForUser = async (req, res) => {
+  let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
+  let searchArray = [
+    { orderId: searchRgx },
+    { "paymentIntent.paymentMethod": searchRgx },
+    { note: searchRgx },
+    { "userDetails.firstName": searchRgx },
+    { "userDetails.lastName": searchRgx },
+    { "userDetails.email": searchRgx },
+    { "userDetails.mobile": searchRgx },
+
+    { "productsDetails.name": searchRgx },
+  ];
+  if (
+    req.params.searchKeyword.length == 12 ||
+    req.params.searchKeyword.length == 24
+  ) {
+    searchArray.push(
+      { userId: mongoose.Types.ObjectId(req.params.searchKeyword) },
+      {
+        "productsDetails._id": mongoose.Types.ObjectId(
+          req.params.searchKeyword
+        ),
+      }
+    );
+  }
+  let joinStage1 = {
+    $lookup: {
+      from: "users",
+      localField: "userId",
+      foreignField: "_id",
+      as: "userDetails",
+    },
+  };
+  let joinStage2 = {
+    $lookup: {
+      from: "products",
+      localField: "allProducts.productId",
+      foreignField: "_id",
+      as: "productsDetails",
+    },
+  };
+  let result = await returnedOrderServices(
     req,
     OrderModel,
     searchArray,

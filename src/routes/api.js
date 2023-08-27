@@ -34,9 +34,12 @@ const {
 const {
   createOrder,
   getAllOrderForAdmin,
-  getAllOrderForUser,
   getDetailsById,
   changeOrderStatus,
+  getRunningOrderForUser,
+  getDeliveredOrderForUser,
+  getCancelledOrderForUser,
+  getReturnedOrderForUser,
 } = require("../controllers/order/orderController");
 const {
   createProduct,
@@ -121,6 +124,7 @@ const {
 const { uploadPhoto } = require("../middlewares/uploadImgMiddleware");
 const verifyAdminMiddleware = require("../middlewares/verifyAdminMiddleware");
 const verifyAuthMiddleware = require("../middlewares/verifyAuthMiddleware");
+const deliveredOrderServices = require("../services/order/deliveredOrderServices");
 
 // registration
 router.post("/registration", registration);
@@ -454,11 +458,29 @@ router.get(
   verifyAdminMiddleware,
   getAllOrderForAdmin
 );
-// get all order for user only
+// get running order for user only
 router.get(
-  "/get-all-order/:pageNo/:perPage/:searchKeyword",
+  "/get-running-order/:pageNo/:perPage/:searchKeyword",
   verifyAuthMiddleware,
-  getAllOrderForUser
+  getRunningOrderForUser
+);
+// get Delivered order for user only
+router.get(
+  "/get-delivered-order/:pageNo/:perPage/:searchKeyword",
+  verifyAuthMiddleware,
+  getDeliveredOrderForUser
+);
+// get Cancelled order for user only
+router.get(
+  "/get-cancelled-order/:pageNo/:perPage/:searchKeyword",
+  verifyAuthMiddleware,
+  getCancelledOrderForUser
+);
+// get Returned order for user only
+router.get(
+  "/get-returned-order/:pageNo/:perPage/:searchKeyword",
+  verifyAuthMiddleware,
+  getReturnedOrderForUser
 );
 
 // get order details for admin only
