@@ -9,8 +9,7 @@ const listTwoJoinService = async (
   let perPage = Number(Request.params.perPage);
   let searchKeyword = Request.params.searchKeyword;
   let skipRow = (pageNo - 1) * perPage;
-  let email = Request.headers.email;
-  console.log(searchKeyword !== "0", "jfdf");
+  // let email = Request.headers.email;
   try {
     let data;
     if (searchKeyword !== "0") {

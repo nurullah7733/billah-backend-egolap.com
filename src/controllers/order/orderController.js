@@ -18,18 +18,27 @@ exports.getAllOrderForAdmin = async (req, res) => {
   let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
   let searchArray = [
     { orderId: searchRgx },
-    { userId: mongoose.Types.ObjectId(req.params.searchKeyword) },
     { "paymentIntent.paymentMethod": searchRgx },
     { note: searchRgx },
     { "userDetails.firstName": searchRgx },
     { "userDetails.lastName": searchRgx },
     { "userDetails.email": searchRgx },
     { "userDetails.mobile": searchRgx },
-    {
-      "productsDetails._id": mongoose.Types.ObjectId(req.params.searchKeyword),
-    },
     { "productsDetails.name": searchRgx },
   ];
+  if (
+    req.params.searchKeyword.length == 12 ||
+    req.params.searchKeyword.length == 24
+  ) {
+    searchArray.push(
+      { userId: mongoose.Types.ObjectId(req.params.searchKeyword) },
+      {
+        "productsDetails._id": mongoose.Types.ObjectId(
+          req.params.searchKeyword
+        ),
+      }
+    );
+  }
 
   let joinStage1 = {
     $lookup: {
@@ -62,18 +71,28 @@ exports.getAllOrderForUser = async (req, res) => {
   let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
   let searchArray = [
     { orderId: searchRgx },
-    { userId: mongoose.Types.ObjectId(req.params.searchKeyword) },
     { "paymentIntent.paymentMethod": searchRgx },
     { note: searchRgx },
     { "userDetails.firstName": searchRgx },
     { "userDetails.lastName": searchRgx },
     { "userDetails.email": searchRgx },
     { "userDetails.mobile": searchRgx },
-    {
-      "productsDetails._id": mongoose.Types.ObjectId(req.params.searchKeyword),
-    },
+
     { "productsDetails.name": searchRgx },
   ];
+  if (
+    req.params.searchKeyword.length == 12 ||
+    req.params.searchKeyword.length == 24
+  ) {
+    searchArray.push(
+      { userId: mongoose.Types.ObjectId(req.params.searchKeyword) },
+      {
+        "productsDetails._id": mongoose.Types.ObjectId(
+          req.params.searchKeyword
+        ),
+      }
+    );
+  }
   let joinStage1 = {
     $lookup: {
       from: "users",
