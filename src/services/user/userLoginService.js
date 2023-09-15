@@ -28,8 +28,7 @@ const userLoginService = async (Request, Response, DataModel) => {
           sameSite: "lax",
           path: "/",
           secure: process.env.NODE_ENV === "production",
-        });
-        console.log(Request.cookies);
+        }); 
         return {
           status: "success",
           data: {

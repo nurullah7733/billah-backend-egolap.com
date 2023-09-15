@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 
 const verifyAuthMiddleware = (req, res, next) => {
-  let token = req.headers.token;
-  // let token = req.cookies.token;
+  // let token = req.headers.token;
+  let token = req.cookies.token;
   jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
     if (err) {
       return res.status(401).json({ status: "unauthorized" });

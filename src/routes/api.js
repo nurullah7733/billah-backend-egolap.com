@@ -294,11 +294,13 @@ router.get(
 );
 // dropdown list brand
 router.get(
-  "/dropdown-brand",
+  "/dropdown-brand-admin",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   dropdownListBrand
 );
+// dropdown list brand for Global
+router.get("/dropdown-brand", dropdownListBrand);
 // get brand details by id
 router.get(
   "/brand-details/:id",
@@ -497,7 +499,7 @@ router.get(
 router.get("/get-order-details/:id", verifyAuthMiddleware, getDetailsById);
 // change orderStatus for Admin
 router.post(
-  "/change-order-status/:id",
+  "/change-order-status-for-admin/:id",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   changeOrderStatus
