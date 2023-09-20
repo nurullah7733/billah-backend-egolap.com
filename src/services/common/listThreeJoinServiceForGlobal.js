@@ -69,7 +69,6 @@ const listThreeJoinServiceForGlobal = async (
     });
   }
   if (subcategory !== undefined) {
-    console.log("subcategory");
     queryPipeline.insert(-1, {
       $match: {
         $or: [
