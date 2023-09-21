@@ -341,10 +341,7 @@ router.get(
   listProduct
 );
 // list product for Global
-router.get(
-  "/list-product-global/:pageNo/:perPage/:searchKeyword",
-  listProductForGlobal
-);
+router.get("/list-product-global", listProductForGlobal);
 // Best Sales product for Global
 router.get(
   "/best-sales/:pageNo/:perPage/:searchKeyword",

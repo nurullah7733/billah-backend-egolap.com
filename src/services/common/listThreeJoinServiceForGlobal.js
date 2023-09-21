@@ -16,9 +16,14 @@ const listThreeJoinServiceForGlobal = async (
   let inStock = Request.query.inStock;
   let tag = Request.query.tag;
 
-  let pageNo = Number(Request.params.pageNo);
-  let perPage = Number(Request.params.perPage);
-  let searchKeyword = Request.params.searchKeyword;
+  // let pageNo = Number(Request.params.pageNo);
+  // let perPage = Number(Request.params.perPage);
+  // let searchKeyword = Request.params.searchKeyword;
+
+  let pageNo = Number(Request.query.pageNo);
+  let perPage = Number(Request.query.perPage);
+  let searchKeyword = Request.query.searchKeyword;
+  console.log(pageNo, "and", perPage);
   let skipRow = (pageNo - 1) * perPage;
 
   // thats dynamic array insert function
