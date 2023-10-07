@@ -99,7 +99,8 @@ exports.listProduct = async (req, res) => {
   return res.status(200).json(result);
 };
 exports.listProductForGlobal = async (req, res) => {
-  let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
+  // let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
+  let searchRgx = { $regex: req.query.searchKeyword, $options: "i" };
   let searchArray = [
     { name: searchRgx },
     { slug: searchRgx },

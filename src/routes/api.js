@@ -194,13 +194,15 @@ router.get(
   verifyAdminMiddleware,
   listCategory
 );
-// dropdown list Category
+// dropdown list Category for admin
 router.get(
-  "/dropdown-category",
+  "/dropdown-category-admin",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   dropdownListCategory
 );
+// dropdown list Category global
+router.get("/dropdown-category", dropdownListCategory);
 // get category details by id
 router.get(
   "/category-details/:id",
@@ -247,13 +249,15 @@ router.get(
   verifyAdminMiddleware,
   listSubCategories
 );
-// dropdown list subcategory
+// dropdown list subcategory by admin
 router.get(
-  "/dropdown-subcategory",
+  "/dropdown-subcategory-admin",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   dropdownListSubCategories
 );
+// dropdown list subcategory Global
+router.get("/dropdown-subcategory", dropdownListSubCategories);
 // get subcategory details by id
 router.get(
   "/subcategory-details/:id",

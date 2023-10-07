@@ -15,6 +15,7 @@ const listThreeJoinServiceForGlobal = async (
   let discount = Number(Request.query.discount);
   let inStock = Request.query.inStock;
   let tag = Request.query.tag;
+  let sortby = Request.query.sortby;
 
   // let pageNo = Number(Request.params.pageNo);
   // let perPage = Number(Request.params.perPage);
@@ -23,7 +24,6 @@ const listThreeJoinServiceForGlobal = async (
   let pageNo = Number(Request.query.pageNo);
   let perPage = Number(Request.query.perPage);
   let searchKeyword = Request.query.searchKeyword;
-  console.log(pageNo, "and", perPage);
   let skipRow = (pageNo - 1) * perPage;
 
   // thats dynamic array insert function
@@ -45,6 +45,7 @@ const listThreeJoinServiceForGlobal = async (
   ];
 
   if (searchKeyword !== "0") {
+    console.log("search", searchKeyword);
     queryPipeline.insert(-1, { $match: { $or: searchArray } });
   }
   if (!isNaN(min) && isNaN(max)) {
@@ -132,6 +133,20 @@ const listThreeJoinServiceForGlobal = async (
       {
         $match: { tags: { $in: tagArr } },
       }
+    );
+  }
+  if (sortby !== undefined && sortby == 0) {
+    queryPipeline.insert(
+      -1,
+
+      { $sort: { finalPrice: 1 } }
+    );
+  }
+  if (sortby !== undefined && sortby == 1) {
+    queryPipeline.insert(
+      -1,
+
+      { $sort: { finalPrice: -1 } }
     );
   }
   // console.log(queryPipeline);
