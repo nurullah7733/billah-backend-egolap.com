@@ -4,16 +4,14 @@ const ProductModel = require("../../models/product/productModel");
 const OrderModel = require("../../models/order/orderModel");
 const createServiceWithImage = require("../../services/common/createServiceWithImage");
 const dropdownListService = require("../../services/common/dropdownListService");
-const getServiceById = require("../../services/common/getSerciceById");
-const listTwoJoinService = require("../../services/common/listTwoJoinService");
 const listThreeJoinServiceForGlobal = require("../../services/common/listThreeJoinServiceForGlobal");
-const updateService = require("../../services/common/updateService");
 const checkAssociateService = require("../../services/common/checkAssociateService");
 const deleteServiceWithImg = require("../../services/common/deleteServiceWithImg");
 const updateServiceWithImg = require("../../services/common/updateServiceWithImg");
 const updateServiceWithDeleteImg = require("../../services/common/updateServiceWithDeleteImg");
 const listThreeJoinService = require("../../services/common/listThreeJoinService");
 const listThreeJoinServiceBestSalesForGlobal = require("../../services/common/listThreeJoinServiceBestSalesForGlobal");
+const getDetailsByIdThreeJoinService = require("../../services/common/getDetailsByIdThreeJoinService");
 
 exports.createProduct = async (req, res) => {
   if (req.body.name !== "undefined") {
@@ -195,7 +193,46 @@ exports.dropdownListProduct = async (req, res) => {
   return res.status(200).json(result);
 };
 exports.getProductDetailsById = async (req, res) => {
-  let result = await getServiceById(req, ProductModel);
+  let joinStage1 = {
+    $lookup: {
+      from: "categories",
+      localField: "categoryId",
+      foreignField: "_id",
+      as: "category",
+    },
+  };
+  let joinStage2 = {
+    $lookup: {
+      from: "subcategories",
+      localField: "subCategoryId",
+      foreignField: "_id",
+      as: "subCategory",
+    },
+  };
+  let joinStage3 = {
+    $lookup: {
+      from: "brands",
+      localField: "brandId",
+      foreignField: "_id",
+      as: "brand",
+    },
+  };
+  let joinStage4 = {
+    $lookup: {
+      from: "users",
+      localField: "ratings.author",
+      foreignField: "_id",
+      as: "ratingsUser",
+    },
+  };
+  let result = await getDetailsByIdThreeJoinService(
+    req,
+    ProductModel,
+    joinStage1,
+    joinStage2,
+    joinStage3,
+    joinStage4
+  );
   return res.status(200).json(result);
 };
 exports.updateProduct = async (req, res) => {

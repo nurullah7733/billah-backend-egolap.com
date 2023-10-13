@@ -358,13 +358,16 @@ router.get(
   verifyAdminMiddleware,
   dropdownListProduct
 );
-// get product details by id
+// get product details by id for admin
 router.get(
-  "/product-details/:id",
+  "/product-details-admin/:id",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   getProductDetailsById
 );
+// get product details by id
+router.get("/product-details/:id", getProductDetailsById);
+
 // update product
 router.post(
   "/update-product/:id",

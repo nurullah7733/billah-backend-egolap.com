@@ -13,9 +13,12 @@ var productSchema = mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    sortDescription: {
+      type: String,
+      required: [true, "Sort description is required"],
+    },
     description: {
       type: String,
-      required: [true, "Description is required"],
     },
     price: {
       type: Number,
