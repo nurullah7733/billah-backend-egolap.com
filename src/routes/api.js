@@ -52,6 +52,8 @@ const {
   ratingsProduct,
   deleteProductImgAndPullImg,
   bestSalesProductForGlobal,
+  relatedProduct,
+  multipleBranSearchInProduct,
 } = require("../controllers/products/productController");
 const {
   pushProvisionalBazar,
@@ -367,6 +369,7 @@ router.get(
 );
 // get product details by id
 router.get("/product-details/:id", getProductDetailsById);
+router.get("/related-products/:searchKeyword", multipleBranSearchInProduct);
 
 // update product
 router.post(
