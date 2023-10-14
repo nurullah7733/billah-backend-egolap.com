@@ -374,75 +374,75 @@ exports.ratingsProduct = async (req, res) => {
 };
 
 // Start multiple brand search in products.
-exports.multipleBranSearchInProduct = async (req, res) => {
-  let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
-  let searchArray = [
-    { name: searchRgx },
-    { slug: searchRgx },
-    { color: searchRgx },
-    { "category.name": searchRgx },
-    { "subCategory.name": searchRgx },
-    { "brand.name": searchRgx },
-  ];
-  let joinStage1 = {
-    $lookup: {
-      from: "categories",
-      localField: "categoryId",
-      foreignField: "_id",
-      as: "category",
-    },
-  };
-  let joinStage2 = {
-    $lookup: {
-      from: "subcategories",
-      localField: "subCategoryId",
-      foreignField: "_id",
-      as: "subCategory",
-    },
-  };
-  let joinStage3 = {
-    $lookup: {
-      from: "brands",
-      localField: "brandId",
-      foreignField: "_id",
-      as: "brand",
-    },
-  };
-  try {
-    let data;
-    const namesToSearch = ["symPhony", "samSung", "Infinix"];
-    const regexPatterns = namesToSearch.map((name) => new RegExp(name, "i"));
-    data = await ProductModel.aggregate([
-      joinStage1,
-      joinStage2,
-      joinStage3,
-      {
-        $match: {
-          $or: [
-            {
-              "brand.name": {
-                $in: namesToSearch,
-              },
-            },
-            {
-              "brand.name": {
-                $in: regexPatterns,
-              },
-            },
-          ],
-        },
-      },
-      {
-        $facet: {
-          total: [{ $count: "count" }],
-          rows: [{ $skip: 0 }, { $limit: 200 }],
-        },
-      },
-    ]);
-    return res.status(200).json({ status: "success", data });
-  } catch (error) {
-    return res.status(401).json({ status: "fail", data: error.toString() });
-  }
-};
+// exports.multipleBranSearchInProduct = async (req, res) => {
+//   let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
+//   let searchArray = [
+//     { name: searchRgx },
+//     { slug: searchRgx },
+//     { color: searchRgx },
+//     { "category.name": searchRgx },
+//     { "subCategory.name": searchRgx },
+//     { "brand.name": searchRgx },
+//   ];
+//   let joinStage1 = {
+//     $lookup: {
+//       from: "categories",
+//       localField: "categoryId",
+//       foreignField: "_id",
+//       as: "category",
+//     },
+//   };
+//   let joinStage2 = {
+//     $lookup: {
+//       from: "subcategories",
+//       localField: "subCategoryId",
+//       foreignField: "_id",
+//       as: "subCategory",
+//     },
+//   };
+//   let joinStage3 = {
+//     $lookup: {
+//       from: "brands",
+//       localField: "brandId",
+//       foreignField: "_id",
+//       as: "brand",
+//     },
+//   };
+//   try {
+//     let data;
+//     const namesToSearch = ["symPhony", "samSung", "Infinix"];
+//     const regexPatterns = namesToSearch.map((name) => new RegExp(name, "i"));
+//     data = await ProductModel.aggregate([
+//       joinStage1,
+//       joinStage2,
+//       joinStage3,
+//       {
+//         $match: {
+//           $or: [
+//             {
+//               "brand.name": {
+//                 $in: namesToSearch,
+//               },
+//             },
+//             {
+//               "brand.name": {
+//                 $in: regexPatterns,
+//               },
+//             },
+//           ],
+//         },
+//       },
+//       {
+//         $facet: {
+//           total: [{ $count: "count" }],
+//           rows: [{ $skip: 0 }, { $limit: 200 }],
+//         },
+//       },
+//     ]);
+//     return res.status(200).json({ status: "success", data });
+//   } catch (error) {
+//     return res.status(401).json({ status: "fail", data: error.toString() });
+//   }
+// };
 
 // End multiple brand search in products.
