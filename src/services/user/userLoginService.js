@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const createToken = require("../../utils/createToken");
-const generateRefreshToken = require("../../utils/refreshToken");
 
 const userLoginService = async (Request, Response, DataModel) => {
   let email = Request.body.email;
@@ -15,11 +14,6 @@ const userLoginService = async (Request, Response, DataModel) => {
       if (encrypt) {
         if (data.length > 0) {
           token = await createToken(data[0].email, data[0]._id);
-          refreshToken = await generateRefreshToken(data[0].email);
-          await DataModel.updateOne(
-            { email: email },
-            { refreshToken: refreshToken }
-          );
         }
 
         Response.cookie("token", token, {
@@ -39,6 +33,9 @@ const userLoginService = async (Request, Response, DataModel) => {
             email: data[0].email,
             mobile: data[0].mobile,
             photo: data[0].photo,
+            cart: data[0].cart,
+            wishList: data[0].wishList,
+            address: data[0].address,
           },
           token,
         };

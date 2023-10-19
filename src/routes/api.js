@@ -117,6 +117,8 @@ const {
   saveUserAddress,
   allAdmin,
   logOut,
+  addToCart,
+  removeToCart,
 } = require("../controllers/user/userController");
 
 const {
@@ -171,6 +173,9 @@ router.get(
 
 // save address
 router.post("/save-address/:id", verifyAuthMiddleware, saveUserAddress);
+// Add to cart
+router.post("/add-to-cart/:id", verifyAuthMiddleware, addToCart);
+router.post("/remove-from-cart/:id", verifyAuthMiddleware, removeToCart);
 
 //------------------------------ Reset password----------------------------------------------------------------------------
 // step 01

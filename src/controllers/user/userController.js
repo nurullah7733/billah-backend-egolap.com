@@ -11,6 +11,8 @@ const verifyOtpService = require("../../services/user/resetPassword/verifyOtpSer
 const userResetPasswordService = require("../../services/user/resetPassword/userResetPasswordService");
 const updateService = require("../../services/common/updateService");
 const allAdminService = require("../../services/user/adminAllService");
+const userAddToCartService = require("../../services/user/userCart/userAddToCartServices");
+const userRemoveToCartService = require("../../services/user/userCart/userRemoveToCartServices");
 
 exports.registration = async (req, res) => {
   let data = await userCreateService(req, userModel);
@@ -66,9 +68,18 @@ exports.allAdmin = async (req, res) => {
   return res.status(200).json(data);
 };
 // save user address
-
 exports.saveUserAddress = async (req, res) => {
   let result = await updateService(req, userModel);
+  return res.status(200).json(result);
+};
+// AddToCart
+exports.addToCart = async (req, res) => {
+  let result = await userAddToCartService(req, userModel);
+  return res.status(200).json(result);
+};
+// RemoveFormCart
+exports.removeToCart = async (req, res) => {
+  let result = await userRemoveToCartService(req, userModel);
   return res.status(200).json(result);
 };
 

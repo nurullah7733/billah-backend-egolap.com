@@ -29,7 +29,7 @@ var userSchema = new mongoose.Schema(
     photo: {
       type: String,
     },
-    cart: [{ type: Array, default: [] }],
+    cart: [],
     wishList: [{ type: mongoose.Schema.Types.ObjectId, default: [] }],
     address: {
       street1: String,
