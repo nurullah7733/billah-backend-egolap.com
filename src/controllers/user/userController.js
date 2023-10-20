@@ -12,7 +12,6 @@ const userResetPasswordService = require("../../services/user/resetPassword/user
 const updateService = require("../../services/common/updateService");
 const allAdminService = require("../../services/user/adminAllService");
 const userAddToCartService = require("../../services/user/userCart/userAddToCartServices");
-const userRemoveToCartService = require("../../services/user/userCart/userRemoveToCartServices");
 
 exports.registration = async (req, res) => {
   let data = await userCreateService(req, userModel);

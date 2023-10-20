@@ -118,7 +118,6 @@ const {
   allAdmin,
   logOut,
   addToCart,
-  removeToCart,
 } = require("../controllers/user/userController");
 
 const {
