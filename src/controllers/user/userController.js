@@ -77,11 +77,6 @@ exports.addToCart = async (req, res) => {
   let result = await userAddToCartService(req, userModel);
   return res.status(200).json(result);
 };
-// RemoveFormCart
-exports.removeToCart = async (req, res) => {
-  let result = await userRemoveToCartService(req, userModel);
-  return res.status(200).json(result);
-};
 
 // ------------------------ Reset Password -------------------------------------//
 
