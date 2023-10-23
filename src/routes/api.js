@@ -77,6 +77,13 @@ const {
   deleteMainSlider,
 } = require("../controllers/settings/mainSliderController");
 const {
+  initPayment,
+  successPaymnet,
+  cancelPaymnet,
+  failPaymnet,
+  ipnPaymnet,
+} = require("../controllers/sslcommarce/sslcommarceController");
+const {
   createSubCategory,
   listSubCategories,
   dropdownListSubCategories,
@@ -521,6 +528,13 @@ router.post(
   verifyAuthMiddleware,
   changeOrderStatus
 );
+
+// ----------------------------------------------- Payment ------------------------------------
+router.post("/payment", initPayment);
+router.post("/payment-success", successPaymnet);
+router.post("/payment-cancel", cancelPaymnet);
+router.post("/payment-fail", failPaymnet);
+router.post("/payment-ipn", ipnPaymnet);
 
 // ---------------------Summary--------------------------------
 // Order Summary

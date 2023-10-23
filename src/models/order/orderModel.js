@@ -3,17 +3,9 @@ const mongoose = require("mongoose");
 const orderSchema = mongoose.Schema(
   {
     userId: mongoose.Schema.Types.ObjectId,
-    orderId: String,
-    allProducts: [
-      {
-        productId: mongoose.Schema.Types.ObjectId,
-        quantityPerProduct: Number,
-        unitPrice: Number,
-        total: Number,
-        size: { type: String, uppercase: true },
-        color: String,
-      },
-    ],
+    tran_id: String,
+    paymentStatus: Boolean,
+    allProducts: [],
     paymentIntent: {
       paymentId: String,
       paymentMethod: String,
