@@ -49,6 +49,7 @@ var userSchema = new mongoose.Schema(
       type: String,
       default: "No",
     },
+    couponCodeUses: { type: String, default: "0" },
     refreshToken: {
       type: String,
     },

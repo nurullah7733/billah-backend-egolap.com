@@ -77,6 +77,10 @@ const {
   deleteMainSlider,
 } = require("../controllers/settings/mainSliderController");
 const {
+  updateShippingAndOtherCost,
+  getAllWebSetting,
+} = require("../controllers/settings/updateShippingAndOtherCostController");
+const {
   initPayment,
   successPaymnet,
   cancelPaymnet,
@@ -446,12 +450,7 @@ router.get(
   verifyAdminMiddleware,
   deleteCoupon
 );
-router.post(
-  "/validate-coupon-code",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  validateCouponCode
-);
+router.post("/validate-coupon-code", validateCouponCode);
 
 // ------------------------- Upload Img ------------------------------------------------
 router.post("/upload-img", uploadPhoto.array("images", 10), uploadImages);
@@ -673,5 +672,12 @@ router.post(
   verifyAdminMiddleware,
   deleteBestOfElectronics
 );
+router.post(
+  "/udpate-shipping-and-other-cost/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  updateShippingAndOtherCost
+);
+router.get("/get-all-web-settings", getAllWebSetting);
 
 module.exports = router;

@@ -7,6 +7,8 @@ var settingsSchema = mongoose.Schema(
     bestSales: { type: Array },
     provisionalBazar: { type: Array },
     bestOfElectronics: { type: Array },
+    otherCost: { type: Number, default: 0 },
+    shippingCost: { type: Number, default: 0 },
   },
   { versionKey: false, timestamps: true }
 );

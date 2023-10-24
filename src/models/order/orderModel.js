@@ -4,7 +4,7 @@ const orderSchema = mongoose.Schema(
   {
     userId: mongoose.Schema.Types.ObjectId,
     tran_id: String,
-    paymentStatus: Boolean,
+    paymentStatus: String,
     allProducts: [],
     paymentIntent: {
       paymentId: String,
@@ -26,6 +26,7 @@ const orderSchema = mongoose.Schema(
         "Processing",
         "Shipping",
         "Cancelled",
+        "Failed",
         "Delivered",
       ],
     },

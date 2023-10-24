@@ -36,6 +36,7 @@ const userLoginService = async (Request, Response, DataModel) => {
             cart: data[0].cart,
             wishList: data[0].wishList,
             address: data[0].address,
+            couponCodeUses: data[0].couponCodeUses,
           },
           token,
         };

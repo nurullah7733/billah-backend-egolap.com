@@ -1,5 +1,6 @@
 const SSLCommerzPayment = require("sslcommerz-lts");
 const uniqid = require("uniqid");
+const globals = require("node-global-storage"); // Commonjs
 const orderModel = require("../../models/order/orderModel");
 
 const store_id = process.env.SSLCOMMERCE_STORE_ID;
@@ -11,6 +12,7 @@ exports.initPayment = async (req, res) => {
   let tran_id = uniqid.process();
   let reqBody = req.body;
 
+  globals.set("orderAllInformation", JSON.stringify(reqBody));
   const data = {
     total_amount: parseInt(reqBody.total_amount),
     currency: "BDT",
@@ -51,7 +53,7 @@ exports.initPayment = async (req, res) => {
       await orderModel.create({
         userId: reqBody.userId,
         tran_id: tran_id,
-        paymentStatus: false,
+        paymentStatus: "init",
       });
 
       return res
@@ -70,31 +72,103 @@ exports.initPayment = async (req, res) => {
 // payment successed
 exports.successPaymnet = async (req, res) => {
   let reqBody = req.body;
-  console.log(reqBody.total_amount);
+  let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
+
   try {
-    console.log(reqBody.tran_id, "tran_id");
     await orderModel.updateOne(
       { tran_id: reqBody.tran_id },
       {
-        paymentStatus: true,
-        allProducts: reqBody.allProducts,
-        totalPrice: parseInt(reqBody.total_amount),
+        userId: ordersAllInfo?.userId,
+        paymentStatus: "success",
+        allProducts: ordersAllInfo?.allProducts,
+        "paymentIntent.paymentId": reqBody.tran_id,
+        "paymentIntent.amount": ordersAllInfo?.total_amount,
+        totalPrice: ordersAllInfo?.total_amount,
+        grandTotal: ordersAllInfo?.total_amount,
+        "shippingAddress.state": "demo",
+        "shippingAddress.zipCode": "demo",
+        "shippingAddress.thana": "demo",
+        "shippingAddress.district": "demo",
+        "shippingAddress.country": "demo",
       }
     );
-    return res.status(200).json({ status: "success", data: "payment success" });
+    return res.redirect("http://localhost:3000/payment/success");
   } catch (error) {
     return res.status(400).json({ status: "fail", data: error.toString() });
   }
 };
 // payment cancelled
 exports.cancelPaymnet = async (req, res) => {
-  return res.status(200).json({ status: "success", data: "payment cancel" });
+  let reqBody = req.body;
+  let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
+
+  await orderModel.updateOne(
+    { tran_id: reqBody.tran_id },
+    {
+      userId: ordersAllInfo?.userId,
+      paymentStatus: "cancel",
+      orderStatus: "Cancelled",
+      allProducts: ordersAllInfo?.allProducts,
+      "paymentIntent.paymentId": reqBody.tran_id,
+      "paymentIntent.amount": ordersAllInfo?.total_amount,
+      totalPrice: ordersAllInfo?.total_amount,
+      grandTotal: ordersAllInfo?.total_amount,
+      "shippingAddress.state": "demo",
+      "shippingAddress.zipCode": "demo",
+      "shippingAddress.thana": "demo",
+      "shippingAddress.district": "demo",
+      "shippingAddress.country": "demo",
+    }
+  );
+  return res.redirect("http://localhost:3000/payment/cancel");
 };
 // payment fail
 exports.failPaymnet = async (req, res) => {
-  return res.status(200).json({ status: "success", data: "payment fail" });
+  let reqBody = req.body;
+  let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
+
+  await orderModel.updateOne(
+    { tran_id: reqBody.tran_id },
+    {
+      userId: ordersAllInfo?.userId,
+      paymentStatus: "fail",
+      orderStatus: "Failed",
+      allProducts: ordersAllInfo?.allProducts,
+      "paymentIntent.paymentId": reqBody.tran_id,
+      "paymentIntent.amount": ordersAllInfo?.total_amount,
+      totalPrice: ordersAllInfo?.total_amount,
+      grandTotal: ordersAllInfo?.total_amount,
+      "shippingAddress.state": "demo",
+      "shippingAddress.zipCode": "demo",
+      "shippingAddress.thana": "demo",
+      "shippingAddress.district": "demo",
+      "shippingAddress.country": "demo",
+    }
+  );
+  return res.redirect("http://localhost:3000/payment/fail");
 };
 // payment ipn
 exports.ipnPaymnet = async (req, res) => {
-  return res.status(200).json({ status: "success", data: "payment ipn" });
+  let reqBody = req.body;
+  let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
+
+  await orderModel.updateOne(
+    { tran_id: reqBody.tran_id },
+    {
+      userId: ordersAllInfo?.userId,
+      paymentStatus: "ipn",
+      orderStatus: "Failed",
+      allProducts: ordersAllInfo?.allProducts,
+      "paymentIntent.paymentId": reqBody.tran_id,
+      "paymentIntent.amount": ordersAllInfo?.total_amount,
+      totalPrice: ordersAllInfo?.total_amount,
+      grandTotal: ordersAllInfo?.total_amount,
+      "shippingAddress.state": "demo",
+      "shippingAddress.zipCode": "demo",
+      "shippingAddress.thana": "demo",
+      "shippingAddress.district": "demo",
+      "shippingAddress.country": "demo",
+    }
+  );
+  return res.redirect("http://localhost:3000/payment/fail");
 };
