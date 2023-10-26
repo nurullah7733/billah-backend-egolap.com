@@ -450,7 +450,7 @@ router.get(
   verifyAdminMiddleware,
   deleteCoupon
 );
-router.post("/validate-coupon-code", validateCouponCode);
+router.post("/validate-coupon-code", verifyAuthMiddleware, validateCouponCode);
 
 // ------------------------- Upload Img ------------------------------------------------
 router.post("/upload-img", uploadPhoto.array("images", 10), uploadImages);

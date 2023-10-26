@@ -6,11 +6,11 @@ const createServiceWithIncreaseDecreaseItem = async (Request, DataModel) => {
   try {
     await allProducts.map(async (prod) => {
       await ProdcutModel.findOneAndUpdate(
-        { _id: prod.productId },
+        { _id: prod._id },
         {
           $inc: {
-            quantity: -Number(prod.quantity),
-            sold: Number(prod.quantity),
+            quantity: -Number(prod.customerChoiceProductQuantity),
+            sold: Number(prod.customerChoiceProductQuantity),
           },
         }
       );

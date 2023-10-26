@@ -11,8 +11,15 @@ const cancelledOrderServices = require("../../services/order/cancelledOrderServi
 const returnedOrderServices = require("../../services/order/returnedOrderServices");
 
 exports.createOrder = async (req, res) => {
-  req.body.orderId = uniqid.time();
-  req.body.userId = req.headers.userId;
+  let reqBody = req.body;
+  let tran_id = uniqid.process();
+  reqBody.tran_id = tran_id;
+  reqBody.userId = req.headers.userId;
+  reqBody["paymentIntent"] = {
+    paymentId: tran_id,
+    amount: reqBody.grandTotal,
+  };
+
   let result = await createServiceWithIncreaseDecreaseItem(req, OrderModel);
   return res.status(200).json(result);
 };
@@ -21,7 +28,7 @@ exports.createOrder = async (req, res) => {
 exports.getAllOrderForAdmin = async (req, res) => {
   let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
   let searchArray = [
-    { orderId: searchRgx },
+    { tran_id: searchRgx },
     { "paymentIntent.paymentMethod": searchRgx },
     { note: searchRgx },
     { "userDetails.firstName": searchRgx },
