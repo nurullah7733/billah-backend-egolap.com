@@ -13,8 +13,9 @@ exports.initPayment = async (req, res) => {
   let reqBody = req.body;
 
   globals.set("orderAllInformation", JSON.stringify(reqBody));
+
   const data = {
-    total_amount: parseInt(reqBody.total_amount),
+    total_amount: parseInt(reqBody.grandTotal),
     currency: "BDT",
     tran_id: tran_id, // use unique tran_id for each api call
     success_url: "http://localhost:4000/payment-success",
@@ -65,7 +66,7 @@ exports.initPayment = async (req, res) => {
         .json({ status: "fail", data: "Payment session fail" });
     }
   } catch (error) {
-    return res.status(400).json({ status: "fail", data: error });
+    return res.status(400).json({ status: "fail", data: error.toString() });
   }
 };
 
@@ -82,14 +83,24 @@ exports.successPaymnet = async (req, res) => {
         paymentStatus: "success",
         allProducts: ordersAllInfo?.allProducts,
         "paymentIntent.paymentId": reqBody.tran_id,
-        "paymentIntent.amount": ordersAllInfo?.total_amount,
-        totalPrice: ordersAllInfo?.total_amount,
-        grandTotal: ordersAllInfo?.total_amount,
-        "shippingAddress.state": "demo",
-        "shippingAddress.zipCode": "demo",
-        "shippingAddress.thana": "demo",
-        "shippingAddress.district": "demo",
-        "shippingAddress.country": "demo",
+        "paymentIntent.paymentMethod": "",
+        "paymentIntent.amount": ordersAllInfo?.grandTotal,
+        voucherDiscount: ordersAllInfo?.voucherDiscount,
+        subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
+        shippingCost: ordersAllInfo?.shippingCost,
+        grandTotal: ordersAllInfo?.grandTotal,
+
+        shippingAddress: {
+          name: ordersAllInfo?.shippingAddress?.name,
+          email: ordersAllInfo?.shippingAddress?.email,
+          mobile: ordersAllInfo?.shippingAddress?.mobile,
+          alternativeMobile: ordersAllInfo?.shippingAddress?.alternativeMobile,
+          thana: ordersAllInfo?.shippingAddress?.thana,
+          city: ordersAllInfo?.shippingAddress?.city,
+          country: ordersAllInfo?.shippingAddress?.country,
+          zipCode: ordersAllInfo?.shippingAddress?.zipCode,
+          address: ordersAllInfo?.shippingAddress?.address,
+        },
       }
     );
     return res.redirect("http://localhost:3000/payment/success");
@@ -106,18 +117,28 @@ exports.cancelPaymnet = async (req, res) => {
     { tran_id: reqBody.tran_id },
     {
       userId: ordersAllInfo?.userId,
-      paymentStatus: "cancel",
+      paymentStatus: "Cancelled",
       orderStatus: "Cancelled",
       allProducts: ordersAllInfo?.allProducts,
       "paymentIntent.paymentId": reqBody.tran_id,
-      "paymentIntent.amount": ordersAllInfo?.total_amount,
-      totalPrice: ordersAllInfo?.total_amount,
-      grandTotal: ordersAllInfo?.total_amount,
-      "shippingAddress.state": "demo",
-      "shippingAddress.zipCode": "demo",
-      "shippingAddress.thana": "demo",
-      "shippingAddress.district": "demo",
-      "shippingAddress.country": "demo",
+      "paymentIntent.paymentMethod": "",
+      "paymentIntent.amount": ordersAllInfo?.grandTotal,
+      voucherDiscount: ordersAllInfo?.voucherDiscount,
+      subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
+      shippingCost: ordersAllInfo?.shippingCost,
+      grandTotal: ordersAllInfo?.grandTotal,
+
+      shippingAddress: {
+        name: ordersAllInfo?.shippingAddress?.name,
+        email: ordersAllInfo?.shippingAddress?.email,
+        mobile: ordersAllInfo?.shippingAddress?.mobile,
+        alternativeMobile: ordersAllInfo?.shippingAddress?.alternativeMobile,
+        thana: ordersAllInfo?.shippingAddress?.thana,
+        city: ordersAllInfo?.shippingAddress?.city,
+        country: ordersAllInfo?.shippingAddress?.country,
+        zipCode: ordersAllInfo?.shippingAddress?.zipCode,
+        address: ordersAllInfo?.shippingAddress?.address,
+      },
     }
   );
   return res.redirect("http://localhost:3000/payment/cancel");
@@ -131,18 +152,28 @@ exports.failPaymnet = async (req, res) => {
     { tran_id: reqBody.tran_id },
     {
       userId: ordersAllInfo?.userId,
-      paymentStatus: "fail",
+      paymentStatus: "Failed",
       orderStatus: "Failed",
       allProducts: ordersAllInfo?.allProducts,
       "paymentIntent.paymentId": reqBody.tran_id,
-      "paymentIntent.amount": ordersAllInfo?.total_amount,
-      totalPrice: ordersAllInfo?.total_amount,
-      grandTotal: ordersAllInfo?.total_amount,
-      "shippingAddress.state": "demo",
-      "shippingAddress.zipCode": "demo",
-      "shippingAddress.thana": "demo",
-      "shippingAddress.district": "demo",
-      "shippingAddress.country": "demo",
+      "paymentIntent.paymentMethod": "",
+      "paymentIntent.amount": ordersAllInfo?.grandTotal,
+      voucherDiscount: ordersAllInfo?.voucherDiscount,
+      subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
+      shippingCost: ordersAllInfo?.shippingCost,
+      grandTotal: ordersAllInfo?.grandTotal,
+
+      shippingAddress: {
+        name: ordersAllInfo?.shippingAddress?.name,
+        email: ordersAllInfo?.shippingAddress?.email,
+        mobile: ordersAllInfo?.shippingAddress?.mobile,
+        alternativeMobile: ordersAllInfo?.shippingAddress?.alternativeMobile,
+        thana: ordersAllInfo?.shippingAddress?.thana,
+        city: ordersAllInfo?.shippingAddress?.city,
+        country: ordersAllInfo?.shippingAddress?.country,
+        zipCode: ordersAllInfo?.shippingAddress?.zipCode,
+        address: ordersAllInfo?.shippingAddress?.address,
+      },
     }
   );
   return res.redirect("http://localhost:3000/payment/fail");
@@ -156,18 +187,28 @@ exports.ipnPaymnet = async (req, res) => {
     { tran_id: reqBody.tran_id },
     {
       userId: ordersAllInfo?.userId,
-      paymentStatus: "ipn",
+      paymentStatus: "Cancelled",
       orderStatus: "Failed",
       allProducts: ordersAllInfo?.allProducts,
       "paymentIntent.paymentId": reqBody.tran_id,
-      "paymentIntent.amount": ordersAllInfo?.total_amount,
-      totalPrice: ordersAllInfo?.total_amount,
-      grandTotal: ordersAllInfo?.total_amount,
-      "shippingAddress.state": "demo",
-      "shippingAddress.zipCode": "demo",
-      "shippingAddress.thana": "demo",
-      "shippingAddress.district": "demo",
-      "shippingAddress.country": "demo",
+      "paymentIntent.paymentMethod": "",
+      "paymentIntent.amount": ordersAllInfo?.grandTotal,
+      voucherDiscount: ordersAllInfo?.voucherDiscount,
+      subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
+      shippingCost: ordersAllInfo?.shippingCost,
+      grandTotal: ordersAllInfo?.grandTotal,
+
+      shippingAddress: {
+        name: ordersAllInfo?.shippingAddress?.name,
+        email: ordersAllInfo?.shippingAddress?.email,
+        mobile: ordersAllInfo?.shippingAddress?.mobile,
+        alternativeMobile: ordersAllInfo?.shippingAddress?.alternativeMobile,
+        thana: ordersAllInfo?.shippingAddress?.thana,
+        city: ordersAllInfo?.shippingAddress?.city,
+        country: ordersAllInfo?.shippingAddress?.country,
+        zipCode: ordersAllInfo?.shippingAddress?.zipCode,
+        address: ordersAllInfo?.shippingAddress?.address,
+      },
     }
   );
   return res.redirect("http://localhost:3000/payment/fail");
