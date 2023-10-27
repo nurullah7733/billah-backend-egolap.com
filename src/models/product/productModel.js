@@ -13,7 +13,7 @@ var productSchema = mongoose.Schema(
       unique: true,
       lowercase: true,
     },
-    sortDescription: {
+    shortDescription: {
       type: String,
       required: [true, "Sort description is required"],
     },
@@ -59,6 +59,14 @@ var productSchema = mongoose.Schema(
       required: true,
     },
     tags: [],
+    country: String,
+    skinType: String,
+    sku: String,
+    madeIn: String,
+    remark: {
+      type: String,
+      enum: ["Popular", "New", "Top", "Special", "Trending", "Regular"],
+    },
   },
   { versionKey: false, timestamps: true }
 );

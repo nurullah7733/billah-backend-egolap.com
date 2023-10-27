@@ -8,6 +8,9 @@ var brandSchema = mongoose.Schema(
       unique: true,
       trim: true,
     },
+    img: {
+      type: Array,
+    },
   },
   { versionKey: false, timestamps: true }
 );

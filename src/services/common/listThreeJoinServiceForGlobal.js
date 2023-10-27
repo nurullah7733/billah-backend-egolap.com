@@ -16,6 +16,7 @@ const listThreeJoinServiceForGlobal = async (
   let inStock = Request.query.inStock;
   let tag = Request.query.tag;
   let sortby = Request.query.sortby;
+  let remark = Request.query.remark;
 
   // let pageNo = Number(Request.params.pageNo);
   // let perPage = Number(Request.params.perPage);
@@ -149,6 +150,28 @@ const listThreeJoinServiceForGlobal = async (
       { $sort: { finalPrice: -1 } }
     );
   }
+  if (remark !== undefined) {
+    queryPipeline.insert(-1, {
+      $match: {
+        $or: [
+          {
+            remark: {
+              $regex: Request.query.remark,
+              $options: "i",
+            },
+          },
+        ],
+      },
+    });
+  }
+  // for remark desc order
+  if (remark !== undefined) {
+    queryPipeline.insert(-1, {
+      $sort: {
+        createdAt: -1,
+      },
+    });
+  }
   // console.log(queryPipeline);
   // let searchQueryCategory = [
   //   { "category.name": { $regex: Request.query.category, $options: "i" } },
@@ -157,6 +180,7 @@ const listThreeJoinServiceForGlobal = async (
   try {
     let data;
     data = await DataModel.aggregate(queryPipeline);
+
     return { status: "success", data };
   } catch (error) {
     return { status: "fail", data: error.toString() };

@@ -2,15 +2,16 @@ const mongoose = require("mongoose");
 const BrandModel = require("../../models/brand/brandModel");
 const ProductModel = require("../../models/product/productModel");
 const checkAssociateService = require("../../services/common/checkAssociateService");
-const createService = require("../../services/common/createService");
 const deleteService = require("../../services/common/deleteService");
 const dropdownListService = require("../../services/common/dropdownListService");
 const getServiceById = require("../../services/common/getSerciceById");
 const listService = require("../../services/common/listService");
-const updateService = require("../../services/common/updateService");
+const createServiceWithImage = require("../../services/common/createServiceWithImage");
+const updateServiceWithImg = require("../../services/common/updateServiceWithImg");
+const updateServiceWithDeleteImg = require("../../services/common/updateServiceWithDeleteImg");
 
 exports.createBrand = async (req, res) => {
-  let result = await createService(req, BrandModel);
+  let result = await createServiceWithImage(req, BrandModel, "brands", 80, 80);
   return res.status(200).json(result);
 };
 
@@ -29,9 +30,15 @@ exports.getBrandDetailsById = async (req, res) => {
   return res.status(200).json(result);
 };
 exports.updateBrand = async (req, res) => {
-  let result = await updateService(req, BrandModel);
+  let result = await updateServiceWithImg(req, BrandModel, "brands", 80, 80);
   return res.status(200).json(result);
 };
+
+exports.deleteBrandImgAndpullImg = async (req, res) => {
+  let result = await updateServiceWithDeleteImg(req, BrandModel);
+  return res.status(200).json(result);
+};
+
 exports.deleteBrand = async (req, res) => {
   let id = req.params.id;
   let objectId = mongoose.Types.ObjectId;

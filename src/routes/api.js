@@ -6,6 +6,7 @@ const {
   deleteBrand,
   dropdownListBrand,
   getBrandDetailsById,
+  deleteBrandImgAndpullImg,
 } = require("../controllers/brands/brandController");
 const {
   createCard,
@@ -302,6 +303,7 @@ router.post(
   "/create-brand",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
   createBrand
 );
 
@@ -333,8 +335,17 @@ router.post(
   "/update-brand/:id",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
   updateBrand
 );
+// delete brand img
+router.post(
+  "/delete-brand-img/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBrandImgAndpullImg
+);
+
 // delete brand
 router.get(
   "/delete-brand/:id",
