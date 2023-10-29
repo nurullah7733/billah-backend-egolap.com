@@ -4,12 +4,11 @@ const ProductModel = require("../../models/product/productModel");
 const listService = require("../../services/common/listService");
 const dropdownListService = require("../../services/common/dropdownListService");
 const getServiceById = require("../../services/common/getSerciceById");
-const deleteService = require("../../services/common/deleteService");
-const updateService = require("../../services/common/updateService");
 const checkAssociateService = require("../../services/common/checkAssociateService");
 const createServiceWithImage = require("../../services/common/createServiceWithImage");
 const updateServiceWithDeleteImg = require("../../services/common/updateServiceWithDeleteImg");
 const updateServiceWithImg = require("../../services/common/updateServiceWithImg");
+const deleteServiceWithImg = require("../../services/common/deleteServiceWithImg");
 
 exports.createCateogry = async (req, res) => {
   let result = await createServiceWithImage(
@@ -49,7 +48,7 @@ exports.deleteCategoryImgAndpullImg = async (req, res) => {
   let result = await updateServiceWithDeleteImg(req, CategoryModel);
   return res.status(200).json(result);
 };
-exports.deleteCategory = async (req, res) => {
+exports.deleteCategoryWithImg = async (req, res) => {
   let id = req.params.id;
   let objectId = mongoose.Types.ObjectId;
   let queryObject = { categoryId: objectId(id) };
@@ -61,7 +60,7 @@ exports.deleteCategory = async (req, res) => {
       data: "This category associate to products",
     });
   } else {
-    let result = await deleteService(req, CategoryModel);
+    let result = await deleteServiceWithImg(req, CategoryModel);
     return res.status(200).json(result);
   }
 };

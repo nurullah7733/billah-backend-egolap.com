@@ -3,10 +3,10 @@ const {
   createBrand,
   listBrand,
   updateBrand,
-  deleteBrand,
   dropdownListBrand,
   getBrandDetailsById,
   deleteBrandImgAndpullImg,
+  deleteBrandWithImg,
 } = require("../controllers/brands/brandController");
 const {
   createCard,
@@ -19,10 +19,9 @@ const {
   listCategory,
   dropdownListCategory,
   getCategoryDetailsById,
-  deleteCategory,
   updateCategory,
-  deleteProductImgAndpullImg,
   deleteCategoryImgAndpullImg,
+  deleteCategoryWithImg,
 } = require("../controllers/categories/categoryController");
 const {
   createCoupon,
@@ -247,7 +246,7 @@ router.get(
   "/delete-category/:id",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
-  deleteCategory
+  deleteCategoryWithImg
 );
 
 //------------------------------ Sub-Categories ----------------------------------------------------------------------------
@@ -351,7 +350,7 @@ router.get(
   "/delete-brand/:id",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
-  deleteBrand
+  deleteBrandWithImg
 );
 
 //------------------------------ product ----------------------------------------------------------------------------

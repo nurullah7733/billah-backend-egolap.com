@@ -10,9 +10,9 @@ const deleteServiceWithImg = async (Request, DataModel) => {
 
   try {
     // delete img
-    let product = await DataModel.findOne({ _id: id });
+    let imgDataOfDataModel = await DataModel.findOne({ _id: id });
 
-    product?.img?.map(async (item) => {
+    imgDataOfDataModel?.img?.map(async (item) => {
       await deleteCloudinaryImg(item.public_id);
     });
 

@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const BrandModel = require("../../models/brand/brandModel");
 const ProductModel = require("../../models/product/productModel");
 const checkAssociateService = require("../../services/common/checkAssociateService");
-const deleteService = require("../../services/common/deleteService");
 const dropdownListService = require("../../services/common/dropdownListService");
 const getServiceById = require("../../services/common/getSerciceById");
 const listService = require("../../services/common/listService");
 const createServiceWithImage = require("../../services/common/createServiceWithImage");
 const updateServiceWithImg = require("../../services/common/updateServiceWithImg");
 const updateServiceWithDeleteImg = require("../../services/common/updateServiceWithDeleteImg");
+const deleteServiceWithImg = require("../../services/common/deleteServiceWithImg");
 
 exports.createBrand = async (req, res) => {
   let result = await createServiceWithImage(req, BrandModel, "brands", 80, 80);
@@ -39,7 +39,7 @@ exports.deleteBrandImgAndpullImg = async (req, res) => {
   return res.status(200).json(result);
 };
 
-exports.deleteBrand = async (req, res) => {
+exports.deleteBrandWithImg = async (req, res) => {
   let id = req.params.id;
   let objectId = mongoose.Types.ObjectId;
   let queryObject = { brandId: objectId(id) };
@@ -50,7 +50,7 @@ exports.deleteBrand = async (req, res) => {
       .status(200)
       .json({ status: "associate", data: "This brand associate to products" });
   } else {
-    let result = await deleteService(req, BrandModel);
+    let result = await deleteServiceWithImg(req, BrandModel);
     return res.status(200).json(result);
   }
 };
