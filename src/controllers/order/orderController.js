@@ -36,6 +36,16 @@ exports.getAllOrderForAdmin = async (req, res) => {
     { "userDetails.email": searchRgx },
     { "userDetails.mobile": searchRgx },
     { "productsDetails.name": searchRgx },
+
+    { "shippingAddress.name": searchRgx },
+    { "shippingAddress.email": searchRgx },
+    { "shippingAddress.mobile": searchRgx },
+    { "shippingAddress.alternativeMobile": searchRgx },
+    { "shippingAddress.city": searchRgx },
+    { "shippingAddress.country": searchRgx },
+    { "shippingAddress.address": searchRgx },
+    { "allProducts.name": searchRgx },
+    { tran_id: searchRgx },
   ];
   if (
     req.params.searchKeyword.length == 12 ||

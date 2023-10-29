@@ -26,6 +26,7 @@ const orderSchema = mongoose.Schema(
         "Processing",
         "Shipping",
         "Cancelled",
+        "Returned",
         "Failed",
         "Delivered",
       ],

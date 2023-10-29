@@ -14,7 +14,7 @@ const listTwoJoinService = async (
     let data;
     if (searchKeyword !== "0") {
       data = await DataModel.aggregate([
-        // { $match: { $expr: { $ne: ["$events", []] } } },
+        { $sort: { createdAt: -1 } },
         joinStage1,
         joinStage2,
         { $match: { $or: searchArray } },
@@ -27,7 +27,7 @@ const listTwoJoinService = async (
       ]);
     } else {
       data = await DataModel.aggregate([
-        { $match: { $expr: { $ne: ["$events", []] } } },
+        { $sort: { createdAt: -1 } },
         joinStage1,
         joinStage2,
         {
