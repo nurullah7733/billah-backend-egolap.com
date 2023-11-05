@@ -9,6 +9,16 @@ var settingsSchema = mongoose.Schema(
     bestOfElectronics: { type: Array },
     otherCost: { type: Number, default: 0 },
     shippingCost: { type: Number, default: 0 },
+    socialLink: {
+      facebook: String,
+      twitter: String,
+      instagram: String,
+      youtube: String,
+      whatsapp: String,
+      wechat: String,
+      tiktok: String,
+      linkedin: String,
+    },
   },
   { versionKey: false, timestamps: true }
 );

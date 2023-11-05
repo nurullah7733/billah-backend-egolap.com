@@ -1,7 +1,9 @@
 const SSLCommerzPayment = require("sslcommerz-lts");
+const mongoose = require("mongoose");
 const uniqid = require("uniqid");
 const globals = require("node-global-storage"); // Commonjs
 const orderModel = require("../../models/order/orderModel");
+const productModel = require("../../models/product/productModel");
 
 const store_id = process.env.SSLCOMMERCE_STORE_ID;
 const store_passwd = process.env.SSLCOMMERCE_STORE_PASSWORD;
@@ -72,10 +74,13 @@ exports.initPayment = async (req, res) => {
 
 // payment successed
 exports.successPaymnet = async (req, res) => {
+  const session = await mongoose.startSession();
   let reqBody = req.body;
   let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
+  // console.log(ordersAllInfo, "ordersAllInfo");
 
   try {
+    await session.startTransaction();
     await orderModel.updateOne(
       { tran_id: reqBody.tran_id },
       {
@@ -83,7 +88,7 @@ exports.successPaymnet = async (req, res) => {
         paymentStatus: "success",
         allProducts: ordersAllInfo?.allProducts,
         "paymentIntent.paymentId": reqBody.tran_id,
-        "paymentIntent.paymentMethod": "",
+        "paymentIntent.paymentMethod": reqBody.card_issuer,
         "paymentIntent.amount": ordersAllInfo?.grandTotal,
         voucherDiscount: ordersAllInfo?.voucherDiscount,
         subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
@@ -101,10 +106,30 @@ exports.successPaymnet = async (req, res) => {
           zipCode: ordersAllInfo?.shippingAddress?.zipCode,
           address: ordersAllInfo?.shippingAddress?.address,
         },
-      }
+      },
+      { session }
     );
+
+    for (const el of ordersAllInfo?.allProducts) {
+      await productModel.updateOne(
+        { _id: el._id },
+        {
+          $inc: {
+            quantity: -Number(el?.customerChoiceProductQuantity),
+            sold: Number(el?.customerChoiceProductQuantity),
+          },
+        },
+        { session }
+      );
+    }
+
+    await session.commitTransaction();
+    session.endSession();
+
     return res.redirect("http://localhost:3000/payment/success");
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     return res.status(400).json({ status: "fail", data: error.toString() });
   }
 };

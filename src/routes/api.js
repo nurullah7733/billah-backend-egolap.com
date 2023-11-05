@@ -81,6 +81,9 @@ const {
   getAllWebSetting,
 } = require("../controllers/settings/updateShippingAndOtherCostController");
 const {
+  updateSocialLink,
+} = require("../controllers/settings/updateSocialLinkController");
+const {
   initPayment,
   successPaymnet,
   cancelPaymnet,
@@ -687,6 +690,13 @@ router.post(
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   updateShippingAndOtherCost
+);
+
+router.post(
+  "/udpate-social-link/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  updateSocialLink
 );
 router.get("/get-all-web-settings", getAllWebSetting);
 

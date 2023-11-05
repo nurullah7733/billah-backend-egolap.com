@@ -3,7 +3,7 @@ let ProductsModel = require("../../models/product/productModel");
 const updateServiceOrderChangeStatus = async (Request, DataModel) => {
   let id = Request.params.id || Request.body.id;
   let orderStatus = Request.body.orderStatus;
-  console.log(Request.body);
+
   try {
     let allData;
     let checkAllreadyCanceled = await DataModel.find({ _id: id });
@@ -12,17 +12,15 @@ const updateServiceOrderChangeStatus = async (Request, DataModel) => {
       (checkAllreadyCanceled[0].orderStatus !== "Cancelled" &&
         orderStatus == "Cancelled") ||
       (checkAllreadyCanceled[0].orderStatus !== "Returned" &&
-        orderStatus == "Returned") ||
-      (checkAllreadyCanceled[0].orderStatus !== "Failed" &&
-        orderStatus == "Failed")
+        orderStatus == "Returned")
     ) {
       checkAllreadyCanceled[0].allProducts.map(async (prod) => {
         allData = await ProductsModel.findOneAndUpdate(
           { _id: prod._id },
           {
             $inc: {
-              quantity: Number(prod.quantity),
-              sold: -Number(prod.quantity),
+              quantity: Number(prod.customerChoiceProductQuantity),
+              sold: -Number(prod.customerChoiceProductQuantity),
             },
           }
         );
