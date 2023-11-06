@@ -12,7 +12,9 @@ const updateServiceOrderChangeStatus = async (Request, DataModel) => {
       (checkAllreadyCanceled[0].orderStatus !== "Cancelled" &&
         orderStatus == "Cancelled") ||
       (checkAllreadyCanceled[0].orderStatus !== "Returned" &&
-        orderStatus == "Returned")
+        orderStatus == "Returned") ||
+      (checkAllreadyCanceled[0].orderStatus !== "Failed" &&
+        orderStatus == "Failed")
     ) {
       checkAllreadyCanceled[0].allProducts.map(async (prod) => {
         allData = await ProductsModel.findOneAndUpdate(

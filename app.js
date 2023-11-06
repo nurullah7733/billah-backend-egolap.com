@@ -18,7 +18,7 @@ const mongoose = require("mongoose");
 // Security Middleware Implement
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "http://localhost:3001"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
@@ -32,6 +32,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
+
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());

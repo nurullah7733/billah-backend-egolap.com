@@ -42,6 +42,12 @@ const {
   getReturnedOrderForUser,
 } = require("../controllers/order/orderController");
 const {
+  addProductsPrivacyPolicy,
+  updateProductsPrivacyPolicy,
+  listProductsPrivacyPolicy,
+  deleteProductsPrivacyPolicy,
+} = require("../controllers/privacyPolicy/productsPrivacyPolicyController");
+const {
   createProduct,
   listProduct,
   dropdownListProduct,
@@ -699,5 +705,28 @@ router.post(
   updateSocialLink
 );
 router.get("/get-all-web-settings", getAllWebSetting);
+
+// --------------------------------------- Privacy Policy --------------------------------------
+
+router.get("/list-products-privacy-policy", listProductsPrivacyPolicy);
+router.post(
+  "/add-products-privacy-policy",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  addProductsPrivacyPolicy
+);
+
+// router.post(
+//   "/update-products-privacy-policy/:id",
+//   verifyAuthMiddleware,
+//   verifyAdminMiddleware,
+//   updateProductsPrivacyPolicy
+// );
+router.get(
+  "/delete-products-privacy-policy/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteProductsPrivacyPolicy
+);
 
 module.exports = router;
