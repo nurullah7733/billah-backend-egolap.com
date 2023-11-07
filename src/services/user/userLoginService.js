@@ -18,7 +18,8 @@ const userLoginService = async (Request, Response, DataModel) => {
 
         Response.cookie("token", token, {
           domain: "https://e-golap.vercel.app/",
-          maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
+          // maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
+          maxAge: 2592000, // 1 month
           httpOnly: true,
           sameSite: "none",
           path: "/",
