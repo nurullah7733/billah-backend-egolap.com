@@ -64,7 +64,7 @@ const {
 const {
   pushProvisionalBazar,
   deleteProvisionalBazar,
-} = require("../controllers/settings/ProvisionalBazarController");
+} = require("../controllers/settings/provisionalBazarController");
 const {
   pushBestOfElectronics,
   deleteBestOfElectronics,
