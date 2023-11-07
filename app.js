@@ -18,17 +18,22 @@ const mongoose = require("mongoose");
 // Security Middleware Implement
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [
+      "https://e-golap-admin.vercel.app",
+      "http://localhost:3000",
+      "http://localhost:3001",
+    ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
+    optionsSuccessStatus: 204,
   })
 );
 app.use(function (req, res, next) {
   res.header("Content-Type", "application/json;charset=UTF-8");
   res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Origin: *");
   res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With"
   );
   next();
 });
