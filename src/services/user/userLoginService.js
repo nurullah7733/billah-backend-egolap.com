@@ -20,7 +20,7 @@ const userLoginService = async (Request, Response, DataModel) => {
           domain: "https://e-golap.vercel.app/",
           // maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
           maxAge: 2592000, // 1 month
-          httpOnly: true,
+          httpOnly: false,
           sameSite: "none",
           path: "/",
           secure: process.env.NODE_ENV === "production",
