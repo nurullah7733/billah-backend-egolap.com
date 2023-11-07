@@ -28,6 +28,7 @@ app.use(
     credentials: true,
   })
 );
+app.set("trust proxy", 1);
 app.use(function (req, res, next) {
   res.header("Content-Type", "application/json;charset=UTF-8");
   res.header("Access-Control-Allow-Credentials", true);
