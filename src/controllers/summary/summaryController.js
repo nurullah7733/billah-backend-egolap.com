@@ -1,5 +1,5 @@
 const OrderSummary = require("../../services/summary/orderSummary");
-const SalesSummary = require("../../services/summary/SaleSummary");
+const SalesSummary = require("../../services/summary/saleSummary");
 const CancelSummary = require("../../services/summary/cancelSummary");
 const RunningOrderSummary = require("../../services/summary/runningOrderSummary");
 const SalesSummaryReportService = require("../../services/report/salesSummaryReportService");
