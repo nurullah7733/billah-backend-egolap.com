@@ -23,7 +23,8 @@ const userLoginService = async (Request, Response, DataModel) => {
           httpOnly: true,
           sameSite: "none",
           path: "/",
-          secure: process.env.NODE_ENV === "production",
+          // secure: process.env.NODE_ENV === "production",
+          secure: true,
         });
 
         return {
