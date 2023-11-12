@@ -21,13 +21,11 @@ app.use(
     origin: [
       "https://e-golap-admin.vercel.app",
       "https://e-golap.vercel.app",
+      "http://localhost:3000",
+      "http://localhost:3001",
       "*",
     ],
-    // origin: [
-    //   "http://localhost:3000",
-    //   "http://localhost:3001",
-    //   "*",
-    // ],
+
     preflightContinue: false,
     optionsSuccessStatus: 204,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
