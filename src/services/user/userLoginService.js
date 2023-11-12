@@ -17,14 +17,13 @@ const userLoginService = async (Request, Response, DataModel) => {
         }
 
         Response.cookie("token", token, {
-          domain: ".vercel.app/",
+          // domain: ".vercel.app/",
           // maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
           maxAge: 2592000, // 1 month
-          httpOnly: true,
+          httpOnly: process.env.NODE_ENV === "production",
           sameSite: "none",
           path: "/",
-          // secure: process.env.NODE_ENV === "production",
-          secure: true,
+          secure: process.env.NODE_ENV === "production",
         });
 
         return {

@@ -20,7 +20,7 @@ app.use(
   cors({
     origin: [
       "https://e-golap-admin.vercel.app",
-      ".vercel.app",
+      "https://e-golap.vercel.app",
       "http://localhost:3000",
       "http://localhost:3001",
     ],
@@ -39,7 +39,10 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
+app.use((req, res, next) => {
+  console.log("Incoming request headers:", req.headers);
+  next();
+});
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());
