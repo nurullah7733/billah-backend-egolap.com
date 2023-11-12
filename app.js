@@ -23,14 +23,11 @@ app.use(
       "https://e-golap.vercel.app",
       "http://localhost:3000",
       "http://localhost:3001",
-      "*",
     ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
 );
-// app.set("trust proxy", 1);
-
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
   res.header("Access-Control-Allow-Origin", req.headers.origin);
