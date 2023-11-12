@@ -21,11 +21,11 @@ const userLoginService = async (Request, Response, DataModel) => {
           // maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
           maxAge: 2592000, // 1 month
           httpOnly: false,
-          sameSite: "Lax",
+          sameSite: "None",
           path: "/",
           secure: process.env.NODE_ENV === "production",
         });
-        console.log(process.env.NODE_ENV, "pprocess");
+        console.log(process.env.NODE_ENV === "production", "pprocess");
 
         return {
           status: "success",
