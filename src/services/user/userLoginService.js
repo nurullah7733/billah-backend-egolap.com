@@ -23,7 +23,7 @@ const userLoginService = async (Request, Response, DataModel) => {
           httpOnly: process.env.NODE_ENV === "production",
           sameSite: "none",
           path: "/",
-          // secure: process.env.NODE_ENV === "production",
+          secure: process.env.NODE_ENV === "production",
         });
         console.log(process.env.NODE_ENV === "production", "pprocess");
 
