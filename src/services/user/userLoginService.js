@@ -40,6 +40,7 @@ const userLoginService = async (Request, Response, DataModel) => {
             address: data[0].address,
             couponCodeUses: data[0].couponCodeUses,
           },
+          token,
         };
       } else {
         return {
