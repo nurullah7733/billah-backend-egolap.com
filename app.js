@@ -25,15 +25,12 @@ app.use(
       "http://localhost:3001",
       "*",
     ],
-
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
 );
 // app.set("trust proxy", 1);
-app.enable("trust proxy");
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
   res.header("Access-Control-Allow-Origin", req.headers.origin);
