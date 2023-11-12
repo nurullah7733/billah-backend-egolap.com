@@ -20,8 +20,8 @@ const userLoginService = async (Request, Response, DataModel) => {
           // domain: ".vercel.app/",
           // maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
           maxAge: 2592000, // 1 month
-          httpOnly: process.env.NODE_ENV === "production",
-          sameSite: "none",
+          httpOnly: false,
+          sameSite: "Lax",
           path: "/",
           secure: process.env.NODE_ENV === "production",
         });

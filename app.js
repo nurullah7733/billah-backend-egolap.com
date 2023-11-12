@@ -23,7 +23,10 @@ app.use(
       "https://e-golap.vercel.app",
       "http://localhost:3000",
       "http://localhost:3001",
+      "*",
     ],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
@@ -31,19 +34,15 @@ app.use(
 // app.set("trust proxy", 1);
 // app.enable("trust proxy");
 app.use(function (req, res, next) {
-  res.header("Content-Type", "application/json;charset=UTF-8");
   res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
 });
-app.use((req, res, next) => {
-  console.log("Incoming request headers:", req.headers);
-  next();
-});
+
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());
