@@ -32,7 +32,7 @@ app.use(
   })
 );
 // app.set("trust proxy", 1);
-// app.enable("trust proxy");
+app.enable("trust proxy");
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
   res.header("Access-Control-Allow-Origin", req.headers.origin);
