@@ -20,7 +20,7 @@ app.use(
   cors({
     origin: [
       "https://e-golap-admin.vercel.app",
-      "https://e-golap.vercel.app",
+      ".vercel.app",
       "http://localhost:3000",
       "http://localhost:3001",
     ],
