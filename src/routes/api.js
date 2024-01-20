@@ -149,6 +149,8 @@ const { uploadPhoto } = require("../middlewares/uploadImgMiddleware");
 const verifyAdminMiddleware = require("../middlewares/verifyAdminMiddleware");
 const verifyAuthMiddleware = require("../middlewares/verifyAuthMiddleware");
 const deliveredOrderServices = require("../services/order/deliveredOrderServices");
+const BkashMiddleware = require("../middlewares/bkashMiddleware");
+const { createPayment } = require("../controllers/bkash/bkashController");
 
 // registration
 router.post("/registration", registration);
@@ -548,7 +550,16 @@ router.post(
 );
 
 // ----------------------------------------------- Payment ------------------------------------
-router.post("/payment", initPayment);
+// sslcommerz
+// router.post("/payment", initPayment);
+// router.post("/payment-success", successPaymnet);
+// router.post("/payment-cancel", cancelPaymnet);
+// router.post("/payment-fail", failPaymnet);
+// router.post("/payment-ipn", ipnPaymnet);
+
+// bkash
+router.post("/payment", BkashMiddleware, createPayment);
+router.post("/bkash-callback", BkashMiddleware);
 router.post("/payment-success", successPaymnet);
 router.post("/payment-cancel", cancelPaymnet);
 router.post("/payment-fail", failPaymnet);

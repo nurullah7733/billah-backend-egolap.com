@@ -13,8 +13,7 @@ const is_live = false; //true for live, false for sandbox
 exports.initPayment = async (req, res) => {
   let tran_id = uniqid.process();
   let reqBody = req.body;
-
-  globals.set("orderAllInformation", JSON.stringify(reqBody));
+  globals.unset("orderAllInformation");
 
   const data = {
     total_amount: parseInt(reqBody.grandTotal),
@@ -49,6 +48,7 @@ exports.initPayment = async (req, res) => {
     ship_country: "Bangladesh",
   };
   try {
+    globals.set("orderAllInformation", JSON.stringify(reqBody));
     const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
     let result = await sslcz.init(data);
 
