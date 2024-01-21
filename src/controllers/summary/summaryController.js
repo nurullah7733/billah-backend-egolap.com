@@ -7,9 +7,14 @@ const CancelledSummaryReportService = require("../../services/report/cancelledSu
 const AllOrderSummaryReport = require("../../services/report/allOrderSummaryReportService");
 const orderModel = require("../../models/order/orderModel");
 const RunningOrderSummaryReport = require("../../services/report/runningOrderSummaryReportService");
+const RefundSummary = require("../../services/summary/refundSurmmary");
 
 exports.salesSummary = async (req, res) => {
   let result = await SalesSummary(req);
+  return res.status(200).json(result);
+};
+exports.refundSummary = async (req, res) => {
+  let result = await RefundSummary(req);
   return res.status(200).json(result);
 };
 exports.salesSummaryReport = async (req, res) => {

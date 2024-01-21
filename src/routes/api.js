@@ -113,6 +113,7 @@ const {
   cancelSummaryReport,
   allOrderSummaryReport,
   runningOrderSummaryReport,
+  refundSummary,
 } = require("../controllers/summary/summaryController");
 // --------summary-----------------
 
@@ -562,7 +563,7 @@ router.post(
 // router.post("/payment-ipn", ipnPaymnet);
 
 // bkash
-router.post("/payment", BkashMiddleware, createPayment);
+router.post("/bkash-payment", BkashMiddleware, createPayment);
 router.get("/bkash-callback", BkashCallBack);
 router.get("/refund:trxID", BkashMiddleware, refundPayment);
 
@@ -573,6 +574,12 @@ router.get(
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   orderSummary
+);
+router.get(
+  "/refund-summary",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  refundSummary
 );
 // All Order Summary Report
 router.post(

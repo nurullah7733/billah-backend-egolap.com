@@ -72,10 +72,10 @@ exports.BkashCallBack = async (req, res) => {
         },
       });
 
-      return res.status(200).json({ status: "success", paymentStatus: status });
+      return res.redirect(
+        `${process.env.FONTEND_DOMAIN}/payment/fail?status=${status}`
+      );
     } else if (status === "success") {
-      let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
-
       let data = await axios.post(
         process.env.bkash_execute_payment_url,
         { paymentID: paymentID },
@@ -88,19 +88,23 @@ exports.BkashCallBack = async (req, res) => {
         }
       );
 
-      if (data?.statusCode === "0000" && data?.statusMessage === "Successful") {
+      if (
+        data?.data?.statusCode === "0000" &&
+        data?.data?.statusMessage === "Successful"
+      ) {
+        let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
         await orderModel.create(
           {
             userId: ordersAllInfo?.userId,
-            paymentStatus: data?.transactionStatus,
-            tran_id: data?.trxID,
-            paymentExecuteTime: data?.paymentExecuteTime,
-            merchantInvoiceNumber: data?.merchantInvoiceNumber,
+            paymentStatus: data?.data?.transactionStatus,
+            tran_id: data?.data?.trxID,
+            paymentExecuteTime: data?.data?.paymentExecuteTime,
+            merchantInvoiceNumber: data?.data?.merchantInvoiceNumber,
             orderStatus: "Not Processed",
             allProducts: ordersAllInfo?.allProducts,
             "paymentIntent.paymentId": paymentID,
             "paymentIntent.paymentMethod": "bkash",
-            "paymentIntent.amount": data?.amount,
+            "paymentIntent.amount": data?.data?.amount,
             voucherDiscount: ordersAllInfo?.voucherDiscount,
             subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
             shippingCost: ordersAllInfo?.shippingCost,
@@ -138,13 +142,12 @@ exports.BkashCallBack = async (req, res) => {
         await session.commitTransaction();
         session.endSession();
 
-        return res.status(200).json({
-          status: "success",
-          statusCode: data?.statusCode,
-          transactionStatus: data?.transactionStatus,
-          paymentStatus: status,
-        });
+        return res.redirect(
+          `${process.env.FONTEND_DOMAIN}/payment/success?status=${status}`
+        );
       } else {
+        await session.abortTransaction();
+        session.endSession();
         return res.status(200).json({
           status: "fail",
           statusCode: data?.statusCode,
@@ -157,6 +160,8 @@ exports.BkashCallBack = async (req, res) => {
       });
     }
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     return res.status(400).json({ status: "fail", data: error.toString() });
   }
 };
@@ -189,7 +194,12 @@ exports.refundPayment = async (req, res) => {
     if (data?.statusCode === "0000") {
       await orderModel.updateOne(
         { tran_id: trxID },
-        { refundTrxID: data?.refundTrxID, refundAmount: data?.amount }
+        {
+          refundTrxID: data?.refundTrxID,
+          refundAmount: data?.amount,
+          refundReason: reqBody.reason,
+          refund: "Success",
+        }
       );
 
       return res.status(200).json({ status: "success", data: data.data });
