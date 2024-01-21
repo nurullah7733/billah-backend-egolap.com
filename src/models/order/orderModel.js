@@ -4,6 +4,10 @@ const orderSchema = mongoose.Schema(
   {
     userId: mongoose.Schema.Types.ObjectId,
     tran_id: String,
+    refundTrxID: String,
+    refundAmount: String,
+    merchantInvoiceNumber: String,
+    paymentExecuteTime: String,
     paymentStatus: String,
     allProducts: [],
     paymentIntent: {
