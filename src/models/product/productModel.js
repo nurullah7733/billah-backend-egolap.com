@@ -43,7 +43,12 @@ var productSchema = mongoose.Schema(
     size: [],
     weight: { type: String },
     ratings: [
-      { star: Number, comment: String, author: mongoose.Schema.Types.ObjectId },
+      {
+        star: Number,
+        comment: String,
+        author: mongoose.Schema.Types.ObjectId,
+        createdAt: { type: String, default: new Date(0) },
+      },
     ],
     totalRating: { type: Number, default: 0 },
     categoryId: {

@@ -58,7 +58,6 @@ const {
   ratingsProduct,
   deleteProductImgAndPullImg,
   bestSalesProductForGlobal,
-  relatedProduct,
   relatedProducts,
 } = require("../controllers/products/productController");
 const {

@@ -289,86 +289,91 @@ exports.ratingsProduct = async (req, res) => {
   let { star, comment } = req.body;
   let userId = req.headers.userId;
 
-  let objectId = mongoose.Types.ObjectId;
-  let productId = req.params.id;
-  let queryObject = {};
-  queryObject._id = objectId(productId);
-
+  let checkValidObjectId = mongoose.Types.ObjectId.isValid(req.params.id);
   try {
-    let product = await ProductModel.aggregate([
-      { $match: queryObject },
-      {
-        $project: {
-          _id: 0,
-          hasRated: {
-            $in: [objectId(userId), "$ratings.author"],
+    if (checkValidObjectId) {
+      let objectId = mongoose.Types.ObjectId;
+      let productId = req.params.id;
+      let queryObject = {};
+      queryObject._id = objectId(productId);
+
+      let product = await ProductModel.aggregate([
+        { $match: queryObject },
+        {
+          $project: {
+            _id: 0,
+            hasRated: {
+              $in: [objectId(userId), "$ratings.author"],
+            },
           },
         },
-      },
-    ]);
-    let pushItem = { star: star, author: userId, comment: comment };
-    let updateRating;
-    if (product[0].hasRated) {
-      updateRating = await ProductModel.findOneAndUpdate(
-        {
-          _id: productId,
-          "ratings.author": userId,
-        },
-        {
-          $set: {
-            "ratings.$.star": star,
-            "ratings.$.author": userId,
-            "ratings.$.comment": comment,
+      ]);
+      let pushItem = { star: star, author: userId, comment: comment };
+      let updateRating;
+      if (product[0].hasRated) {
+        updateRating = await ProductModel.findOneAndUpdate(
+          {
+            _id: productId,
+            "ratings.author": userId,
           },
-        }
+          {
+            $set: {
+              "ratings.$.star": star,
+              "ratings.$.author": userId,
+              "ratings.$.comment": comment,
+            },
+          }
+        );
+      } else {
+        updateRating = await ProductModel.updateOne(
+          {
+            _id: productId,
+          },
+          {
+            $push: {
+              ratings: pushItem,
+            },
+          }
+        );
+      }
+
+      let productAllRating = await ProductModel.aggregate([
+        { $match: queryObject },
+        {
+          $project: {
+            _id: 0,
+            name: 0,
+            slug: 0,
+            description: 0,
+            price: 0,
+            quantity: 0,
+            sold: 0,
+            img: 0,
+            color: 0,
+            categoryId: 0,
+            brandId: 0,
+            createdAt: 0,
+            updatedAt: 0,
+          },
+        },
+      ]);
+      let totalRating = productAllRating[0].ratings.length;
+      let totalRatingSum = productAllRating[0].ratings.reduce(
+        (prev, curr) => prev + curr.star,
+        0
       );
+
+      totalRating = Math.floor(totalRatingSum / totalRating);
+
+      await ProductModel.findOneAndUpdate(
+        { _id: productId },
+        { totalRating: totalRating }
+      );
+
+      return res.status(200).json({ status: "success", data: updateRating });
     } else {
-      updateRating = await ProductModel.updateOne(
-        {
-          _id: productId,
-        },
-        {
-          $push: {
-            ratings: pushItem,
-          },
-        }
-      );
+      return res.status(400).json({ status: "fail", data: "ObjectId invalid" });
     }
-
-    let productAllRating = await ProductModel.aggregate([
-      { $match: queryObject },
-      {
-        $project: {
-          _id: 0,
-          name: 0,
-          slug: 0,
-          description: 0,
-          price: 0,
-          quantity: 0,
-          sold: 0,
-          img: 0,
-          color: 0,
-          categoryId: 0,
-          brandId: 0,
-          createdAt: 0,
-          updatedAt: 0,
-        },
-      },
-    ]);
-    let totalRating = productAllRating[0].ratings.length;
-    let totalRatingSum = productAllRating[0].ratings.reduce(
-      (prev, curr) => prev + curr.star,
-      0
-    );
-
-    totalRating = Math.floor(totalRatingSum / totalRating);
-
-    await ProductModel.findOneAndUpdate(
-      { _id: productId },
-      { totalRating: totalRating }
-    );
-
-    return res.status(200).json({ status: "success", data: updateRating });
   } catch (error) {
     return res.status(400).json({ status: "fail", data: error.toString() });
   }
