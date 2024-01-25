@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
-
+const generateFakeProfilePic = require("../../utils/fakeProfilePic/fakeProfilePic");
 const createUserService = async (Request, DataModel) => {
   let reqBody = Request.body;
   let password = Request.body.password;
-
+  Request.body.photo = generateFakeProfilePic();
   try {
     const salt = await bcrypt.genSaltSync(10);
     password = await bcrypt.hash(password, salt);
