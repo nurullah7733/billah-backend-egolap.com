@@ -167,7 +167,7 @@ exports.BkashCallBack = async (req, res) => {
 };
 
 exports.refundPayment = async (req, res) => {
-  let { trxID } = req.query;
+  let { trxID } = req.params;
   let reqBody = req.body;
 
   try {
@@ -191,12 +191,13 @@ exports.refundPayment = async (req, res) => {
       }
     );
 
-    if (data?.statusCode === "0000") {
+    if (data?.data?.statusCode === "0000") {
       await orderModel.updateOne(
         { tran_id: trxID },
         {
-          refundTrxID: data?.refundTrxID,
-          refundAmount: data?.amount,
+          refundTrxID: data?.data?.refundTrxID,
+          refundAmount: Number(data?.data?.amount),
+          refundExecuteTime: data?.data?.completedTime,
           refundReason: reqBody.reason,
           refund: "Success",
         }

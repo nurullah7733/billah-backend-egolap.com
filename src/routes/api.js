@@ -565,7 +565,7 @@ router.post(
 // bkash
 router.post("/bkash-payment", BkashMiddleware, createPayment);
 router.get("/bkash-callback", BkashCallBack);
-router.get("/refund/:trxID", BkashMiddleware, refundPayment);
+router.post("/refund/:trxID", BkashMiddleware, refundPayment);
 
 // ---------------------Summary--------------------------------
 // Order Summary
