@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const globals = require("node-global-storage"); // Commonjs
 const orderModel = require("../../models/order/orderModel");
 const productModel = require("../../models/product/productModel");
+const userModel = require("../../models/users/userModel");
 
 exports.createPayment = async (req, res) => {
   let reqBody = req.body;
@@ -41,13 +42,15 @@ exports.createPayment = async (req, res) => {
 exports.BkashCallBack = async (req, res) => {
   let { paymentID, status } = req.query;
   const session = await mongoose.startSession();
+
   try {
     await session.startTransaction();
     if (status === "cancel" || status === "failure") {
       let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
 
-      await orderModel.create({
+      const newOrder = new orderModel({
         userId: ordersAllInfo?.userId,
+        orderId: uniqid.process(),
         paymentStatus: status,
         orderStatus: "Cancelled",
         allProducts: ordersAllInfo?.allProducts,
@@ -72,6 +75,7 @@ exports.BkashCallBack = async (req, res) => {
         },
       });
 
+      await newOrder.save();
       return res.redirect(
         `${process.env.FONTEND_DOMAIN}/payment/fail?status=${status}`
       );
@@ -93,38 +97,39 @@ exports.BkashCallBack = async (req, res) => {
         data?.data?.statusMessage === "Successful"
       ) {
         let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
-        await orderModel.create(
-          {
-            userId: ordersAllInfo?.userId,
-            paymentStatus: data?.data?.transactionStatus,
-            tran_id: data?.data?.trxID,
-            paymentExecuteTime: data?.data?.paymentExecuteTime,
-            merchantInvoiceNumber: data?.data?.merchantInvoiceNumber,
-            orderStatus: "Not Processed",
-            allProducts: ordersAllInfo?.allProducts,
-            "paymentIntent.paymentId": paymentID,
-            "paymentIntent.paymentMethod": "bkash",
-            "paymentIntent.amount": data?.data?.amount,
-            voucherDiscount: ordersAllInfo?.voucherDiscount,
-            subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
-            shippingCost: ordersAllInfo?.shippingCost,
-            grandTotal: ordersAllInfo?.grandTotal,
 
-            shippingAddress: {
-              name: ordersAllInfo?.shippingAddress?.name,
-              email: ordersAllInfo?.shippingAddress?.email,
-              mobile: ordersAllInfo?.shippingAddress?.mobile,
-              alternativeMobile:
-                ordersAllInfo?.shippingAddress?.alternativeMobile,
-              thana: ordersAllInfo?.shippingAddress?.thana,
-              city: ordersAllInfo?.shippingAddress?.city,
-              country: ordersAllInfo?.shippingAddress?.country,
-              zipCode: ordersAllInfo?.shippingAddress?.zipCode,
-              address: ordersAllInfo?.shippingAddress?.address,
-            },
+        const newOrder = new orderModel({
+          userId: ordersAllInfo?.userId,
+          orderId: uniqid.process(),
+          paymentStatus: data?.data?.transactionStatus,
+          tran_id: data?.data?.trxID,
+          paymentExecuteTime: data?.data?.paymentExecuteTime,
+          merchantInvoiceNumber: data?.data?.merchantInvoiceNumber,
+          orderStatus: "Not Processed",
+          allProducts: ordersAllInfo?.allProducts,
+          "paymentIntent.paymentId": paymentID,
+          "paymentIntent.paymentMethod": "bkash",
+          "paymentIntent.amount": data?.data?.amount,
+          voucherDiscount: ordersAllInfo?.voucherDiscount,
+          subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
+          shippingCost: ordersAllInfo?.shippingCost,
+          grandTotal: ordersAllInfo?.grandTotal,
+
+          shippingAddress: {
+            name: ordersAllInfo?.shippingAddress?.name,
+            email: ordersAllInfo?.shippingAddress?.email,
+            mobile: ordersAllInfo?.shippingAddress?.mobile,
+            alternativeMobile:
+              ordersAllInfo?.shippingAddress?.alternativeMobile,
+            thana: ordersAllInfo?.shippingAddress?.thana,
+            city: ordersAllInfo?.shippingAddress?.city,
+            country: ordersAllInfo?.shippingAddress?.country,
+            zipCode: ordersAllInfo?.shippingAddress?.zipCode,
+            address: ordersAllInfo?.shippingAddress?.address,
           },
-          { session }
-        );
+        });
+
+        await newOrder.save({ session });
 
         for (const el of ordersAllInfo?.allProducts) {
           await productModel.updateOne(
@@ -139,6 +144,14 @@ exports.BkashCallBack = async (req, res) => {
           );
         }
 
+        await userModel.updateOne(
+          { _id: ordersAllInfo?.userId },
+          {
+            cart: [],
+          },
+          { session }
+        );
+
         await session.commitTransaction();
         session.endSession();
 
@@ -146,8 +159,6 @@ exports.BkashCallBack = async (req, res) => {
           `${process.env.FONTEND_DOMAIN}/payment/success?status=${status}`
         );
       } else {
-        await session.abortTransaction();
-        session.endSession();
         return res.status(200).json({
           status: "fail",
           statusCode: data?.statusCode,

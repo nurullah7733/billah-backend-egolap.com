@@ -4,6 +4,7 @@ const orderSchema = mongoose.Schema(
   {
     userId: mongoose.Schema.Types.ObjectId,
     tran_id: String,
+    orderId: String,
     refundTrxID: String,
     refundAmount: Number,
     refundReason: String,

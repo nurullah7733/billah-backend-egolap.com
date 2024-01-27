@@ -12,11 +12,11 @@ const returnedOrderServices = require("../../services/order/returnedOrderService
 
 exports.createOrder = async (req, res) => {
   let reqBody = req.body;
-  let tran_id = uniqid.process();
-  reqBody.tran_id = tran_id;
+  let orderId = uniqid.process();
+  reqBody.orderId = orderId;
   reqBody.userId = req.headers.userId;
   reqBody["paymentIntent"] = {
-    paymentId: tran_id,
+    paymentId: "",
     amount: reqBody.grandTotal,
   };
 
