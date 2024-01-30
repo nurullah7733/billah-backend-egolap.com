@@ -155,6 +155,43 @@ const {
   BkashCallBack,
   refundPayment,
 } = require("../controllers/bkash/bkashController");
+const {
+  addFaq,
+  listFaq,
+  deleteFaqQuestionsOnly,
+  deleteFaq,
+} = require("../controllers/privacyPolicy/faqController");
+const {
+  addAboutUs,
+  listAboutUs,
+  deleteAboutUs,
+} = require("../controllers/privacyPolicy/aboutUsController");
+const {
+  addTermOfUse,
+  listTermOfUse,
+  deleteTermOfUse,
+} = require("../controllers/privacyPolicy/termOfUseController");
+const {
+  pushTermOfUse,
+  pushTermOfUseImg,
+  deleteTermOfUseImg,
+} = require("../controllers/settings/privacyPolicy/termOfUseController");
+const {
+  pushAboutUsImg,
+  deleteAboutUsImg,
+} = require("../controllers/settings/privacyPolicy/aboutUsController");
+const {
+  pushFaqImg,
+  deleteFaqImg,
+} = require("../controllers/settings/privacyPolicy/faqController");
+const {
+  pushPrivacyPolicyImg,
+  deletePrivacyPolicyImg,
+} = require("../controllers/settings/privacyPolicy/privacyPolicyController");
+const {
+  pushDealerBrandLogoImg,
+  deleteDealerBrandLogoImg,
+} = require("../controllers/settings/privacyPolicy/dealerBrandLogo");
 
 // registration
 router.post("/registration", registration);
@@ -633,6 +670,8 @@ router.post(
 );
 
 //-------------------------- Settings -----------------------------------------------
+//-------------------------- logo -----------------------------------------------
+
 router.post(
   "/upload-logo",
   verifyAuthMiddleware,
@@ -666,6 +705,76 @@ router.post(
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   deleteMainSlider
+);
+// -------- Terms of use -------------------------------------------
+router.post(
+  "/add-term-of-use/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushTermOfUseImg
+);
+router.post(
+  "/delete-term-of-use/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteTermOfUseImg
+);
+// -------- About us -------------------------------------------
+router.post(
+  "/add-about-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushAboutUsImg
+);
+router.post(
+  "/delete-about-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteAboutUsImg
+);
+// -------- faq -------------------------------------------
+router.post(
+  "/add-faq/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushFaqImg
+);
+router.post(
+  "/delete-faq/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteFaqImg
+);
+// -------- Privacy Policy -------------------------------------------
+router.post(
+  "/add-privacy-policy/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushPrivacyPolicyImg
+);
+router.post(
+  "/delete-privacy-policy/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deletePrivacyPolicyImg
+);
+// -------- Dealer Brand Logo -------------------------------------------
+router.post(
+  "/add-dealer-brand-logo/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushDealerBrandLogoImg
+);
+router.post(
+  "/delete-dealer-brand-logo/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteDealerBrandLogoImg
 );
 // -------- BestSales Banner -------------------------------------------
 router.post(
@@ -709,13 +818,15 @@ router.post(
   verifyAdminMiddleware,
   deleteBestOfElectronics
 );
+
+// -------- Shipping cost -------------------------------------------
 router.post(
   "/udpate-shipping-and-other-cost/:id",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   updateShippingAndOtherCost
 );
-
+// -------- Social link -------------------------------------------
 router.post(
   "/udpate-social-link/:id",
   verifyAuthMiddleware,
@@ -726,7 +837,9 @@ router.get("/get-all-web-settings", getAllWebSetting);
 
 // --------------------------------------- Privacy Policy --------------------------------------
 
+// add products privacy policy
 router.get("/list-products-privacy-policy", listProductsPrivacyPolicy);
+
 router.post(
   "/add-products-privacy-policy",
   verifyAuthMiddleware,
@@ -734,17 +847,56 @@ router.post(
   addProductsPrivacyPolicy
 );
 
-// router.post(
-//   "/update-products-privacy-policy/:id",
-//   verifyAuthMiddleware,
-//   verifyAdminMiddleware,
-//   updateProductsPrivacyPolicy
-// );
 router.get(
   "/delete-products-privacy-policy/:id",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   deleteProductsPrivacyPolicy
+);
+
+// add faq questions
+router.post("/add-faq", verifyAuthMiddleware, verifyAdminMiddleware, addFaq);
+
+router.get("/list-faq", listFaq);
+
+router.get(
+  "/delete-faq-question/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteFaq
+);
+
+// about us privacy policy
+router.post(
+  "/add-about-us",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  addAboutUs
+);
+
+router.get("/list-about-us", listAboutUs);
+
+router.get(
+  "/delete-about-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteAboutUs
+);
+// Terms of use privacy policy
+router.post(
+  "/add-term-of-use",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  addTermOfUse
+);
+
+router.get("/list-term-of-use", listTermOfUse);
+
+router.get(
+  "/delete-term-of-use/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteTermOfUse
 );
 
 module.exports = router;

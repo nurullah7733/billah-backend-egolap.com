@@ -29,6 +29,7 @@ exports.getAllOrderForAdmin = async (req, res) => {
   let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
   let searchArray = [
     { tran_id: searchRgx },
+    { orderId: searchRgx },
     { "paymentIntent.paymentMethod": searchRgx },
     { note: searchRgx },
     { "userDetails.firstName": searchRgx },

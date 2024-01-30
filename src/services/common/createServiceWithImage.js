@@ -32,7 +32,6 @@ const createServiceWithImage = async (
 
     if (cloudinaryUploadedImgUrl.length > 0) {
       Request.body.img = cloudinaryUploadedImgUrl;
-      Request.body.logoImg = cloudinaryUploadedImgUrl;
       var infoResult = await DataModel.create(reqBody);
     }
 

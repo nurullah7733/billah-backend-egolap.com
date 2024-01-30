@@ -19,6 +19,11 @@ var settingsSchema = mongoose.Schema(
       tiktok: String,
       linkedin: String,
     },
+    termOfUse: { type: Array },
+    faqImg: { type: Array },
+    aboutUsImg: { type: Array },
+    privacyPolicyImg: { type: Array },
+    dealerBrandLogo: { type: Array },
   },
   { versionKey: false, timestamps: true }
 );

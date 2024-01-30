@@ -7,14 +7,8 @@ exports.addProductsPrivacyPolicy = async (req, res) => {
   return res.status(200).json(result);
 };
 
-// exports.updateProductsPrivacyPolicy = async (req, res) => {
-//   let result = await updateService(req, ProductsPrivacyPolicyModel);
-//   return res.status(200).json(result);
-// };
 exports.listProductsPrivacyPolicy = async (req, res) => {
-  let result = await ProductsPrivacyPolicyModel.aggregate([
-    { $sort: { createdAt: -1 } },
-  ]);
+  let result = await ProductsPrivacyPolicyModel.find({});
   return res.status(200).json({ status: "success", data: result });
 };
 
