@@ -192,6 +192,11 @@ const {
   pushDealerBrandLogoImg,
   deleteDealerBrandLogoImg,
 } = require("../controllers/settings/privacyPolicy/dealerBrandLogo");
+const {
+  addPrivacyPolicy,
+  listPrivacyPolicy,
+  deletePrivacyPolicy,
+} = require("../controllers/privacyPolicy/privacyPolicyController");
 
 // registration
 router.post("/registration", registration);
@@ -897,6 +902,22 @@ router.get(
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   deleteTermOfUse
+);
+// Privacy policy
+router.post(
+  "/add-privacy-policy",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  addPrivacyPolicy
+);
+
+router.get("/list-privacy-policy", listPrivacyPolicy);
+
+router.get(
+  "/delete-privacy-policy/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deletePrivacyPolicy
 );
 
 module.exports = router;
