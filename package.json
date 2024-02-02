@@ -4,7 +4,8 @@
   "description": "ecommerce-application",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+"start": "node index.js"
   },
   "author": "Nurullah",
   "license": "ISC",

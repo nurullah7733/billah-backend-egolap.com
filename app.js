@@ -57,11 +57,11 @@ const limiter = rateLimit({ windowMs: 15 * 60 * 100, max: 3000 });
 app.use(limiter);
 
 // MongoDB Database Connection
-// let URI = "mongodb://127.0.0.1:27017/billah-shop";
-let URI =
-  "mongodb+srv://<username>:<password>@cluster0.y610b.mongodb.net/billah-shop?retryWrites=true&w=majority";
-let option = { user: "nur", pass: "nur" };
-// let option = { user: "", pass: "" };
+let URI = "mongodb://127.0.0.1:27017/egolap";
+// let URI =
+//   "mongodb+srv://<username>:<password>@cluster0.y610b.mongodb.net/billah-shop?retryWrites=true&w=majority";
+let option = { user: "egolap", pass: "AfW5iaaxwWnjzaJ6" };
+// let option = { user: "nur", pass: "nur" };
 
 // let OPTION = {
 //   user: process.env.DATABASE_USER,
