@@ -24,6 +24,9 @@ var settingsSchema = mongoose.Schema(
     aboutUsImg: { type: Array },
     privacyPolicyImg: { type: Array },
     dealerBrandLogo: { type: Array },
+    contactUsImg: { type: Array },
+    teamImgBanner: { type: Array },
+    teamImgs: { type: Array },
   },
   { versionKey: false, timestamps: true }
 );

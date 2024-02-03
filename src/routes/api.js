@@ -197,6 +197,26 @@ const {
   listPrivacyPolicy,
   deletePrivacyPolicy,
 } = require("../controllers/privacyPolicy/privacyPolicyController");
+const {
+  addContactUs,
+  listContactUs,
+  deleteContactUs,
+} = require("../controllers/privacyPolicy/contactUsController");
+const {
+  addTeam,
+  listTeam,
+  deleteTeam,
+} = require("../controllers/privacyPolicy/teamController");
+const {
+  pushContactUsImg,
+  deleteContactUsImg,
+} = require("../controllers/settings/privacyPolicy/contactUsController");
+const {
+  pushTeamBanner,
+  deleteTeamBanner,
+  pushTeamImgs,
+  deleteTeamImgs,
+} = require("../controllers/settings/privacyPolicy/teamController");
 
 // registration
 router.post("/registration", registration);
@@ -739,6 +759,47 @@ router.post(
   verifyAdminMiddleware,
   deleteAboutUsImg
 );
+// -------- Contact us -------------------------------------------
+router.post(
+  "/add-contact-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushContactUsImg
+);
+router.post(
+  "/delete-contact-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteContactUsImg
+);
+// -------- Team -------------------------------------------
+router.post(
+  "/add-team-banner/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushTeamBanner
+);
+router.post(
+  "/delete-team-banner/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteTeamBanner
+);
+router.post(
+  "/add-team-imgs/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  pushTeamImgs
+);
+router.post(
+  "/delete-team-imgs/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteTeamImgs
+);
 // -------- faq -------------------------------------------
 router.post(
   "/add-faq/:id",
@@ -918,6 +979,33 @@ router.get(
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   deletePrivacyPolicy
+);
+// Contact us
+router.post(
+  "/add-contact-us",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  addContactUs
+);
+
+router.get("/list-contact-us", listContactUs);
+
+router.get(
+  "/delete-contact-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteContactUs
+);
+// Team
+router.post("/add-team", verifyAuthMiddleware, verifyAdminMiddleware, addTeam);
+
+router.get("/list-team", listTeam);
+
+router.get(
+  "/delete-team/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteTeam
 );
 
 module.exports = router;
