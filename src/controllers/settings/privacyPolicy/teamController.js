@@ -28,8 +28,8 @@ exports.pushTeamImgs = async (req, res) => {
     req,
     SettingsModel,
     "privacy-policy",
-    "1200",
-    "310"
+    "300",
+    "300"
   );
   return res.status(200).json(result);
 };
