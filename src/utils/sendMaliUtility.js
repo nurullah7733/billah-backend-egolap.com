@@ -28,22 +28,22 @@
 var nodemailer = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
 
-const SendEmailUtility = async (EmailTo, EmailText, EmailSubject) => {
+const SendEmailUtility = async (EmailTo, EmailText) => {
   var transporter = nodemailer.createTransport(
     smtpTransport({
       service: "gmail",
       host: "smtp.gmail.com",
       auth: {
-        user: "sinanrumi7733@gmail.com",
+        user: process.env.GMAIL,
         pass: process.env.GMAIL_PASSWORD,
       },
     })
   );
 
   var mailOptions = {
-    from: "sinanrumi7733@gmail.com",
+    from: "egolap.com <egolap2@gmail.com>",
     to: EmailTo,
-    subject: EmailSubject,
+    subject: "Password Reset",
     text: EmailText,
   };
 
