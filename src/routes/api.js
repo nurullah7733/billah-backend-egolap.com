@@ -138,6 +138,7 @@ const {
   allAdmin,
   logOut,
   addToCart,
+  contactUsForm,
 } = require("../controllers/user/userController");
 
 const {
@@ -263,6 +264,8 @@ router.post("/save-address/:id", verifyAuthMiddleware, saveUserAddress);
 // Add to cart
 router.post("/add-to-cart/:id", verifyAuthMiddleware, addToCart);
 
+//------------------------------ contact form----------------------------------------------------------------
+router.post("/contact-us-form", contactUsForm);
 //------------------------------ Reset password----------------------------------------------------------------------------
 // step 01
 router.get("/verify-email/:email", verifyEmail);

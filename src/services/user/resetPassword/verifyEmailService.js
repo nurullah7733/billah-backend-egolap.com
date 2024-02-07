@@ -15,8 +15,7 @@ const verifyEmailService = async (Request, DataModel, otpDataModel) => {
       });
       let emailSendResult = await SendEmailUtility(
         email,
-        `Welcome to Billah Shop. Your 6 digit OTP code is = ${OTPCode}`,
-        "Billah Shop"
+        `Your 6 digit OTP code is: ${OTPCode}`
       );
       return { status: "success", data: emailSendResult };
     } else {

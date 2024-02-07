@@ -15,7 +15,7 @@ const SendEmailUtilityForContactUs = async (name, email, phone, message) => {
 
   var mailOptions = {
     from: "egolap.com <egolap2@gmail.com>",
-    to: ["info@graphicsviewpoint.com", "graphicsviewpoint24@gmail.com"],
+    to: ["egolap2@gmail.com"],
     subject: "Contact Us",
     html: `<h1>Name: ${name}</h1> <h2>Email: ${email}</h2> <h3>phone: ${phone}</h3> <h4>message: ${message}</h4>`,
   };

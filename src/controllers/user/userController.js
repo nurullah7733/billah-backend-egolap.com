@@ -12,6 +12,7 @@ const userResetPasswordService = require("../../services/user/resetPassword/user
 const updateService = require("../../services/common/updateService");
 const allAdminService = require("../../services/user/adminAllService");
 const userAddToCartService = require("../../services/user/userCart/userAddToCartServices");
+const SendEmailUtilityForContactUs = require("../../utils/sendEmailUtilityForContactUs");
 
 exports.registration = async (req, res) => {
   let data = await userCreateService(req, userModel);
@@ -75,6 +76,13 @@ exports.saveUserAddress = async (req, res) => {
 exports.addToCart = async (req, res) => {
   let result = await userAddToCartService(req, userModel);
   return res.status(200).json(result);
+};
+
+// ------------------------ Contact Us -------------------------------------//
+exports.contactUsForm = async (req, res) => {
+  let { name, email, phone, message } = req.body;
+  let data = await SendEmailUtilityForContactUs(name, email, phone, message);
+  return res.status(200).json(data);
 };
 
 // ------------------------ Reset Password -------------------------------------//
