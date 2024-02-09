@@ -46,7 +46,6 @@ const listThreeJoinServiceForGlobal = async (
   ];
 
   if (searchKeyword !== "0") {
-    console.log("search", searchKeyword);
     queryPipeline.insert(-1, { $match: { $or: searchArray } });
   }
   if (!isNaN(min) && isNaN(max)) {
@@ -172,7 +171,7 @@ const listThreeJoinServiceForGlobal = async (
       },
     });
   }
-  // console.log(queryPipeline);
+
   // let searchQueryCategory = [
   //   { "category.name": { $regex: Request.query.category, $options: "i" } },
   // ];

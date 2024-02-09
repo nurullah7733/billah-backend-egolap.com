@@ -23,7 +23,6 @@ const BkashMiddleware = async (req, res, next) => {
     globals.set("id_token", data?.data?.id_token);
     next();
   } catch (error) {
-    console.log(error);
     return res.status(400).json({ status: "fail", data: error });
   }
 };

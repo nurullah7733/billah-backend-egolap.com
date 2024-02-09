@@ -13,7 +13,6 @@ exports.uploadImages = async (req, res, next) => {
       const { path } = file;
       urls.push(path);
     }
-    // console.log(urls);
 
     cloudinaryUploadedImgUrl = await uploadMultipleImages(urls, {
       overwrite: true,

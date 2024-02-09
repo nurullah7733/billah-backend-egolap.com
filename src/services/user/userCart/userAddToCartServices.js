@@ -29,7 +29,7 @@ const userAddToCartService = async (Request, DataModel) => {
       // ]);
       // let updateData;
       // if (data[0].hasRated) {
-      //   console.log("findOneAndUpdate");
+      //   ("findOneAndUpdate");
       //   updateData = await DataModel.findOneAndUpdate(
       //     {
       //       _id: mongoose.Types.ObjectId(id),
@@ -65,7 +65,7 @@ const userAddToCartService = async (Request, DataModel) => {
       //     }
       //   );
       // } else {
-      //   console.log("updateMany");
+      //   ("updateMany");
       //   updateData = await DataModel.updateMany(
       //     { _id: id },
       //     { $push: { cart: { $each: cart } } }

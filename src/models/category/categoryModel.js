@@ -11,11 +11,7 @@ var categorySchema = mongoose.Schema(
     img: {
       type: Array,
     },
-    subCategoryId: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-      },
-    ],
+    subCategoryId: [{ type: mongoose.Schema.Types.ObjectId }],
   },
   { versionKey: false, timestamps: true }
 );

@@ -30,7 +30,7 @@ exports.createSubCategory = async (req, res) => {
     );
     return res.status(200).json({ status: "success", data: data });
   } catch (e) {
-    return res.status(400).json({ status: "fail", data: e.toString() });
+    return res.status(200).json({ status: "fail", data: e });
   }
 };
 exports.listSubCategories = async (req, res) => {
@@ -48,8 +48,67 @@ exports.getSubCategoryDetailsById = async (req, res) => {
   return res.status(200).json(result);
 };
 exports.updateSubCategory = async (req, res) => {
-  let result = await updateService(req, SubCategoryModel);
-  return res.status(200).json(result);
+  let categoryId = req.body.categoryId;
+  let subCategoryId = req.params.id || req.body.id;
+  // push subcategory in category
+  let checkCategoryId = mongoose.Types.ObjectId.isValid(categoryId);
+  try {
+    let result = await updateService(req, SubCategoryModel);
+    if (checkCategoryId) {
+      // check if category has subcategory
+      let category = await CategoriesModel.aggregate([
+        { $match: { _id: mongoose.Types.ObjectId(categoryId) } },
+        {
+          $project: {
+            _id: 0,
+            hasRated: {
+              $in: [mongoose.Types.ObjectId(subCategoryId), "$subCategoryId"],
+            },
+          },
+        },
+      ]);
+
+      // push subcategory in category
+      if (!category[0].hasRated) {
+        updateRating = await CategoriesModel.updateOne(
+          {
+            _id: categoryId,
+          },
+          {
+            $push: {
+              subCategoryId: subCategoryId,
+            },
+          }
+        );
+      }
+      // find subcategory in another category
+      let subCategoryInAnotherCategory = await CategoriesModel.aggregate([
+        {
+          $match: {
+            subCategoryId: mongoose.Types.ObjectId(subCategoryId),
+            _id: { $ne: mongoose.Types.ObjectId(categoryId) },
+          },
+        },
+      ]);
+      // pull subcategory in another category
+      if (subCategoryInAnotherCategory.length > 0) {
+        await CategoriesModel.updateOne(
+          {
+            _id: subCategoryInAnotherCategory[0]._id,
+          },
+          {
+            $pull: {
+              subCategoryId: subCategoryId,
+            },
+          }
+        );
+      }
+
+      return res.status(200).json(result);
+    }
+  } catch (error) {
+    return res.status(200).json({ status: "fail", data: error.toString() });
+  }
 };
 exports.deleteSubCategory = async (req, res) => {
   let id = req.params.id;

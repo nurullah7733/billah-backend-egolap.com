@@ -2,7 +2,7 @@ const verifyOtpService = async (Request, DataModel) => {
   let email = Request.params.email;
   let otp = Request.params.otp;
 
-  console.log(email, otp);
+  email, otp;
 
   try {
     let matchingOtp = await DataModel.aggregate([

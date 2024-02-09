@@ -54,8 +54,8 @@ module.exports = SendEmailUtility;
 
 // {
 //   if (error) {
-//     console.log(error);
+//     (error);
 //   } else {
-//     console.log("Email sent: " + info.response);
+//     ("Email sent: " + info.response);
 //   }
 // });

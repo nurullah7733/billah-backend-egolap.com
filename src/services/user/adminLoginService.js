@@ -23,10 +23,15 @@ const adminLoginService = async (Request, Response, DataModel) => {
             { refreshToken: refreshToken }
           );
         }
-
-        Response.cookie("refreshToken", refreshToken, {
-          maxAge: 2.592e8,
-          httpOnly: true,
+        const oneMonthInMilliseconds = 1000 * 60 * 60 * 24 * 30;
+        Response.cookie("token", token, {
+          // domain: "e-golap-admin.verce.app",
+          // maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
+          maxAge: oneMonthInMilliseconds, // 1 month
+          httpOnly: process.env.NODE_ENV === "production",
+          sameSite: "none",
+          path: "/",
+          secure: process.env.NODE_ENV === "production",
         });
 
         return {

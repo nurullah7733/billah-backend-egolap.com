@@ -15,11 +15,11 @@ const userLoginService = async (Request, Response, DataModel) => {
         if (data.length > 0) {
           token = await createToken(data[0].email, data[0]._id);
         }
-
+        const oneMonthInMilliseconds = 1000 * 60 * 60 * 24 * 30;
         Response.cookie("token", token, {
           // domain: "e-golap-admin.verce.app",
           // maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
-          maxAge: 2592000, // 1 month
+          maxAge: oneMonthInMilliseconds, // 1 month
           httpOnly: process.env.NODE_ENV === "production",
           sameSite: "none",
           path: "/",

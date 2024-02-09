@@ -372,10 +372,10 @@ exports.ratingsProduct = async (req, res) => {
 
       return res.status(200).json({ status: "success", data: updateRating });
     } else {
-      return res.status(400).json({ status: "fail", data: "ObjectId invalid" });
+      return res.status(200).json({ status: "fail", data: "ObjectId invalid" });
     }
   } catch (error) {
-    return res.status(400).json({ status: "fail", data: error.toString() });
+    return res.status(200).json({ status: "fail", data: error.toString() });
   }
 };
 

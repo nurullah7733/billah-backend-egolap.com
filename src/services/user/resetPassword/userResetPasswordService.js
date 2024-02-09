@@ -10,7 +10,6 @@ const userResetPasswordService = async (
   let statusCode = 1;
 
   try {
-    console.log(email, otp, password);
     let data = await DataModelOtp.aggregate([
       { $match: { email: email, otp: otp, status: statusCode } },
     ]);
