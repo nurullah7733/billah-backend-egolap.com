@@ -59,13 +59,13 @@ app.use(limiter);
 // MongoDB Database Connection
 
 // ******* its for local database *******
-let URI = "mongodb://127.0.0.1:27017/egolap";
-let option = { user: "egolap", pass: "AfW5iaaxwWnjzaJ6" };
+// let URI = "mongodb://127.0.0.1:27017/egolap";
+// let option = { user: "egolap", pass: "AfW5iaaxwWnjzaJ6" };
 
 // ******* its for cloud database *******
-// let URI =
-//   "mongodb+srv://<username>:<password>@cluster0.y610b.mongodb.net/billah-shop?retryWrites=true&w=majority";
-// let option = { user: "nur", pass: "nur" };
+let URI =
+  "mongodb+srv://<username>:<password>@cluster0.y610b.mongodb.net/billah-shop?retryWrites=true&w=majority";
+let option = { user: "nur", pass: "nur" };
 
 // let OPTION = {
 //   user: process.env.DATABASE_USER,

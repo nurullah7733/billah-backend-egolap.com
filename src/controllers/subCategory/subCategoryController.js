@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const SubCategoryModel = require("../../models/subCategory/subCategoryModel");
+const CategoriesModel = require("../../models/category/categoryModel");
 const ProductModel = require("../../models/product/productModel");
 const checkAssociateService = require("../../services/common/checkAssociateService");
 const createService = require("../../services/common/createService");
@@ -8,10 +9,29 @@ const dropdownListService = require("../../services/common/dropdownListService")
 const getServiceById = require("../../services/common/getSerciceById");
 const listService = require("../../services/common/listService");
 const updateService = require("../../services/common/updateService");
+const listOneJoinServiceWithOutEmail = require("../../services/common/listOneJoinServiceWithOutEmail");
 
 exports.createSubCategory = async (req, res) => {
-  let result = await createService(req, SubCategoryModel);
-  return res.status(200).json(result);
+  let reqBody = req.body;
+  let subCategoryName = reqBody["name"];
+  let categoryId = reqBody.categoryId;
+
+  try {
+    let data = await SubCategoryModel.create({ name: subCategoryName });
+    await CategoriesModel.updateOne(
+      {
+        _id: categoryId,
+      },
+      {
+        $push: {
+          subCategoryId: data._id,
+        },
+      }
+    );
+    return res.status(200).json({ status: "success", data: data });
+  } catch (e) {
+    return res.status(400).json({ status: "fail", data: e.toString() });
+  }
 };
 exports.listSubCategories = async (req, res) => {
   let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
@@ -44,6 +64,18 @@ exports.deleteSubCategory = async (req, res) => {
     });
   } else {
     let result = await deleteService(req, SubCategoryModel);
+    if (result.data?.deletedCount === 1) {
+      await CategoriesModel.updateOne(
+        {
+          subCategoryId: id,
+        },
+        {
+          $pull: {
+            subCategoryId: id,
+          },
+        }
+      );
+    }
     return res.status(200).json(result);
   }
 };

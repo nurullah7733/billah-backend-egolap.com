@@ -9,6 +9,7 @@ const createServiceWithImage = require("../../services/common/createServiceWithI
 const updateServiceWithDeleteImg = require("../../services/common/updateServiceWithDeleteImg");
 const updateServiceWithImg = require("../../services/common/updateServiceWithImg");
 const deleteServiceWithImg = require("../../services/common/deleteServiceWithImg");
+const listOneJoinServiceWithOutEmail = require("../../services/common/listOneJoinServiceWithOutEmail");
 
 exports.createCateogry = async (req, res) => {
   let result = await createServiceWithImage(
@@ -27,8 +28,23 @@ exports.listCategory = async (req, res) => {
   return res.status(200).json(result);
 };
 exports.dropdownListCategory = async (req, res) => {
-  let result = await dropdownListService(req, CategoryModel);
-  return res.status(200).json(result);
+  let searchRgx = { $regex: req.params.searchKeyword, $options: "i" };
+  let searchArray = [{ name: searchRgx }];
+  let joinStage1 = {
+    $lookup: {
+      from: "subcategories",
+      localField: "subCategoryId",
+      foreignField: "_id",
+      as: "subCategory",
+    },
+  };
+  let data = await listOneJoinServiceWithOutEmail(
+    req,
+    CategoryModel,
+    searchArray,
+    joinStage1
+  );
+  return res.status(200).json(data);
 };
 exports.getCategoryDetailsById = async (req, res) => {
   let result = await getServiceById(req, CategoryModel);

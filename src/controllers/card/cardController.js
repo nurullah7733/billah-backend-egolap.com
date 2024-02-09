@@ -85,8 +85,6 @@ exports.deleteCard = async (req, res) => {
   let email = req.headers.email;
   let id = req.params.id;
 
-  console.log(id, "id");
-
   try {
     let data = await cardModel.updateOne(
       { email: email },

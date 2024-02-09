@@ -298,7 +298,10 @@ router.get(
   dropdownListCategory
 );
 // dropdown list Category global
-router.get("/dropdown-category", dropdownListCategory);
+router.get(
+  "/dropdown-category/:pageNo/:perPage/:searchKeyword",
+  dropdownListCategory
+);
 // get category details by id
 router.get(
   "/category-details/:id",
