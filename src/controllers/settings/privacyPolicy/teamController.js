@@ -11,7 +11,7 @@ exports.pushTeamBanner = async (req, res) => {
     req,
     SettingsModel,
     "privacy-policy",
-    "1200",
+    "1680",
     "310"
   );
   return res.status(200).json(result);

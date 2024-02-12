@@ -7,8 +7,8 @@ exports.pushDealerBrandLogoImg = async (req, res) => {
     req,
     SettingsModel,
     "privacy-policy",
-    "1200",
-    "310"
+    "300",
+    "100"
   );
   return res.status(200).json(result);
 };
