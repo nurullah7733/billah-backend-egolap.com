@@ -40,6 +40,7 @@ app.use(function (req, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
+  console.log(res.getHeaders());
 });
 
 app.use(helmet());

@@ -25,6 +25,7 @@ exports.login = async (req, res) => {
 };
 exports.logOut = async (req, res) => {
   res.clearCookie("token");
+  res.clearCookie("token2");
   return res
     .status(200)
     .json({ status: "success", data: "Successfully logged out" });
