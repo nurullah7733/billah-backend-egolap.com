@@ -17,13 +17,14 @@ const userLoginService = async (Request, Response, DataModel) => {
         }
         const oneMonthInMilliseconds = 1000 * 60 * 60 * 24 * 30;
         Response.cookie("token", token, {
-          // domain: "e-golap-admin.verce.app",
-          // maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
+          domain: ".egolap.com",
           maxAge: oneMonthInMilliseconds, // 1 month
-          httpOnly: process.env.NODE_ENV === "production",
-          sameSite: "none",
+          sameSite: "None",
           path: "/",
-          secure: process.env.NODE_ENV === "production",
+          // httpOnly: process.env.NODE_ENV === "production",
+          // secure: process.env.NODE_ENV === "production",
+          httpOnly: true,
+          secure: true,
         });
 
         return {
