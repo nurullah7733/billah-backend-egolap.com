@@ -158,10 +158,48 @@ exports.BkashCallBack = async (req, res) => {
         return res.redirect(
           `${process.env.FONTEND_DOMAIN}/payment/success?status=${status}`
         );
+      } else if (
+        data?.data?.statusCode === "2023" &&
+        data?.data?.statusMessage === "Insufficient Balance"
+      ) {
+        let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
+
+        const newOrder = new orderModel({
+          userId: ordersAllInfo?.userId,
+          orderId: uniqid.process(),
+          paymentStatus: status,
+          orderStatus: "Cancelled",
+          allProducts: ordersAllInfo?.allProducts,
+          "paymentIntent.paymentId": paymentID,
+          "paymentIntent.paymentMethod": "bkash",
+          "paymentIntent.amount": ordersAllInfo?.grandTotal,
+          voucherDiscount: ordersAllInfo?.voucherDiscount,
+          subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
+          shippingCost: ordersAllInfo?.shippingCost,
+          grandTotal: ordersAllInfo?.grandTotal,
+
+          shippingAddress: {
+            name: ordersAllInfo?.shippingAddress?.name,
+            email: ordersAllInfo?.shippingAddress?.email,
+            mobile: ordersAllInfo?.shippingAddress?.mobile,
+            alternativeMobile:
+              ordersAllInfo?.shippingAddress?.alternativeMobile,
+            thana: ordersAllInfo?.shippingAddress?.thana,
+            city: ordersAllInfo?.shippingAddress?.city,
+            country: ordersAllInfo?.shippingAddress?.country,
+            zipCode: ordersAllInfo?.shippingAddress?.zipCode,
+            address: ordersAllInfo?.shippingAddress?.address,
+          },
+        });
+
+        await newOrder.save();
+        return res.redirect(
+          `${process.env.FONTEND_DOMAIN}/payment/fail?status=${data?.data?.statusMessage}`
+        );
       } else {
         return res.status(200).json({
           status: "fail",
-          statusCode: data?.statusCode,
+          statusCode: data?.data?.statusCode,
         });
       }
     } else {
