@@ -47,8 +47,8 @@ exports.createProduct = async (req, res) => {
     req,
     ProductModel,
     "products",
-    300,
-    300
+    600,
+    600
   );
 
   return res.status(200).json(result);
