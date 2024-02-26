@@ -167,7 +167,7 @@ exports.BkashCallBack = async (req, res) => {
         const newOrder = new orderModel({
           userId: ordersAllInfo?.userId,
           orderId: uniqid.process(),
-          paymentStatus: status,
+          paymentStatus: "Insufficient Balance",
           orderStatus: "Cancelled",
           allProducts: ordersAllInfo?.allProducts,
           "paymentIntent.paymentId": paymentID,

@@ -9,10 +9,10 @@ const checkAssociateService = require("../../services/common/checkAssociateServi
 const deleteServiceWithImg = require("../../services/common/deleteServiceWithImg");
 const updateServiceWithImg = require("../../services/common/updateServiceWithImg");
 const updateServiceWithDeleteImg = require("../../services/common/updateServiceWithDeleteImg");
-const listThreeJoinService = require("../../services/common/listThreeJoinService");
 const listThreeJoinServiceBestSalesForGlobal = require("../../services/common/listThreeJoinServiceBestSalesForGlobal");
 const getDetailsByIdThreeJoinService = require("../../services/common/getDetailsByIdThreeJoinService");
 const RelatedProductsSearchSercice = require("../../services/common/relatedProductsServices");
+const listThreeJoinServiceSortByCreateAt = require("../../services/products/listThreeJoinServiceSortByCreateAt");
 
 exports.createProduct = async (req, res) => {
   if (req.body.name !== "undefined") {
@@ -87,7 +87,7 @@ exports.listProduct = async (req, res) => {
       as: "brand",
     },
   };
-  let result = await listThreeJoinService(
+  let result = await listThreeJoinServiceSortByCreateAt(
     req,
     ProductModel,
     searchArray,

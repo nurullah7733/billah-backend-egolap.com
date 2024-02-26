@@ -11,34 +11,25 @@ const listTwoJoinService = async (
   let skipRow = (pageNo - 1) * perPage;
 
   try {
-    let data;
+    let totalQuery = {};
     if (searchKeyword !== "0") {
-      data = await DataModel.aggregate([
-        // { $sort: { createdAt: -1 } }, // max data limit 16mb so its don't use
-        joinStage1,
-        joinStage2,
-        { $match: { $or: searchArray } },
-        {
-          $facet: {
-            total: [{ $count: "count" }],
-            rows: [{ $skip: skipRow }, { $limit: perPage }],
-          },
-        },
-      ]);
-    } else {
-      data = await DataModel.aggregate([
-        // { $sort: { createdAt: -1 } }, // max data limit 16mb so its don't use
-        joinStage1,
-        joinStage2,
-        {
-          $facet: {
-            total: [{ $count: "count" }],
-            rows: [{ $skip: skipRow }, { $limit: perPage }],
-          },
-        },
-      ]);
+      totalQuery = { $or: searchArray };
     }
-    return { status: "success", data };
+
+    const total = await DataModel.countDocuments(totalQuery);
+
+    let rowsPipeline = [
+      { $sort: { createdAt: -1 } },
+      joinStage1,
+      joinStage2,
+      { $match: { $or: searchArray } },
+      { $skip: skipRow },
+      { $limit: perPage },
+    ];
+
+    let rows = await DataModel.aggregate(rowsPipeline);
+
+    return { status: "success", data: { total, rows } };
   } catch (error) {
     return { status: "fail", data: error.toString() };
   }
