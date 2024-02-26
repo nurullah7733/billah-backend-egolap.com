@@ -14,7 +14,7 @@ const listTwoJoinService = async (
     let data;
     if (searchKeyword !== "0") {
       data = await DataModel.aggregate([
-        { $sort: { createdAt: -1 } },
+        // { $sort: { createdAt: -1 } }, // max data limit 16mb so its don't use
         joinStage1,
         joinStage2,
         { $match: { $or: searchArray } },
@@ -27,7 +27,7 @@ const listTwoJoinService = async (
       ]);
     } else {
       data = await DataModel.aggregate([
-        { $sort: { createdAt: -1 } },
+        // { $sort: { createdAt: -1 } }, // max data limit 16mb so its don't use
         joinStage1,
         joinStage2,
         {
