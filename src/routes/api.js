@@ -218,6 +218,10 @@ const {
   pushTeamImgs,
   deleteTeamImgs,
 } = require("../controllers/settings/privacyPolicy/teamController");
+const {
+  getDivisions,
+  getDistrictsByDivisions,
+} = require("../controllers/bdApi/divisionsController");
 
 // registration
 router.post("/registration", registration);
@@ -1013,5 +1017,9 @@ router.get(
   verifyAdminMiddleware,
   deleteTeam
 );
+
+// bd api Divisions
+router.get("/get-divisions", getDivisions);
+router.get("/get-districs-by-divisions/:district", getDistrictsByDivisions);
 
 module.exports = router;
