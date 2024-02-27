@@ -77,7 +77,6 @@ exports.successPaymnet = async (req, res) => {
   const session = await mongoose.startSession();
   let reqBody = req.body;
   let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
-  // console.log(ordersAllInfo, "ordersAllInfo");
 
   try {
     await session.startTransaction();

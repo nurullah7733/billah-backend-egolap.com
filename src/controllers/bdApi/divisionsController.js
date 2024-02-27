@@ -13,7 +13,7 @@ exports.getDivisions = async (req, res) => {
     const response = await axios.request(options);
     return res.status(200).json({
       status: "success",
-      data: response.data?.data,
+      data: response.data,
     });
   } catch (error) {
     console.error(error);
@@ -35,7 +35,7 @@ exports.getDistrictsByDivisions = async (req, res) => {
     const response = await axios.request(options);
     return res.status(200).json({
       status: "success",
-      data: response.data?.data,
+      data: response.data,
     });
   } catch (error) {
     console.error(error);
