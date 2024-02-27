@@ -7,8 +7,19 @@ var settingsSchema = mongoose.Schema(
     bestSales: { type: Array },
     provisionalBazar: { type: Array },
     bestOfElectronics: { type: Array },
-    otherCost: { type: Number, default: 0 },
+
+    shippingCostThakurgaonSadar: { type: Number, default: 0 },
+    otherCostThakurgaonSadar: { type: Number, default: 0 },
+
+    shippingCostThakurgaon: { type: Number, default: 0 },
+    otherCostThakurgaon: { type: Number, default: 0 },
+
+    shippingCostDhaka: { type: Number, default: 0 },
+    otherCostDhaka: { type: Number, default: 0 },
+
     shippingCost: { type: Number, default: 0 },
+    otherCost: { type: Number, default: 0 },
+
     socialLink: {
       facebook: String,
       twitter: String,
