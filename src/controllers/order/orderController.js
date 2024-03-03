@@ -68,6 +68,17 @@ exports.getAllOrderForAdmin = async (req, res) => {
       localField: "userId",
       foreignField: "_id",
       as: "userDetails",
+      pipeline: [
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            mobile: 1,
+          },
+        },
+      ],
     },
   };
   let joinStage2 = {
@@ -301,6 +312,17 @@ exports.getDetailsById = async (req, res) => {
       localField: "userId",
       foreignField: "_id",
       as: "userDetails",
+      pipeline: [
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            mobile: 1,
+          },
+        },
+      ],
     },
   };
   let joinStage2 = {

@@ -1,6 +1,10 @@
+const mongoose = require("mongoose");
 let ProdcutModel = require("../../models/product/productModel");
 const createServiceWithIncreaseDecreaseItem = async (Request, DataModel) => {
   let reqBody = Request.body;
+  Request.body.allProducts.map((prod) => {
+    prod.productId = mongoose.Types.ObjectId(prod.productId);
+  });
   let allProducts = Request.body.allProducts;
 
   try {

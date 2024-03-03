@@ -13,7 +13,18 @@ const orderSchema = mongoose.Schema(
     merchantInvoiceNumber: String,
     paymentExecuteTime: String,
     paymentStatus: String,
-    allProducts: [],
+    allProducts: [
+      {
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+        },
+        finalPrice: Number,
+        total: Number,
+        customerChoiceProductQuantity: Number,
+        customerChoiceProductSize: String,
+      },
+    ],
     paymentIntent: {
       paymentId: String,
       paymentMethod: String,
@@ -50,8 +61,17 @@ const orderSchema = mongoose.Schema(
       upazilla: String,
       address: String,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      index: true,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false }
 );
 
 const orderModel = mongoose.model("order", orderSchema);
