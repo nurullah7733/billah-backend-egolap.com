@@ -18,7 +18,7 @@ const updateServiceOrderChangeStatus = async (Request, DataModel) => {
     ) {
       checkAllreadyCanceled[0].allProducts.map(async (prod) => {
         allData = await ProductsModel.findOneAndUpdate(
-          { _id: prod._id },
+          { _id: prod.productId },
           {
             $inc: {
               quantity: Number(prod.customerChoiceProductQuantity),
