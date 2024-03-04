@@ -163,14 +163,12 @@ const listThreeJoinServiceForGlobal = async (
       },
     });
   }
-  // for remark desc order
-  if (remark !== undefined) {
-    queryPipeline.insert(-1, {
-      $sort: {
-        createdAt: -1,
-      },
-    });
-  }
+  // for all products latest
+  queryPipeline.insert(-1, {
+    $sort: {
+      createdAt: -1,
+    },
+  });
 
   // let searchQueryCategory = [
   //   { "category.name": { $regex: Request.query.category, $options: "i" } },

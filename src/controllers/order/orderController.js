@@ -87,6 +87,13 @@ exports.getAllOrderForAdmin = async (req, res) => {
       localField: "allProducts.productId",
       foreignField: "_id",
       as: "productsDetails",
+      pipeline: [
+        {
+          $project: {
+            ratings: 0,
+          },
+        },
+      ],
     },
   };
   let result = await listTwoJoinService(
@@ -132,6 +139,17 @@ exports.getRunningOrderForUser = async (req, res) => {
       localField: "userId",
       foreignField: "_id",
       as: "userDetails",
+      pipeline: [
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            mobile: 1,
+          },
+        },
+      ],
     },
   };
   let joinStage2 = {
@@ -140,6 +158,13 @@ exports.getRunningOrderForUser = async (req, res) => {
       localField: "allProducts.productId",
       foreignField: "_id",
       as: "productsDetails",
+      pipeline: [
+        {
+          $project: {
+            ratings: 0,
+          },
+        },
+      ],
     },
   };
   let result = await runningOrderServices(
@@ -183,6 +208,17 @@ exports.getDeliveredOrderForUser = async (req, res) => {
       localField: "userId",
       foreignField: "_id",
       as: "userDetails",
+      pipeline: [
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            mobile: 1,
+          },
+        },
+      ],
     },
   };
   let joinStage2 = {
@@ -191,6 +227,13 @@ exports.getDeliveredOrderForUser = async (req, res) => {
       localField: "allProducts.productId",
       foreignField: "_id",
       as: "productsDetails",
+      pipeline: [
+        {
+          $project: {
+            ratings: 0,
+          },
+        },
+      ],
     },
   };
   let result = await deliveredOrderServices(
@@ -234,6 +277,17 @@ exports.getCancelledOrderForUser = async (req, res) => {
       localField: "userId",
       foreignField: "_id",
       as: "userDetails",
+      pipeline: [
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            mobile: 1,
+          },
+        },
+      ],
     },
   };
   let joinStage2 = {
@@ -242,6 +296,13 @@ exports.getCancelledOrderForUser = async (req, res) => {
       localField: "allProducts.productId",
       foreignField: "_id",
       as: "productsDetails",
+      pipeline: [
+        {
+          $project: {
+            ratings: 0,
+          },
+        },
+      ],
     },
   };
   let result = await cancelledOrderServices(
@@ -285,6 +346,17 @@ exports.getReturnedOrderForUser = async (req, res) => {
       localField: "userId",
       foreignField: "_id",
       as: "userDetails",
+      pipeline: [
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            mobile: 1,
+          },
+        },
+      ],
     },
   };
   let joinStage2 = {
@@ -293,6 +365,13 @@ exports.getReturnedOrderForUser = async (req, res) => {
       localField: "allProducts.productId",
       foreignField: "_id",
       as: "productsDetails",
+      pipeline: [
+        {
+          $project: {
+            ratings: 0,
+          },
+        },
+      ],
     },
   };
   let result = await returnedOrderServices(
@@ -331,6 +410,13 @@ exports.getDetailsById = async (req, res) => {
       localField: "allProducts.productId",
       foreignField: "_id",
       as: "productsDetails",
+      pipeline: [
+        {
+          $project: {
+            ratings: 0,
+          },
+        },
+      ],
     },
   };
   let result = await getDetailsByIdTwoJoinService(
