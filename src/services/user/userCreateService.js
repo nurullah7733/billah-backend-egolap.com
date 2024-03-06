@@ -1,9 +1,15 @@
 const bcrypt = require("bcrypt");
-const generateFakeProfilePic = require("../../utils/fakeProfilePic/fakeProfilePic");
 const createUserService = async (Request, DataModel) => {
   let reqBody = Request.body;
   let password = Request.body.password;
-  Request.body.photo = generateFakeProfilePic();
+  Request.body.photo = [
+    {
+      public_id: "default_avatar",
+      secure_url:
+        "https://res.cloudinary.com/dwcjrquex/image/upload/v1709617274/profile/avatar_mwtugu.jpg",
+    },
+  ];
+
   try {
     const salt = await bcrypt.genSaltSync(10);
     password = await bcrypt.hash(password, salt);

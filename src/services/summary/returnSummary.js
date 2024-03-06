@@ -1,30 +1,11 @@
 let OrderModel = require("../../models/order/orderModel");
-const RunningOrderSummary = async (Request) => {
+const ReturnedSummary = async (Request) => {
   try {
     let data = await OrderModel.aggregate([
-      {
-        $match: {
-          orderStatus: { $not: { $eq: "Delivered" } },
-        },
-      },
-      {
-        $match: {
-          orderStatus: { $not: { $eq: "Cancelled" } },
-        },
-      },
-      {
-        $match: {
-          orderStatus: { $not: { $eq: "Returned" } },
-        },
-      },
-      {
-        $match: {
-          orderStatus: { $not: { $eq: "Failed" } },
-        },
-      },
+      { $match: { orderStatus: "Returned" } },
       {
         $facet: {
-          runningOrder: [{ $count: "count" }],
+          totalReturned: [{ $count: "count" }],
           total: [
             {
               $group: {
@@ -55,4 +36,4 @@ const RunningOrderSummary = async (Request) => {
   }
 };
 
-module.exports = RunningOrderSummary;
+module.exports = ReturnedSummary;

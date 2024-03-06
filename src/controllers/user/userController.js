@@ -13,6 +13,11 @@ const updateService = require("../../services/common/updateService");
 const allAdminService = require("../../services/user/adminAllService");
 const userAddToCartService = require("../../services/user/userCart/userAddToCartServices");
 const SendEmailUtilityForContactUs = require("../../utils/sendEmailUtilityForContactUs");
+const fs = require("fs");
+const {
+  uploadMultipleImages,
+  deleteCloudinaryImg,
+} = require("../../utils/cloudinary");
 
 exports.registration = async (req, res) => {
   let data = await userCreateService(req, userModel);
@@ -41,8 +46,106 @@ exports.userDetailsById = async (req, res) => {
 };
 
 exports.userUpdate = async (req, res) => {
-  let data = await userUpdateService(req, userModel);
-  return res.status(200).json(data);
+  let id = req.params.id;
+  let isAdmin = req.headers.isAdmin;
+  let email = req.headers.email;
+  let reqBody = req.body;
+
+  try {
+    if (isAdmin) {
+      let data = await userModel.updateOne({ _id: id }, reqBody);
+      return res.status(200).json({ status: "success", data: data });
+    }
+
+    if (req?.files?.length > 0) {
+      let cloudinaryUploadedImgUrl;
+      const urls = [];
+      const files = req.files;
+      for (const file of files) {
+        const { path } = file;
+        urls.push(path);
+      }
+      cloudinaryUploadedImgUrl = await uploadMultipleImages(urls, {
+        folder: "profile",
+        width: "400",
+        height: "400",
+      });
+      // delete file in img directory
+      urls.map((item) => {
+        fs.unlinkSync(item);
+      });
+
+      let userOldPhoto = await userModel.findOne({ _id: id, email: email });
+      if (userOldPhoto?.photo.length > 0) {
+        await deleteCloudinaryImg(userOldPhoto?.photo[0].public_id);
+      }
+
+      let updateAndFindData;
+      var pushImg;
+      await Promise.all(
+        cloudinaryUploadedImgUrl.map(async (element) => {
+          pushImg = await userModel.updateOne(
+            { _id: id, email: email },
+            { photo: element }
+          );
+        })
+      );
+
+      var updateData = await userModel.updateOne(
+        { _id: id, email: email },
+        reqBody
+      );
+      // succesfully updated then return data
+      if (
+        (pushImg?.acknowledged && pushImg?.modifiedCount > 0) ||
+        (updateData?.acknowledged && updateData?.modifiedCount > 0)
+      ) {
+        updateAndFindData = await userModel.findOne(
+          { _id: id, email: email },
+          {
+            password: 0,
+            cart: 0,
+            wishList: 0,
+            role: 0,
+            isBlock: 0,
+            couponCodeUses: 0,
+            refreshToken: 0,
+            createdAt: 0,
+            updatedAt: 0,
+          }
+        );
+      }
+      return res.status(200).json({
+        status: "success",
+        data: updateAndFindData,
+      });
+    } else {
+      let data = await userModel.updateOne({ _id: id, email: email }, reqBody);
+
+      if (data?.acknowledged && data?.modifiedCount > 0) {
+        data = await userModel.findOne(
+          { _id: id, email: email },
+          {
+            password: 0,
+            cart: 0,
+            wishList: 0,
+            role: 0,
+            isBlock: 0,
+            refreshToken: 0,
+            createdAt: 0,
+            updatedAt: 0,
+          }
+        );
+      }
+      return res.status(200).json({
+        status: "success",
+        data,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: "fail", data: error.toString() });
+  }
 };
 // all user
 exports.allUser = async (req, res) => {

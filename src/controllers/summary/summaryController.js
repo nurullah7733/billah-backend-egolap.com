@@ -8,6 +8,8 @@ const AllOrderSummaryReport = require("../../services/report/allOrderSummaryRepo
 const orderModel = require("../../models/order/orderModel");
 const RunningOrderSummaryReport = require("../../services/report/runningOrderSummaryReportService");
 const RefundSummary = require("../../services/summary/refundSurmmary");
+const ReturnedSummary = require("../../services/summary/returnSummary");
+const ReturnedSummaryReportService = require("../../services/report/returnedSummaryReportService");
 
 exports.salesSummary = async (req, res) => {
   let result = await SalesSummary(req);
@@ -28,6 +30,16 @@ exports.cancelSummary = async (req, res) => {
 };
 exports.cancelSummaryReport = async (req, res) => {
   let result = await CancelledSummaryReportService(req, orderModel);
+  return res.status(200).json(result);
+};
+
+exports.returnSummary = async (req, res) => {
+  let result = await ReturnedSummary(req);
+  return res.status(200).json(result);
+};
+
+exports.returnedSummaryReport = async (req, res) => {
+  let result = await ReturnedSummaryReportService(req, orderModel);
   return res.status(200).json(result);
 };
 

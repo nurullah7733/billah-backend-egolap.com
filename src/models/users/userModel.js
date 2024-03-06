@@ -27,7 +27,7 @@ var userSchema = new mongoose.Schema(
       unique: true,
     },
     photo: {
-      type: String,
+      type: Array,
     },
     cart: [],
     wishList: [{ type: mongoose.Schema.Types.ObjectId, default: [] }],

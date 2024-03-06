@@ -113,6 +113,8 @@ const {
   allOrderSummaryReport,
   runningOrderSummaryReport,
   refundSummary,
+  returnSummary,
+  returnedSummaryReport,
 } = require("../controllers/summary/summaryController");
 // --------summary-----------------
 
@@ -239,7 +241,12 @@ router.get(
   userDetailsById
 );
 // user Udpate for User
-router.post("/user-udpate-by-user/:id", verifyAuthMiddleware, userUpdate);
+router.post(
+  "/user-udpate-by-user/:id",
+  verifyAuthMiddleware,
+  uploadPhoto.array("images", 10),
+  userUpdate
+);
 // user Udpate for Admin
 router.post(
   "/user-udpate-by-admin/:id",
@@ -696,12 +703,26 @@ router.get(
   verifyAdminMiddleware,
   cancelSummary
 );
-// cancel Summary Report
 router.post(
   "/cancel-summary-report",
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   cancelSummaryReport
+);
+
+// return Summary
+router.get(
+  "/return-summary",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  returnSummary
+);
+// return Summary Report
+router.post(
+  "/return-summary-report",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  returnedSummaryReport
 );
 
 //-------------------------- Settings -----------------------------------------------
