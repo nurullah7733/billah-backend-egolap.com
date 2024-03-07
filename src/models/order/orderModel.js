@@ -32,10 +32,11 @@ const orderSchema = mongoose.Schema(
     },
     vatTax: { type: Number, default: 0 },
     voucherDiscount: { type: Number, default: 0 },
-    otherCost: { type: Number, default: 0 },
+    productsSubTotal: { type: Number, default: 0 },
     subTotal: { type: Number, default: 0 },
-    shippingCost: { type: Number, default: 0 },
     grandTotal: { type: Number, default: 0 },
+    otherCost: { type: Number, default: 0 },
+    shippingCost: { type: Number, default: 0 },
     note: { type: String },
     orderStatus: {
       type: String,
