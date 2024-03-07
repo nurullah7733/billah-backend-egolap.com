@@ -58,7 +58,9 @@ exports.BkashCallBack = async (req, res) => {
         "paymentIntent.paymentMethod": "bkash",
         "paymentIntent.amount": ordersAllInfo?.grandTotal,
         voucherDiscount: ordersAllInfo?.voucherDiscount,
-        subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
+        productsSubTotal: ordersAllInfo?.productsSubTotal,
+        subTotal: ordersAllInfo?.subTotal,
+        otherCost: ordersAllInfo?.otherCost,
         shippingCost: ordersAllInfo?.shippingCost,
         grandTotal: ordersAllInfo?.grandTotal,
 
@@ -67,10 +69,10 @@ exports.BkashCallBack = async (req, res) => {
           email: ordersAllInfo?.shippingAddress?.email,
           mobile: ordersAllInfo?.shippingAddress?.mobile,
           alternativeMobile: ordersAllInfo?.shippingAddress?.alternativeMobile,
-          thana: ordersAllInfo?.shippingAddress?.thana,
-          city: ordersAllInfo?.shippingAddress?.city,
           country: ordersAllInfo?.shippingAddress?.country,
-          zipCode: ordersAllInfo?.shippingAddress?.zipCode,
+          division: ordersAllInfo?.shippingAddress?.division,
+          district: ordersAllInfo?.shippingAddress?.district,
+          upazilla: ordersAllInfo?.shippingAddress?.upazilla,
           address: ordersAllInfo?.shippingAddress?.address,
         },
       });
@@ -111,7 +113,9 @@ exports.BkashCallBack = async (req, res) => {
           "paymentIntent.paymentMethod": "bkash",
           "paymentIntent.amount": data?.data?.amount,
           voucherDiscount: ordersAllInfo?.voucherDiscount,
-          subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
+          productsSubTotal: ordersAllInfo?.productsSubTotal,
+          subTotal: ordersAllInfo?.subTotal,
+          otherCost: ordersAllInfo?.otherCost,
           shippingCost: ordersAllInfo?.shippingCost,
           grandTotal: ordersAllInfo?.grandTotal,
 
@@ -121,10 +125,10 @@ exports.BkashCallBack = async (req, res) => {
             mobile: ordersAllInfo?.shippingAddress?.mobile,
             alternativeMobile:
               ordersAllInfo?.shippingAddress?.alternativeMobile,
-            thana: ordersAllInfo?.shippingAddress?.thana,
-            city: ordersAllInfo?.shippingAddress?.city,
             country: ordersAllInfo?.shippingAddress?.country,
-            zipCode: ordersAllInfo?.shippingAddress?.zipCode,
+            division: ordersAllInfo?.shippingAddress?.division,
+            district: ordersAllInfo?.shippingAddress?.district,
+            upazilla: ordersAllInfo?.shippingAddress?.upazilla,
             address: ordersAllInfo?.shippingAddress?.address,
           },
         });
@@ -163,7 +167,6 @@ exports.BkashCallBack = async (req, res) => {
         data?.data?.statusMessage === "Insufficient Balance"
       ) {
         let ordersAllInfo = JSON.parse(globals.get("orderAllInformation"));
-
         const newOrder = new orderModel({
           userId: ordersAllInfo?.userId,
           orderId: uniqid.process(),
@@ -173,8 +176,11 @@ exports.BkashCallBack = async (req, res) => {
           "paymentIntent.paymentId": paymentID,
           "paymentIntent.paymentMethod": "bkash",
           "paymentIntent.amount": ordersAllInfo?.grandTotal,
+
           voucherDiscount: ordersAllInfo?.voucherDiscount,
-          subTotal: ordersAllInfo?.grandTotal - ordersAllInfo?.shippingCost,
+          productsSubTotal: ordersAllInfo?.productsSubTotal,
+          subTotal: ordersAllInfo?.subTotal,
+          otherCost: ordersAllInfo?.otherCost,
           shippingCost: ordersAllInfo?.shippingCost,
           grandTotal: ordersAllInfo?.grandTotal,
 
@@ -184,10 +190,10 @@ exports.BkashCallBack = async (req, res) => {
             mobile: ordersAllInfo?.shippingAddress?.mobile,
             alternativeMobile:
               ordersAllInfo?.shippingAddress?.alternativeMobile,
-            thana: ordersAllInfo?.shippingAddress?.thana,
-            city: ordersAllInfo?.shippingAddress?.city,
             country: ordersAllInfo?.shippingAddress?.country,
-            zipCode: ordersAllInfo?.shippingAddress?.zipCode,
+            division: ordersAllInfo?.shippingAddress?.division,
+            district: ordersAllInfo?.shippingAddress?.district,
+            upazilla: ordersAllInfo?.shippingAddress?.upazilla,
             address: ordersAllInfo?.shippingAddress?.address,
           },
         });
