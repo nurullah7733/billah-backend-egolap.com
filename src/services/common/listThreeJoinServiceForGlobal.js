@@ -120,7 +120,7 @@ const listThreeJoinServiceForGlobal = async (
   if (inStock == "false") {
     queryPipeline.insert(-1, {
       $match: {
-        quantity: 0,
+        quantity: { $lte: 0 },
       },
     });
   }
@@ -135,20 +135,7 @@ const listThreeJoinServiceForGlobal = async (
       }
     );
   }
-  if (sortby !== undefined && sortby == 0) {
-    queryPipeline.insert(
-      -1,
 
-      { $sort: { finalPrice: 1 } }
-    );
-  }
-  if (sortby !== undefined && sortby == 1) {
-    queryPipeline.insert(
-      -1,
-
-      { $sort: { finalPrice: -1 } }
-    );
-  }
   if (remark !== undefined) {
     queryPipeline.insert(-1, {
       $match: {
@@ -164,15 +151,28 @@ const listThreeJoinServiceForGlobal = async (
     });
   }
   // for all products latest
-  queryPipeline.insert(-1, {
-    $sort: {
-      createdAt: -1,
-    },
-  });
 
-  // let searchQueryCategory = [
-  //   { "category.name": { $regex: Request.query.category, $options: "i" } },
-  // ];
+  if (sortby !== undefined && sortby == 0) {
+    queryPipeline.insert(-1, {
+      $sort: {
+        finalPrice: 1,
+        createdAt: -1,
+      },
+    });
+  } else if (sortby !== undefined && sortby == 1) {
+    queryPipeline.insert(-1, {
+      $sort: {
+        finalPrice: -1,
+        createdAt: -1,
+      },
+    });
+  } else {
+    queryPipeline.insert(-1, {
+      $sort: {
+        createdAt: -1,
+      },
+    });
+  }
 
   try {
     let data;
