@@ -6,6 +6,8 @@ const listThreeJoinServiceForGlobal = async (
   joinStage2,
   joinStage3
 ) => {
+  console.log("hi .allowDiskUse()");
+  console.log(Request.query.perPage);
   // query search
   let min = Number(Request.query.min);
   let max = Number(Request.query.max);
@@ -37,6 +39,11 @@ const listThreeJoinServiceForGlobal = async (
     joinStage1,
     joinStage2,
     joinStage3,
+    {
+      $project: {
+        description: 0,
+      },
+    },
     {
       $facet: {
         total: [{ $count: "count" }],
@@ -176,7 +183,7 @@ const listThreeJoinServiceForGlobal = async (
 
   try {
     let data;
-    data = await DataModel.aggregate(queryPipeline);
+    data = await DataModel.aggregate(queryPipeline).allowDiskUse();
 
     return { status: "success", data };
   } catch (error) {

@@ -72,7 +72,7 @@ const listThreeJoinServiceSortByCreateAt = async (
     const total = await DataModel.countDocuments(totalQuery);
 
     // Perform the aggregation
-    const rows = await DataModel.aggregate(queryPipeline);
+    const rows = await DataModel.aggregate(queryPipeline).allowDiskUse();
 
     return { status: "success", data: { total, rows } };
   } catch (error) {

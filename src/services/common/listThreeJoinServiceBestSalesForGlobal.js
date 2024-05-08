@@ -29,6 +29,11 @@ const listThreeJoinServiceBestSalesForGlobal = async (
     joinStage1,
     joinStage2,
     joinStage3,
+    {
+      $project: {
+        description: 0,
+      },
+    },
     { $sort: { sold: -1 } },
     {
       $facet: {

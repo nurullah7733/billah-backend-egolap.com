@@ -21,6 +21,11 @@ const listTwoJoinService = async (
     let rows;
     if (searchKeyword !== "0") {
       rows = await DataModel.aggregate([
+        {
+          $project: {
+            description: 0,
+          },
+        },
         { $sort: { createdAt: -1 } },
         joinStage1,
         joinStage2,

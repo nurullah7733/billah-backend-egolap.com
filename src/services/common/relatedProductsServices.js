@@ -16,6 +16,11 @@ const RelatedProductsSearchSercice = async (
       joinStage2,
       joinStage3,
       {
+        $project: {
+          description: 0,
+        },
+      },
+      {
         $match: {
           $or: [
             {
