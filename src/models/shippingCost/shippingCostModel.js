@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-var settingsSchema = mongoose.Schema(
+var shippingCostSchema = mongoose.Schema(
   {
     shippingCostThakurgaonSadar: { type: Number, default: 0 },
     otherCostThakurgaonSadar: { type: Number, default: 0 },
@@ -17,5 +17,5 @@ var settingsSchema = mongoose.Schema(
   { versionKey: false, timestamps: true }
 );
 
-var SettingsModel = mongoose.model("settings", settingsSchema);
-module.exports = SettingsModel;
+var ShippingCostModel = mongoose.model("shippingcosts", shippingCostSchema);
+module.exports = ShippingCostModel;

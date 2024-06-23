@@ -11,6 +11,7 @@ const allUserService = async (Request, DataModel, searchArray) => {
         { $match: searchQuery },
         { $match: { role: "user" } },
         { $project: { password: 0 } },
+        { $sort: { createdAt: -1 } },
         {
           $facet: {
             total: [{ $count: "count" }],
@@ -22,6 +23,7 @@ const allUserService = async (Request, DataModel, searchArray) => {
       data = await DataModel.aggregate([
         { $match: { role: "user" } },
         { $project: { password: 0 } },
+        { $sort: { createdAt: -1 } },
         {
           $facet: {
             total: [{ $count: "count" }],

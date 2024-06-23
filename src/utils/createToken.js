@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const createToken = async (email, id) => {
   let payload = {
-    exp: Math.floor(Date.now() / 1000 + 24 * 60 * 60),
+    exp: Math.floor(Date.now() / 1000 + 30 * 24 * 60 * 60), // 30 days in seconds
     data: email + " " + id,
   };
 

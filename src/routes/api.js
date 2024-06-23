@@ -60,41 +60,7 @@ const {
   bestSalesProductForGlobal,
   relatedProducts,
 } = require("../controllers/products/productController");
-const {
-  pushProvisionalBazar,
-  deleteProvisionalBazar,
-} = require("../controllers/settings/provisionalBazarController");
-const {
-  pushBestOfElectronics,
-  deleteBestOfElectronics,
-} = require("../controllers/settings/bestOfElectronicsController");
-const {
-  pushBestSalesBanner,
-  deleteBestSalesBanner,
-} = require("../controllers/settings/bestSalesBannerController");
-const {
-  logoUpload,
-  deletelogo,
-  pushLogo,
-} = require("../controllers/settings/logoUploadController");
-const {
-  pushMainSlider,
-  deleteMainSlider,
-} = require("../controllers/settings/mainSliderController");
-const {
-  updateShippingAndOtherCost,
-  getAllWebSetting,
-} = require("../controllers/settings/updateShippingAndOtherCostController");
-const {
-  updateSocialLink,
-} = require("../controllers/settings/updateSocialLinkController");
-const {
-  initPayment,
-  successPaymnet,
-  cancelPaymnet,
-  failPaymnet,
-  ipnPaymnet,
-} = require("../controllers/sslcommarce/sslcommarceController");
+
 const {
   createSubCategory,
   listSubCategories,
@@ -174,27 +140,7 @@ const {
   listTermOfUse,
   deleteTermOfUse,
 } = require("../controllers/privacyPolicy/termOfUseController");
-const {
-  pushTermOfUse,
-  pushTermOfUseImg,
-  deleteTermOfUseImg,
-} = require("../controllers/settings/privacyPolicy/termOfUseController");
-const {
-  pushAboutUsImg,
-  deleteAboutUsImg,
-} = require("../controllers/settings/privacyPolicy/aboutUsController");
-const {
-  pushFaqImg,
-  deleteFaqImg,
-} = require("../controllers/settings/privacyPolicy/faqController");
-const {
-  pushPrivacyPolicyImg,
-  deletePrivacyPolicyImg,
-} = require("../controllers/settings/privacyPolicy/privacyPolicyController");
-const {
-  pushDealerBrandLogoImg,
-  deleteDealerBrandLogoImg,
-} = require("../controllers/settings/privacyPolicy/dealerBrandLogo");
+
 const {
   addPrivacyPolicy,
   listPrivacyPolicy,
@@ -210,20 +156,113 @@ const {
   listTeam,
   deleteTeam,
 } = require("../controllers/privacyPolicy/teamController");
-const {
-  pushContactUsImg,
-  deleteContactUsImg,
-} = require("../controllers/settings/privacyPolicy/contactUsController");
-const {
-  pushTeamBanner,
-  deleteTeamBanner,
-  pushTeamImgs,
-  deleteTeamImgs,
-} = require("../controllers/settings/privacyPolicy/teamController");
+
 const {
   getDivisions,
   getDistrictsByDivisions,
 } = require("../controllers/bdApi/divisionsController");
+const {
+  createTeamOwner,
+  listTeamOwner,
+  getTeamOwnerById,
+  updateTeamOwner,
+  deleteTeamOwnerImgAndpullImg,
+  deleteTeamOwnerWithImg,
+} = require("../controllers/team/teamOwnersController");
+const {
+  getMainSliders,
+  getMainSliderDetailsById,
+  createMainSlider,
+  updateMainSliderWithImg,
+  deleteImgMainSlider,
+  deleteMainSlider,
+} = require("../controllers/mainSlider/mainSliderController");
+const {
+  listSocialLink,
+  addSocialLink,
+  updateSocialLinks,
+  getSocialLinkById,
+  deleteSocialLink,
+} = require("../controllers/socialLinks/socialLinksController");
+const {
+  createBannerAboutUs,
+  getAllBannersAboutUs,
+  getBannerByIdAboutUs,
+  updateBannerWithImgAboutUs,
+  deleteImgBannerAboutUs,
+  deleteBannerAboutUs,
+} = require("../controllers/banners/bannerAboutUsController");
+const {
+  createBannerBestOfElectronics,
+  getAllBannersBestOfElectronics,
+  getBannerByIdBestOfElectronics,
+  updateBannerWithImgBestOfElectronics,
+  deleteImgBannerBestOfElectronics,
+  deleteBannerBestOfElectronics,
+} = require("../controllers/banners/bannerBestOfElectronicsController");
+const {
+  createBannerBestSales,
+  getAllBannersBestSales,
+  getBannerByIdBestSales,
+  updateBannerWithImgBestSales,
+  deleteImgBannerBestSales,
+  deleteBannerBestSales,
+} = require("../controllers/banners/bannerBestSalesController");
+const {
+  getBannerByIdKachaBazar,
+  createBannerKachaBazar,
+  getAllBannersKachaBazar,
+  updateBannerWithImgKachaBazar,
+  deleteImgBannerKachaBazar,
+  deleteBannerKachaBazar,
+} = require("../controllers/banners/bannerKachaBazarController");
+const {
+  createBannerContactUs,
+  getAllBannersContactUs,
+  getBannerByIdContactUs,
+  updateBannerWithImgContactUs,
+  deleteImgBannerContactUs,
+  deleteBannerContactUs,
+} = require("../controllers/banners/bannerContactUsController");
+const {
+  deleteBannerPrivacyPolicy,
+  deleteImgBannerPrivacyPolicy,
+  updateBannerWithImgPrivacyPolicy,
+  getBannerByIdPrivacyPolicy,
+  getAllBannersPrivacyPolicy,
+  createBannerPrivacyPolicy,
+} = require("../controllers/banners/bannerPrivacyPolicyController");
+const {
+  createBannerTermOfConditions,
+  getAllBannersTermOfConditions,
+  getBannerByIdTermOfConditions,
+  updateBannerWithImgTermOfConditions,
+  deleteImgBannerTermOfConditions,
+  deleteBannerTermOfConditions,
+} = require("../controllers/banners/bannerTermOfConditionsController");
+const {
+  createBannerFaq,
+  getAllBannersFaq,
+  getBannerByIdFaq,
+  updateBannerWithImgFaq,
+  deleteImgBannerFaq,
+  deleteBannerFaq,
+} = require("../controllers/banners/bannerFaqController");
+const {
+  createBannerTeam,
+  getAllBannersTeam,
+  getBannerByIdTeam,
+  updateBannerWithImgTeam,
+  deleteImgBannerTeam,
+  deleteBannerTeam,
+} = require("../controllers/banners/bannerTeamController");
+const {
+  createShippingCost,
+  listShippingCost,
+  updateShippingCost,
+  getShippingCostDetailsById,
+  deleteShippingCost,
+} = require("../controllers/shippingCost/shippingCostController");
 
 // registration
 router.post("/registration", registration);
@@ -401,12 +440,7 @@ router.post(
 );
 
 // list Brand
-router.get(
-  "/list-brand/:pageNo/:perPage/:searchKeyword",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  listBrand
-);
+router.get("/list-brand/:pageNo/:perPage/:searchKeyword", listBrand);
 // dropdown list brand
 router.get(
   "/dropdown-brand-admin",
@@ -725,213 +759,6 @@ router.post(
   returnedSummaryReport
 );
 
-//-------------------------- Settings -----------------------------------------------
-//-------------------------- logo -----------------------------------------------
-
-router.post(
-  "/upload-logo",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  logoUpload
-);
-router.post(
-  "/delete-logo/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deletelogo
-);
-router.post(
-  "/update-logo/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushLogo
-);
-// -------- Main Slider -------------------------------------------
-router.post(
-  "/add-main-slider/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushMainSlider
-);
-router.post(
-  "/delete-main-slider/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deleteMainSlider
-);
-// -------- Terms of use -------------------------------------------
-router.post(
-  "/add-term-of-use/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushTermOfUseImg
-);
-router.post(
-  "/delete-term-of-use/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deleteTermOfUseImg
-);
-// -------- About us -------------------------------------------
-router.post(
-  "/add-about-us/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushAboutUsImg
-);
-router.post(
-  "/delete-about-us/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deleteAboutUsImg
-);
-// -------- Contact us -------------------------------------------
-router.post(
-  "/add-contact-us/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushContactUsImg
-);
-router.post(
-  "/delete-contact-us/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deleteContactUsImg
-);
-// -------- Team -------------------------------------------
-router.post(
-  "/add-team-banner/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushTeamBanner
-);
-router.post(
-  "/delete-team-banner/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deleteTeamBanner
-);
-router.post(
-  "/add-team-imgs/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushTeamImgs
-);
-router.post(
-  "/delete-team-imgs/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deleteTeamImgs
-);
-// -------- faq -------------------------------------------
-router.post(
-  "/add-faq/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushFaqImg
-);
-router.post(
-  "/delete-faq/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deleteFaqImg
-);
-// -------- Privacy Policy -------------------------------------------
-router.post(
-  "/add-privacy-policy/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushPrivacyPolicyImg
-);
-router.post(
-  "/delete-privacy-policy/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deletePrivacyPolicyImg
-);
-// -------- Dealer Brand Logo -------------------------------------------
-router.post(
-  "/add-dealer-brand-logo/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushDealerBrandLogoImg
-);
-router.post(
-  "/delete-dealer-brand-logo/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deleteDealerBrandLogoImg
-);
-// -------- BestSales Banner -------------------------------------------
-router.post(
-  "/add-best-sales-banner/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushBestSalesBanner
-);
-router.post(
-  "/delete-best-sales-banner/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deleteBestSalesBanner
-);
-// -------- provisionalBazar Banner -------------------------------------------
-router.post(
-  "/add-provisional-bazar-banner/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushProvisionalBazar
-);
-router.post(
-  "/delete-provisional-bazar-banner/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deleteProvisionalBazar
-);
-// -------- bestOfElectronics Banner -------------------------------------------
-router.post(
-  "/add-best-of-electronics-banner/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  uploadPhoto.array("images", 10),
-  pushBestOfElectronics
-);
-router.post(
-  "/delete-best-of-electronics-banner/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  deleteBestOfElectronics
-);
-
-// -------- Shipping cost -------------------------------------------
-router.post(
-  "/udpate-shipping-and-other-cost/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  updateShippingAndOtherCost
-);
-// -------- Social link -------------------------------------------
-router.post(
-  "/udpate-social-link/:id",
-  verifyAuthMiddleware,
-  verifyAdminMiddleware,
-  updateSocialLink
-);
-router.get("/get-all-web-settings", getAllWebSetting);
-
 // --------------------------------------- Privacy Policy --------------------------------------
 
 // add products privacy policy
@@ -1037,6 +864,442 @@ router.get(
   verifyAuthMiddleware,
   verifyAdminMiddleware,
   deleteTeam
+);
+
+// ------------------------------ Team ------------------------------
+
+router.post(
+  "/create-team-owner",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createTeamOwner
+);
+router.post(
+  "/update-team-owner/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateTeamOwner
+);
+router.get("/list-team-owners/:pageNo/:perPage/:searchKeyword", listTeamOwner);
+router.get("/get-team-owners-by-id/:id", getTeamOwnerById);
+router.get("/delete-team-owner/:id", deleteTeamOwnerWithImg);
+router.post("/delete-team-owner-img/:id", deleteTeamOwnerImgAndpullImg);
+
+// -------- Main Slider -------------------------------------------
+router.get(
+  "/get-all-main-slider/:pageNo/:perPage/:searchKeyword",
+  getMainSliders
+);
+router.get("/get-main-slider-details/:id", getMainSliderDetailsById);
+router.post(
+  "/add-main-slider",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createMainSlider
+);
+router.post(
+  "/update-main-slider/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateMainSliderWithImg
+);
+router.post(
+  "/delete-img-main-slider/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteImgMainSlider
+);
+router.post(
+  "/delete-main-slider/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteMainSlider
+);
+
+// -------- Banner Best of Electronics -------------------------------------------
+router.post(
+  "/add-banner-best-of-electronics",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createBannerBestOfElectronics
+);
+
+router.get(
+  "/get-all-banner-best-of-electronics/:pageNo/:perPage/:searchKeyword",
+  getAllBannersBestOfElectronics
+);
+
+router.get(
+  "/get-banner-best-of-electronics-details/:id",
+  getBannerByIdBestOfElectronics
+);
+
+router.post(
+  "/update-banner-best-of-electronics/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateBannerWithImgBestOfElectronics
+);
+router.post(
+  "/delete-img-banner-best-of-electronics/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteImgBannerBestOfElectronics
+);
+router.post(
+  "/delete-banner-best-of-electronics/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBannerBestOfElectronics
+);
+
+// -------- Banner Best Sales -------------------------------------------
+router.post(
+  "/add-banner-best-sales",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createBannerBestSales
+);
+
+router.get(
+  "/get-all-banner-best-sales/:pageNo/:perPage/:searchKeyword",
+  getAllBannersBestSales
+);
+
+router.get("/get-banner-best-sales-details/:id", getBannerByIdBestSales);
+
+router.post(
+  "/update-banner-best-sales/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateBannerWithImgBestSales
+);
+router.post(
+  "/delete-img-banner-best-sales/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteImgBannerBestSales
+);
+router.post(
+  "/delete-banner-best-sales/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBannerBestSales
+);
+
+// -------- Banner Kacha Bazar -------------------------------------------
+router.post(
+  "/add-banner-kacha-bazar",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createBannerKachaBazar
+);
+
+router.get(
+  "/get-all-banner-kacha-bazar/:pageNo/:perPage/:searchKeyword",
+  getAllBannersKachaBazar
+);
+
+router.get("/get-banner-kacha-bazar-details/:id", getBannerByIdKachaBazar);
+
+router.post(
+  "/update-banner-kacha-bazar/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateBannerWithImgKachaBazar
+);
+router.post(
+  "/delete-img-banner-kacha-bazar/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteImgBannerKachaBazar
+);
+router.post(
+  "/delete-banner-kacha-bazar/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBannerKachaBazar
+);
+
+// -------- Banner About Us -------------------------------------------
+router.post(
+  "/add-banner-about-us",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createBannerAboutUs
+);
+
+router.get(
+  "/get-all-banner-about-us/:pageNo/:perPage/:searchKeyword",
+  getAllBannersAboutUs
+);
+
+router.get("/get-banner-about-us-details/:id", getBannerByIdAboutUs);
+
+router.post(
+  "/update-banner-about-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateBannerWithImgAboutUs
+);
+router.post(
+  "/delete-img-banner-about-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteImgBannerAboutUs
+);
+router.post(
+  "/delete-banner-about-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBannerAboutUs
+);
+
+// -------- Banner Contact Us -------------------------------------------
+router.post(
+  "/add-banner-contact-us",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createBannerContactUs
+);
+
+router.get(
+  "/get-all-banner-contact-us/:pageNo/:perPage/:searchKeyword",
+  getAllBannersContactUs
+);
+
+router.get("/get-banner-contact-us-details/:id", getBannerByIdContactUs);
+
+router.post(
+  "/update-banner-contact-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateBannerWithImgContactUs
+);
+router.post(
+  "/delete-img-banner-contact-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteImgBannerContactUs
+);
+router.post(
+  "/delete-banner-contact-us/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBannerContactUs
+);
+
+// -------- Banner Faq -------------------------------------------
+router.post(
+  "/add-banner-faq",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createBannerFaq
+);
+
+router.get(
+  "/get-all-banner-faq/:pageNo/:perPage/:searchKeyword",
+  getAllBannersFaq
+);
+
+router.get("/get-banner-faq-details/:id", getBannerByIdFaq);
+
+router.post(
+  "/update-banner-faq/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateBannerWithImgFaq
+);
+router.post(
+  "/delete-img-banner-faq/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteImgBannerFaq
+);
+router.post(
+  "/delete-banner-faq/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBannerFaq
+);
+
+// -------- Banner Privacy Policy -------------------------------------------
+router.post(
+  "/add-banner-privacy-policy",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createBannerPrivacyPolicy
+);
+
+router.get(
+  "/get-all-banner-privacy-policy/:pageNo/:perPage/:searchKeyword",
+  getAllBannersPrivacyPolicy
+);
+
+router.get(
+  "/get-banner-privacy-policy-details/:id",
+  getBannerByIdPrivacyPolicy
+);
+
+router.post(
+  "/update-banner-privacy-policy/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateBannerWithImgPrivacyPolicy
+);
+router.post(
+  "/delete-img-banner-privacy-policy/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteImgBannerPrivacyPolicy
+);
+router.post(
+  "/delete-banner-privacy-policy/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBannerPrivacyPolicy
+);
+// -------- Banner Term of Conditions -------------------------------------------
+router.post(
+  "/add-banner-term-of-conditions",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createBannerTermOfConditions
+);
+
+router.get(
+  "/get-all-banner-term-of-conditions/:pageNo/:perPage/:searchKeyword",
+  getAllBannersTermOfConditions
+);
+
+router.get(
+  "/get-banner-term-of-conditions-details/:id",
+  getBannerByIdTermOfConditions
+);
+
+router.post(
+  "/update-banner-term-of-conditions/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateBannerWithImgTermOfConditions
+);
+router.post(
+  "/delete-img-banner-term-of-conditions/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteImgBannerTermOfConditions
+);
+router.post(
+  "/delete-banner-term-of-conditions/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBannerTermOfConditions
+);
+// -------- Banner Team -------------------------------------------
+router.post(
+  "/add-banner-team",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createBannerTeam
+);
+
+router.get(
+  "/get-all-banner-team/:pageNo/:perPage/:searchKeyword",
+  getAllBannersTeam
+);
+
+router.get("/get-banner-team-details/:id", getBannerByIdTeam);
+
+router.post(
+  "/update-banner-team/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateBannerWithImgTeam
+);
+router.post(
+  "/delete-img-banner-team/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteImgBannerTeam
+);
+router.post(
+  "/delete-banner-team/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteBannerTeam
+);
+
+// --------------------------- Shipping cost ------------------------------
+
+router.post(
+  "/add-shipping-cost",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  createShippingCost
+);
+router.get(
+  "/list-shipping-cost/:pageNo/:perPage/:searchKeyword",
+  listShippingCost
+);
+
+router.get("/get-shipping-cost-by-id/:id", getShippingCostDetailsById);
+
+router.post(
+  "/update-shipping-cost/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  updateShippingCost
+);
+
+router.get(
+  "/delete-shipping-cost/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteShippingCost
+);
+
+// --------------------------- Social Links  ------------------------------
+router.get("/get-social-link", listSocialLink);
+router.post(
+  "/add-social-link",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  addSocialLink
+);
+router.post(
+  "/update-social-link/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  updateSocialLinks
+);
+router.get("/get-social-link-by-id/:id", getSocialLinkById);
+router.get(
+  "/delete-social-link/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteSocialLink
 );
 
 // bd api Divisions
