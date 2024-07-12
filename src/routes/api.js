@@ -158,10 +158,6 @@ const {
 } = require("../controllers/privacyPolicy/teamController");
 
 const {
-  getDivisions,
-  getDistrictsByDivisions,
-} = require("../controllers/bdApi/divisionsController");
-const {
   createTeamOwner,
   listTeamOwner,
   getTeamOwnerById,
@@ -263,6 +259,19 @@ const {
   getShippingCostDetailsById,
   deleteShippingCost,
 } = require("../controllers/shippingCost/shippingCostController");
+const {
+  getAllDivisionsController,
+  getDistrictsController,
+  getUpazilasController,
+} = require("../controllers/bdApi/divisionsController");
+const {
+  createDealerBrandLogo,
+  getAllDealerBrandLogo,
+  getBannerByIdDealerBrandLogo,
+  updateBannerWithImgDealerBrandLogo,
+  deleteImgDealerBrandLogo,
+  deleteDealerBrandLogo,
+} = require("../controllers/banners/dealerBrandLogoController");
 
 // registration
 router.post("/registration", registration);
@@ -1251,6 +1260,42 @@ router.post(
   deleteBannerTeam
 );
 
+// -------- Dealer Brand Logo -------------------------------------------
+router.post(
+  "/add-dealer-brand-logo",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  createDealerBrandLogo
+);
+
+router.get(
+  "/get-all-dealer-brand-logo/:pageNo/:perPage/:searchKeyword",
+  getAllDealerBrandLogo
+);
+
+router.get("/get-dealer-brand-logo-details/:id", getBannerByIdDealerBrandLogo);
+
+router.post(
+  "/update-dealer-brand-logo/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  uploadPhoto.array("images", 10),
+  updateBannerWithImgDealerBrandLogo
+);
+router.post(
+  "/delete-img-dealer-brand-logo/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteImgDealerBrandLogo
+);
+router.post(
+  "/delete-dealer-brand-logo/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  deleteDealerBrandLogo
+);
+
 // --------------------------- Shipping cost ------------------------------
 
 router.post(
@@ -1303,7 +1348,8 @@ router.get(
 );
 
 // bd api Divisions
-router.get("/get-divisions", getDivisions);
-router.get("/get-districs-by-divisions/:district", getDistrictsByDivisions);
+router.get("/get-divisions", getAllDivisionsController);
+router.get("/get-districts/:id", getDistrictsController);
+router.get("/get-Upazilas/:id", getUpazilasController);
 
 module.exports = router;

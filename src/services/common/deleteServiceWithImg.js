@@ -9,19 +9,23 @@ const deleteServiceWithImg = async (Request, DataModel) => {
   query._id = objectId(id);
 
   try {
-    // delete img
-    let imgDataOfDataModel = await DataModel.findOne({ _id: id });
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      // delete img
+      let imgDataOfDataModel = await DataModel.findOne({ _id: id });
 
-    imgDataOfDataModel?.img?.map(async (item) => {
-      await deleteCloudinaryImg(item.public_id);
-    });
+      imgDataOfDataModel?.img?.map(async (item) => {
+        await deleteCloudinaryImg(item.public_id);
+      });
 
-    // delete info
-    var data = await DataModel.deleteMany(query);
+      // delete info
+      var data = await DataModel.deleteMany(query);
 
-    return { status: "success", data };
+      return { status: "success", data };
+    } else {
+      return { status: "fail", data: "Invalid Object Id" };
+    }
   } catch (error) {
-    return { status: "fail", data: error.toString() };
+    return { status: "fail", data: error };
   }
 };
 
