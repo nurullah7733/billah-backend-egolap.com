@@ -28,12 +28,8 @@ exports.getShippingCostDetailsById = async (req, res) => {
 };
 
 exports.updateShippingCost = async (req, res) => {
-  try {
-    let data = await updateService(req, ShippingCostModel);
-    return res.status(200).json({ status: "fail", data });
-  } catch (error) {
-    return res.status(200).json({ status: "fail", data: error.toString() });
-  }
+  let data = await updateService(req, ShippingCostModel);
+  return res.status(200).json(data);
 };
 exports.deleteShippingCost = async (req, res) => {
   let result = await deleteService(req, ShippingCostModel);
