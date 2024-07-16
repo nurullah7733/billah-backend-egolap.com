@@ -6,8 +6,6 @@ const listThreeJoinServiceForGlobal = async (
   joinStage2,
   joinStage3
 ) => {
-  console.log("hi .allowDiskUse()");
-  console.log(Request.query.perPage);
   // query search
   let min = Number(Request.query.min);
   let max = Number(Request.query.max);
