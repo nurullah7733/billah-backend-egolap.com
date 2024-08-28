@@ -1,6 +1,9 @@
 const RunningOrderSummaryReport = async (Request, DataModel) => {
-  let fromDate = Request.body.fromDate;
-  let toDate = Request.body.toDate;
+  let fromDate = new Date(Request.body.fromDate);
+  let toDate = new Date(Request.body.toDate);
+
+  fromDate.setHours(0, 0, 0, 0);
+  toDate.setHours(23, 59, 59, 999);
 
   try {
     let data = await DataModel.aggregate([
@@ -54,6 +57,14 @@ const RunningOrderSummaryReport = async (Request, DataModel) => {
                 localField: "productsDetails.brandId",
                 foreignField: "_id",
                 as: "brandName",
+              },
+            },
+            {
+              $lookup: {
+                from: "users",
+                localField: "userId",
+                foreignField: "_id",
+                as: "userDetails",
               },
             },
           ],

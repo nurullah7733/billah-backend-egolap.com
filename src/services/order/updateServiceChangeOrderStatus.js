@@ -35,42 +35,47 @@ const updateServiceOrderChangeStatus = async (Request, DataModel) => {
       // order status change then send email to user
       if (updateStatus) {
         if (orderStatus === "Processing") {
+          const emailBodybyHtml = `<p>We have processed your order and it is now being prepared for shipment. Order Id: ${checkAllreadyCanceled[0]?.orderId}.</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
           await SendEmailUtility(
             Request.headers.email,
             "Order Status",
-            `YWe have processed your order and it is now being prepared for shipment. Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+            emailBodybyHtml
           );
         } else if (orderStatus === "Shipping") {
+          const emailBodybyHtml = `<p>Good news! Your order has been dispatched and will be delivered soon. Track your shipment here Order Id: ${checkAllreadyCanceled[0]?.orderId}.</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
           await SendEmailUtility(
             Request.headers.email,
             "Order Status",
-            `Good news! Your order has been dispatched and will be delivered soon. Track your shipment here Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+            emailBodybyHtml
           );
         } else if (orderStatus === "Delivered") {
+          const emailBodybyHtml = `<p>Your order has been delivered. We hope you enjoy your purchase! Order Id: ${checkAllreadyCanceled[0]?.orderId}.</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
           const sendEmail = await SendEmailUtility(
             Request.headers.email,
             "Order Status",
-            `Your order has been delivered. We hope you enjoy your purchase! Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+            emailBodybyHtml
           );
-          console.log(sendEmail, "sendEmail");
         } else if (orderStatus === "Cancelled") {
+          const emailBodybyHtml = `<p>Your order has been canceled as per your request. Order Id: ${checkAllreadyCanceled[0]?.orderId}.</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
           await SendEmailUtility(
             Request.headers.email,
             "Order Status",
-            `Your order has been canceled as per your request. Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+            emailBodybyHtml
           );
         } else if (orderStatus === "Returned") {
+          const emailBodybyHtml = `<p>Your return has been processed. We have issued a refund to your account. Order Id: ${checkAllreadyCanceled[0]?.orderId}.</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
           await SendEmailUtility(
             Request.headers.email,
             "Order Status",
-            `Your return has been processed. We have issued a refund to your account. Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+            emailBodybyHtml
           );
         }
       } else {
+        const emailBodybyHtml = `<p>Your order has been ${orderStatus}. Order Id: ${checkAllreadyCanceled[0]?.orderId}.</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
         await SendEmailUtility(
           Request.headers.email,
           "Order Status",
-          `Your order has been ${orderStatus}. Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+          emailBodybyHtml
         );
       }
 
@@ -98,41 +103,51 @@ const updateServiceOrderChangeStatus = async (Request, DataModel) => {
         // order status change then send email to user
         if (allData) {
           if (orderStatus === "Processing") {
+            const emailBodybyHtml = `<p>We have processed your order and it is now being prepared for shipment. Order Id: ${checkAllreadyCanceled[0]?.orderId}.</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
             await SendEmailUtility(
               Request.headers.email,
               "Order Status",
-              `YWe have processed your order and it is now being prepared for shipment. Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+              emailBodybyHtml
             );
           } else if (orderStatus === "Shipping") {
+            const emailBodybyHtml = `<p>Good news! Your order has been dispatched and will be delivered soon. Track your shipment here Order Id: ${checkAllreadyCanceled[0]?.orderId}.</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
+
             await SendEmailUtility(
               Request.headers.email,
               "Order Status",
-              `Good news! Your order has been dispatched and will be delivered soon. Track your shipment here Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+              emailBodybyHtml
             );
           } else if (orderStatus === "Delivered") {
+            const emailBodybyHtml = `<p>Your order has been delivered. We hope you enjoy your purchase! Order Id: ${checkAllreadyCanceled[0]?.orderId}.</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
+
             await SendEmailUtility(
               Request.headers.email,
               "Order Status",
-              `Your order has been delivered. We hope you enjoy your purchase! Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+              emailBodybyHtml
             );
           } else if (orderStatus === "Cancelled") {
+            const emailBodybyHtml = `<p>Your order has been canceled as per your request. Order Id: ${checkAllreadyCanceled[0]?.orderId}.</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
+
             await SendEmailUtility(
               Request.headers.email,
               "Order Status",
-              `Your order has been canceled as per your request. Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+              emailBodybyHtml
             );
           } else if (orderStatus === "Returned") {
+            const emailBodybyHtml = `<p>Your return has been processed. We have issued a refund to your account. Order Id: ${checkAllreadyCanceled[0]?.orderId}.</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
+
             await SendEmailUtility(
               Request.headers.email,
               "Order Status",
-              `Your return has been processed. We have issued a refund to your account. Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+              emailBodybyHtml
             );
           }
         } else {
+          const emailBodybyHtml = `<p>Your order has been ${orderStatus}. Order Id: ${checkAllreadyCanceled[0]?.orderId}</p><p>Click here to view your order details. <a href="https://egolap.com/user-dashboard/orders/running-orders">More Details</a> </p>`;
           await SendEmailUtility(
             Request.headers.email,
             "Order Status",
-            `Your order has been ${orderStatus}. Order Id: ${checkAllreadyCanceled[0]?.orderId}`
+            emailBodybyHtml
           );
         }
         return { status: "success", data: allData };

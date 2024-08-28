@@ -4,7 +4,9 @@ var smtpTransport = require("nodemailer-smtp-transport");
 const SendEmailUtility = async (
   EmailTo,
   subject = "Password Reset",
-  EmailText
+  emailBody,
+  attachmentBuffer = null,
+  attachmentFilename = "attachment.pdf"
 ) => {
   var transporter = nodemailer.createTransport(
     smtpTransport({
@@ -21,7 +23,16 @@ const SendEmailUtility = async (
     from: "egolap.com <egolap2@gmail.com>",
     to: [EmailTo],
     subject: subject,
-    text: EmailText,
+    html: emailBody,
+    attachments: attachmentBuffer
+      ? [
+          {
+            filename: attachmentFilename,
+            content: attachmentBuffer,
+            contentType: "application/pdf",
+          },
+        ]
+      : [],
   };
 
   return await transporter.sendMail(mailOptions);
@@ -29,10 +40,4 @@ const SendEmailUtility = async (
 
 module.exports = SendEmailUtility;
 
-// {
-//   if (error) {
-//     (error);
-//   } else {
-//     ("Email sent: " + info.response);
-//   }
-// });
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
