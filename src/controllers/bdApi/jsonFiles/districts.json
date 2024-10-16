@@ -425,6 +425,15 @@
   {
     "id": "48",
     "division_id": "6",
+    "name": "Inside Dhaka",
+    "bn_name": "ঢাকার ভিতরে",
+    "lat": "23.7115253",
+    "lon": "90.4111451",
+    "url": "www.dhaka.gov.bd"
+  },
+  {
+    "id": "49",
+    "division_id": "6",
     "name": "Munshiganj",
     "bn_name": "মুন্সিগঞ্জ",
     "lat": "23.5435742",
@@ -432,7 +441,7 @@
     "url": "www.munshiganj.gov.bd"
   },
   {
-    "id": "49",
+    "id": "50",
     "division_id": "6",
     "name": "Rajbari",
     "bn_name": "রাজবাড়ী",
@@ -441,7 +450,7 @@
     "url": "www.rajbari.gov.bd"
   },
   {
-    "id": "50",
+    "id": "51",
     "division_id": "6",
     "name": "Madaripur",
     "bn_name": "মাদারীপুর",
@@ -450,7 +459,7 @@
     "url": "www.madaripur.gov.bd"
   },
   {
-    "id": "51",
+    "id": "52",
     "division_id": "6",
     "name": "Gopalganj",
     "bn_name": "গোপালগঞ্জ",
@@ -459,7 +468,7 @@
     "url": "www.gopalganj.gov.bd"
   },
   {
-    "id": "52",
+    "id": "53",
     "division_id": "6",
     "name": "Faridpur",
     "bn_name": "ফরিদপুর",
@@ -468,7 +477,7 @@
     "url": "www.faridpur.gov.bd"
   },
   {
-    "id": "53",
+    "id": "54",
     "division_id": "7",
     "name": "Panchagarh",
     "bn_name": "পঞ্চগড়",
@@ -477,7 +486,7 @@
     "url": "www.panchagarh.gov.bd"
   },
   {
-    "id": "54",
+    "id": "55",
     "division_id": "7",
     "name": "Dinajpur",
     "bn_name": "দিনাজপুর",
@@ -486,7 +495,7 @@
     "url": "www.dinajpur.gov.bd"
   },
   {
-    "id": "55",
+    "id": "56",
     "division_id": "7",
     "name": "Lalmonirhat",
     "bn_name": "লালমনিরহাট",
@@ -495,7 +504,7 @@
     "url": "www.lalmonirhat.gov.bd"
   },
   {
-    "id": "56",
+    "id": "57",
     "division_id": "7",
     "name": "Nilphamari",
     "bn_name": "নীলফামারী",
@@ -504,7 +513,7 @@
     "url": "www.nilphamari.gov.bd"
   },
   {
-    "id": "57",
+    "id": "58",
     "division_id": "7",
     "name": "Gaibandha",
     "bn_name": "গাইবান্ধা",
@@ -513,7 +522,7 @@
     "url": "www.gaibandha.gov.bd"
   },
   {
-    "id": "58",
+    "id": "59",
     "division_id": "7",
     "name": "Thakurgaon",
     "bn_name": "ঠাকুরগাঁও",
@@ -522,7 +531,7 @@
     "url": "www.thakurgaon.gov.bd"
   },
   {
-    "id": "59",
+    "id": "60",
     "division_id": "7",
     "name": "Rangpur",
     "bn_name": "রংপুর",
@@ -531,7 +540,7 @@
     "url": "www.rangpur.gov.bd"
   },
   {
-    "id": "60",
+    "id": "61",
     "division_id": "7",
     "name": "Kurigram",
     "bn_name": "কুড়িগ্রাম",
@@ -540,7 +549,7 @@
     "url": "www.kurigram.gov.bd"
   },
   {
-    "id": "61",
+    "id": "62",
     "division_id": "8",
     "name": "Sherpur",
     "bn_name": "শেরপুর",
@@ -549,7 +558,7 @@
     "url": "www.sherpur.gov.bd"
   },
   {
-    "id": "62",
+    "id": "63",
     "division_id": "8",
     "name": "Mymensingh",
     "bn_name": "ময়মনসিংহ",
@@ -558,7 +567,7 @@
     "url": "www.mymensingh.gov.bd"
   },
   {
-    "id": "63",
+    "id": "64",
     "division_id": "8",
     "name": "Jamalpur",
     "bn_name": "জামালপুর",
@@ -567,7 +576,7 @@
     "url": "www.jamalpur.gov.bd"
   },
   {
-    "id": "64",
+    "id": "65",
     "division_id": "8",
     "name": "Netrokona",
     "bn_name": "নেত্রকোণা",
