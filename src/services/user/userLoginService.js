@@ -15,17 +15,28 @@ const userLoginService = async (Request, Response, DataModel) => {
         if (data.length > 0) {
           token = await createToken(data[0].email, data[0]._id);
         }
+        // const oneMonthInMilliseconds = 1000 * 60 * 60 * 24 * 30;
+        // Response.cookie("token", token, {
+        //   domain: ".vercel.app",
+        //   maxAge: oneMonthInMilliseconds, // 1 month
+        //   sameSite: "None",
+        //   path: "/",
+        //   // httpOnly: process.env.NODE_ENV === "production",
+        //   // secure: process.env.NODE_ENV === "production",
+        //   httpOnly: true,
+        //   secure: true,
+        // });
+
         const oneMonthInMilliseconds = 1000 * 60 * 60 * 24 * 30;
-        Response.cookie("token", token, {
-          domain: ".vercel.app",
-          maxAge: oneMonthInMilliseconds, // 1 month
-          sameSite: "None",
-          path: "/",
-          // httpOnly: process.env.NODE_ENV === "production",
-          // secure: process.env.NODE_ENV === "production",
-          httpOnly: true,
-          secure: true,
-        });
+res.cookie("token", token, {
+  maxAge: oneMonthInMilliseconds,
+  domain: "vercel.app", // অথবা সরিয়ে দিন
+  path: "/",
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "None",
+});
+
 
         return {
           status: "success",
