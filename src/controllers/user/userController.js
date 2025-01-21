@@ -33,8 +33,8 @@ exports.logOut = async (req, res) => {
   res.clearCookie("token2");
   res.clearCookie("token", { domain: ".egolap.com", path: "/" });
   res.clearCookie("token2", { domain: ".egolap.com", path: "/" });
-  res.clearCookie("token", { domain: ".e-golap.vercel.app", path: "/" });
-  res.clearCookie("token2", { domain: ".e-golap.vercel.app", path: "/" });
+  res.clearCookie("token", { domain: ".vercel.app", path: "/" });
+  res.clearCookie("token2", { domain: ".vercel.app", path: "/" });
   res.clearCookie("token", { domain: ".localhost", path: "/" });
   res.clearCookie("token2", { domain: ".localhost", path: "/" });
   return res
