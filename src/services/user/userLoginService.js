@@ -17,7 +17,7 @@ const userLoginService = async (Request, Response, DataModel) => {
         }
         const oneMonthInMilliseconds = 1000 * 60 * 60 * 24 * 30;
         Response.cookie("token", token, {
-          domain: process.env.FONTEND_DOMAIN,
+          domain: [".egolap.com", ".localhost", ".vercel.app"],
           maxAge: oneMonthInMilliseconds, // 1 month
           sameSite: "None",
           path: "/",
