@@ -28,7 +28,7 @@ const userLoginService = async (Request, Response, DataModel) => {
         // });
 
         const oneMonthInMilliseconds = 1000 * 60 * 60 * 24 * 30;
-res.cookie("token", token, {
+        Response.cookie("token", token, {
   maxAge: oneMonthInMilliseconds,
   domain: "vercel.app", // অথবা সরিয়ে দিন
   path: "/",
