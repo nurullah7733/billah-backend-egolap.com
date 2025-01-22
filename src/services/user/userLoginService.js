@@ -21,10 +21,10 @@ const userLoginService = async (Request, Response, DataModel) => {
           maxAge: oneMonthInMilliseconds, // 1 month
           sameSite: "None",
           path: "/",
-          // httpOnly: process.env.NODE_ENV === "production",
-          // secure: process.env.NODE_ENV === "production",
-          httpOnly: true,
-          secure: true,
+          httpOnly: process.env.NODE_ENV === "production",
+          secure: process.env.NODE_ENV === "production",
+          // httpOnly: true,
+          // secure: true,
         });
 
         return {
